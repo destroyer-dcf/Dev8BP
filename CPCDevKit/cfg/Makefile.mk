@@ -102,13 +102,7 @@ patch:
 # Compilar con el nivel especificado
 compile: $(DIST_DIR)
 	@echo "$(YELLOW)\nCompilando nivel $(BUILD_LEVEL)...$(NC)"
-	@# Crear enlace simbólico de ASM/dist a DIST_DIR
-	@rm -rf "$(8BP_ASM_PATH)/dist"
-	@mkdir -p "$(DIST_DIR)"
-	@# Asegurarse de que DIST_DIR existe antes de crear el enlace
-	@DIST_ABS=$$(cd "$(DIST_DIR)" 2>/dev/null && pwd || (mkdir -p "$(DIST_DIR)" && cd "$(DIST_DIR)" && pwd)); \
-	ln -sf "$$DIST_ABS" "$(8BP_ASM_PATH)/dist"
-	@$(COMPILE_SCRIPT) $(BUILD_LEVEL) "$(8BP_ASM_PATH)" "$(ABASM_PATH)"
+	@$(COMPILE_SCRIPT) $(BUILD_LEVEL) "$(8BP_ASM_PATH)" "$(ABASM_PATH)" "$(DIST_DIR)"
 	@# Verificar que el binario se generó correctamente
 	@if [ -f "$(DIST_DIR)/8BP$(BUILD_LEVEL).bin" ]; then \
 		echo "$(GREEN)✓ Binario generado: $(DIST_DIR)/8BP$(BUILD_LEVEL).bin ($(shell ls -lh $(DIST_DIR)/8BP$(BUILD_LEVEL).bin 2>/dev/null | awk '{print $$5}'))$(NC)\n"; \
@@ -143,7 +137,7 @@ $(DIST_DIR):
 
 # Limpiar archivos temporales
 clean:
-	@echo "$(YELLOW)Limpiando archivos temporales...$(NC)"
+	@echo "\n$(YELLOW)Limpiando archivos temporales...$(NC)"
 	@rm -f "$(8BP_ASM_PATH)"/*.backup
 	@rm -f "$(8BP_ASM_PATH)"/*.encoding_backup
 	@rm -f "$(8BP_ASM_PATH)"/build_8bp.asm
@@ -151,9 +145,8 @@ clean:
 	@rm -f "$(8BP_ASM_PATH)"/make_all_mygame.bin
 	@rm -f "$(8BP_ASM_PATH)"/*.lst
 	@rm -f "$(8BP_ASM_PATH)"/*.map
-	@rm -rf "$(8BP_ASM_PATH)/dist"
 	@rm -rf $(DIST_DIR)
-	@echo "$(GREEN)✓ Limpieza completada (incluye dist/)$(NC)"
+	@echo "$(GREEN)✓ Limpieza completada (incluye $(DIST_DIR))$(NC)\n"
 
 # =====================================================
 # Targets específicos por nivel (alias para compilar)

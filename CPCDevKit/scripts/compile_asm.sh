@@ -19,7 +19,7 @@ show_usage() {
     echo -e "${BLUE}  BUILD8BP - Compile${NC}"
     echo -e "${BLUE}═══════════════════════════════════════${NC}"
     echo ""
-    echo "Uso: $0 <nivel_build> <ruta_directorio_ASM> [ruta_abasm.py]"
+    echo "Uso: $0 <nivel_build> <ruta_directorio_ASM> [ruta_abasm.py] [ruta_dist]"
     echo ""
     echo "Niveles de build:"
     echo "  0 = Todas las funcionalidades"
@@ -31,6 +31,7 @@ show_usage() {
     echo "Ejemplos:"
     echo "  $0 0 ./8BP_V43/ASM"
     echo "  $0 1 ./8BP_V43/ASM ./abasm/src/abasm.py"
+    echo "  $0 2 ./8BP_V43/ASM ./abasm/src/abasm.py ./dist"
     echo ""
     echo "Variables de entorno (opcional):"
     echo "  BP8_ASM_PATH  - Ruta al directorio ASM"
@@ -49,10 +50,15 @@ fi
 BUILD_LEVEL="$1"
 ASM_DIR="$2"
 ABASM_PATH="${3:-${ABASM_PATH:-./abasm/src/abasm.py}}"
+DIST_DIR="${4:-$ASM_DIR/dist}"
 
 # Convertir a rutas absolutas
 ASM_DIR=$(cd "$ASM_DIR" && pwd)
 ABASM_PATH=$(cd "$(dirname "$ABASM_PATH")" && pwd)/$(basename "$ABASM_PATH")
+# Convertir DIST_DIR a ruta absoluta si es relativa
+if [[ "$DIST_DIR" != /* ]]; then
+    DIST_DIR=$(cd "$(dirname "$DIST_DIR")" 2>/dev/null && pwd)/$(basename "$DIST_DIR") || DIST_DIR="$PWD/$DIST_DIR"
+fi
 
 # Validar nivel de build
 if ! [[ "$BUILD_LEVEL" =~ ^[0-4]$ ]]; then
@@ -143,7 +149,6 @@ EOF
 echo -e "${CYAN}Archivo maestro:${NC}     $(basename $BUILD_FILE)"
 
 # Crear carpeta dist
-DIST_DIR="$ASM_DIR/dist"
 mkdir -p "$DIST_DIR"
 echo -e "${CYAN}Carpeta de salida:${NC}   $DIST_DIR"
 
