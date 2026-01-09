@@ -122,7 +122,7 @@ compile: $(DIST_DIR)
 		exit 1; \
 	fi
 	@# Hacer backup y modificar ASSEMBLING_OPTION
-	@echo "$(YELLOW)Configurando ASSEMBLING_OPTION = $(BUILD_LEVEL)...$(NC)"
+	@echo "$(YELLOW)Configurando ASSEMBLING_OPTION = $(BUILD_LEVEL)...\n$(NC)"
 	@cp "$(8BP_ASM_PATH)/make_all_mygame.asm" "$(8BP_ASM_PATH)/make_all_mygame.asm.backup_build"
 	@# Modificar ASSEMBLING_OPTION
 	@if [[ "$(shell uname)" == "Darwin" ]]; then \
@@ -141,18 +141,18 @@ compile: $(DIST_DIR)
 		fi; \
 		echo "" >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
 		echo "if ASSEMBLING_OPTION = 0" >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
-		echo 'SAVE "8BP0.bin",b,23500,19120' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
+		echo 'SAVE "8BP0.bin",23600,19120' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
 		echo "elseif ASSEMBLING_OPTION = 1" >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
-		echo 'SAVE "8BP1.bin",b,25000,17620' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
+		echo 'SAVE "8BP1.bin",25000,17620' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
 		echo "elseif ASSEMBLING_OPTION = 2" >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
-		echo 'SAVE "8BP2.bin",b,24800,17820' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
+		echo 'SAVE "8BP2.bin",24800,17820' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
 		echo "elseif ASSEMBLING_OPTION = 3" >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
-		echo 'SAVE "8BP3.bin",b,24000,18620' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
+		echo 'SAVE "8BP3.bin",24000,18620' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
 		echo "elseif ASSEMBLING_OPTION = 4" >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
-		echo 'SAVE "8BP4.bin",b,25300,17320' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
+		echo 'SAVE "8BP4.bin",25300,17320' >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
 		echo "endif" >> "$(8BP_ASM_PATH)/make_all_mygame.asm"; \
-		echo "$(CYAN)→ Añadidas directivas SAVE condicionales:$(NC)"; \
-		echo "  $(CYAN)0:$(NC) 8BP0.bin, 23500, 19120"; \
+		echo "$(CYAN)Añadidas directivas SAVE condicionales:$(NC)"; \
+		echo "  $(CYAN)0:$(NC) 8BP0.bin, 23600, 19120"; \
 		echo "  $(CYAN)1:$(NC) 8BP1.bin, 25000, 17620"; \
 		echo "  $(CYAN)2:$(NC) 8BP2.bin, 24800, 17820"; \
 		echo "  $(CYAN)3:$(NC) 8BP3.bin, 24000, 18620"; \
@@ -181,7 +181,7 @@ compile: $(DIST_DIR)
 		echo "$(GREEN)  Tamaño:     $$SIZE bytes$(NC)"; \
 		echo ""; \
 		case $(BUILD_LEVEL) in \
-			0) MEMORY="MEMORY 23500" ;; \
+			0) MEMORY="MEMORY 23600" ;; \
 			1) MEMORY="MEMORY 25000" ;; \
 			2) MEMORY="MEMORY 24800" ;; \
 			3) MEMORY="MEMORY 24000" ;; \

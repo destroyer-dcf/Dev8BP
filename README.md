@@ -1,10 +1,18 @@
 # Dev8BP
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows%20WSL-lightgrey.svg)]()
+[![Python](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/)
+[![ABASM](https://img.shields.io/badge/ABASM-1.4.0%20%20-green.svg)](https://github.com/fragarco/abasm)
+[![Amstrad CPC](https://img.shields.io/badge/Amstrad-CPC-red.svg)]()
+[![Make](https://img.shields.io/badge/build-Make-orange.svg)]()
+[![8BP](https://img.shields.io/badge/8BP-v0.43-purple.svg)](https://github.com/jjaranda13/8BP)
+
 Compilacion [8BP](https://github.com/jjaranda13/8BP) utilizando [ABASM](https://github.com/fragarco/abasm)
 
 ## Sistemas
 
-- ✅ Windows (Utilizando MSYS2 MinGW64)
+- ✅ Windows (Utilizando MSYS2 MinGW64 o WSL)
 - ✅ Linux
 - ✅ Mac
 
