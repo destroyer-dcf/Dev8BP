@@ -1,3 +1,6 @@
 [submodule "Dev8bp/tools/abasm"]
 	path = Dev8bp/tools/abasm
 	url = https://github.com/fragarco/abasm.git
+[submodule "Dev8bp/tools/8bp-graphics-converter"]
+	path = Dev8bp/tools/8bp-graphics-converter
+	url = https://github.com/javy-fernandez/8bp-graphics-converter.git
