@@ -7,7 +7,7 @@
 8BP_ASM_PATH ?= ./8BP_V43/ASM
 
 # Ruta a abasm.py
-ABASM_PATH ?= $(CURDIR)/Dev8BP/tools/abasm/src/abasm.py
+ABASM_PATH ?= $(CURDIR)/Dev8bp/tools/abasm/src/abasm.py
 
 # Nivel de compilación (0-4)
 BUILD_LEVEL ?= 0
@@ -19,8 +19,8 @@ DIST_DIR := ./dist
 PYTHON := $(shell command -v python3 2> /dev/null || command -v python)
 
 # Scripts
-PATCH_SCRIPT := $(CURDIR)/CPCDevKit/scripts/patch_asm.sh
-CONVERT_SCRIPT := $(CURDIR)/CPCDevKit/scripts/convert_to_utf8.sh
+PATCH_SCRIPT := $(CURDIR)/Dev8bp/scripts/patch_asm.sh
+CONVERT_SCRIPT := $(CURDIR)/Dev8bp/scripts/convert_to_utf8.sh
 
 # Colores para output
 GREEN := \033[0;32m
