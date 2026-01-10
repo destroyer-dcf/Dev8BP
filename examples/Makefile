@@ -37,7 +37,10 @@ PROJECT_NAME := MY_GAME_MOLON
 BUILD_LEVEL := 0
 
 # Path codigo emsembler 8BP
-8BP_ASM_PATH := $(CURDIR)/ASM
+ASM_PATH := $(CURDIR)/ASM
+
+# Path archivos BASIC (se añadirán al DSK automáticamente)
+BASIC_PATH := $(CURDIR)/bas
 
 # Path Binario Generado (objetos intermedios)
 OBJ_DIR := obj
