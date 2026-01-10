@@ -129,7 +129,7 @@ Cada nivel optimiza el código para diferentes tipos de juegos. Define el nivel 
 | **3** | Juegos pseudo-3D | 23999 | \|3D | 18620 bytes |
 | **4** | Sin scroll/layout (+500 bytes) | 25299 | Básicos | 17320 bytes |
 
-## Comandos Make
+## 📝 Comandos Make
 
 | Comando | Descripción |
 |---------|-------------|
@@ -138,6 +138,7 @@ Cada nivel optimiza el código para diferentes tipos de juegos. Define el nivel 
 | `make info` | Muestra la configuración actual |
 | `make dsk` | Crea/actualiza imagen DSK con binario y archivos BASIC |
 | `make bas` | Añade archivos BASIC desde `BASIC_PATH` al DSK |
+| `make run` | Ejecuta el DSK en RetroVirtualMachine (requiere configuración) |
 | `make clean` | Limpia archivos temporales, obj y dist |
 
 ## Variables de Configuración
@@ -153,6 +154,9 @@ Cada nivel optimiza el código para diferentes tipos de juegos. Define el nivel 
 | `OBJ_DIR` | Directorio para archivos intermedios (bin, lst, map) | `obj` |
 | `DIST_DIR` | Directorio donde se generará el DSK final | `dist` |
 | `DSK` | Nombre del archivo DSK generado | `$(PROJECT_NAME).dsk` |
+| `RVM_PATH` | Ruta al ejecutable de RetroVirtualMachine (opcional, para `make run`) | - |
+| `CPC_MODEL` | Modelo de Amstrad CPC para el emulador (464, 6128, etc.) | `464` |
+| `RUN_FILE` | Archivo a ejecutar automáticamente en el emulador (opcional) | - |
 
 ### Variables de Sistema (Automáticas)
 
@@ -236,19 +240,76 @@ dist/                   # Salida final
 
 La imagen DSK se puede usar directamente en emuladores o hardware real.
 
+## 🎮 Ejecutar en RetroVirtualMachine
+
+Dev8BP incluye integración con [RetroVirtualMachine](https://www.retrovirtualmachine.org/) para probar tus proyectos rápidamente.
+
+### Configuración
+
+Añade estas variables a tu `Makefile`:
+
+```makefile
+# Configuración RetroVirtualMachine (opcional - para usar 'make run')
+# macOS:
+RVM_PATH := /Applications/Retro Virtual Machine 2.app/Contents/MacOS/Retro Virtual Machine 2
+# Linux:
+# RVM_PATH := /usr/local/bin/RetroVirtualMachine
+# Windows WSL:
+# RVM_PATH := /mnt/c/Program Files/RetroVirtualMachine/RetroVirtualMachine.exe
+
+CPC_MODEL := 464        # Modelo: 464, 664, 6128
+RUN_FILE := 8BP0.BIN    # Archivo a ejecutar (opcional)
+```
+
+### Uso
+
+```bash
+# Compilar y ejecutar en un solo comando
+make && make run
+
+# Solo ejecutar (si ya compilaste)
+make run
+```
+
+### Características
+
+- ✅ **Cierre automático**: Mata cualquier sesión anterior de RVM antes de abrir una nueva
+- ✅ **Ejecución en background**: No bloquea la terminal
+- ✅ **Rutas con espacios**: Maneja correctamente rutas con espacios en el nombre
+- ✅ **Auto-ejecución**: Si defines `RUN_FILE`, ejecuta automáticamente el archivo con `RUN"archivo"`
+- ✅ **Modelos CPC**: Soporta todos los modelos (464, 664, 6128)
+
+### Ejemplo de Salida
+
+```
+═══════════════════════════════════════
+  🎮 Ejecutar en RetroVirtualMachine
+═══════════════════════════════════════
+
+Emulador:        /Applications/Retro Virtual Machine 2.app/...
+Modelo CPC:      464
+DSK:             dist/MI_JUEGO.dsk
+⚠ Cerrando sesión anterior de RetroVirtualMachine...
+Ejecutando:      8BP0.BIN
+
+✓ RetroVirtualMachine iniciado
+```
+
 ## 🕹️ Roadmap
 
 - ✅ Compilación 8BP automatizada con ABASM
+- ✅ Generación de niveles de compilación (0-4)
 - ✅ Generación automática de DSK con dsk.py (Python, multiplataforma)
 - ✅ Detección automática de plataforma (macOS/Linux/Windows)
 - ✅ Sistema de variables de entorno (DEV8BP_PATH)
 - ✅ Organización de archivos (obj/ y dist/)
 - ✅ Integración automática de archivos BASIC
+- ✅ Ejecución en RetroVirtualMachine (make run)
 - 📌 Gestión de imágenes (tiles, scr, etc)
 - 📌 Generación TAP
 - 📌 Generación de ROMs
-- 📌 Test/Run Retro Virtual Machine (RVM)
 - 📌 Test/Run M4Board
+- 📌 Instalador Dev8BP
 - 📌 ...más...
 
 ---

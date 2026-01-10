@@ -119,11 +119,11 @@ help:
 	@echo "  make info                   # Ver configuración"
 	@echo ""
 	@echo "$(CYAN)Niveles de compilación:$(NC)"
-	@echo "  0 = Todas las funcionalidades (MEMORY 23600)"
-	@echo "  1 = Juegos de laberintos (MEMORY 25000)"
-	@echo "  2 = Juegos con scroll (MEMORY 24800)"
-	@echo "  3 = Juegos pseudo-3D (MEMORY 24000)"
-	@echo "  4 = Sin scroll/layout +500 bytes (MEMORY 25500)"
+	@echo "  0 = Todas las funcionalidades (MEMORY 23599)"
+	@echo "  1 = Juegos de laberintos (MEMORY 24999)"
+	@echo "  2 = Juegos con scroll (MEMORY 24799)"
+	@echo "  3 = Juegos pseudo-3D (MEMORY 23999)"
+	@echo "  4 = Sin scroll/layout +500 bytes (MEMORY 25299)"
 	@echo ""
 
 # INFORMACION DE CONFIGURACION
@@ -165,7 +165,7 @@ _compile: $(OBJ_DIR) $(DIST_DIR)
 	echo ""
 	@# Verificar que existe make_all_mygame.asm
 	@if [ ! -f "$(ASM_PATH)/make_all_mygame.asm" ]; then \
-		echo "$(RED)Error: No existe el archivo $(ASM_PATH)/make_all_mygame.asm$(NC)"; \
+		echo "$(RED)ERROR: No existe el archivo $(ASM_PATH)/make_all_mygame.asm$(NC)"; \
 		exit 1; \
 	fi
 	@# Hacer backup y modificar ASSEMBLING_OPTION
@@ -282,7 +282,7 @@ dsk: $(DIST_DIR)
 	@echo "$(CYAN)DSK Tool:$(NC)           $(DSK_PATH)"
 	@echo ""
 	@if [ ! -f "$(DSK_PATH)" ]; then \
-		echo "$(RED)Error: dsk.py no encontrado en $(DSK_PATH)$(NC)"; \
+		echo "$(RED)ERROR: dsk.py no encontrado en $(DSK_PATH)$(NC)"; \
 		exit 1; \
 	fi
 	@$(call create-dsk,$(DSK))
@@ -305,6 +305,9 @@ dsk: $(DIST_DIR)
 	@echo "       Cada extent puede contener hasta 128 páginas de datos (16KB)"
 	@echo ""
 
+
+# AÑADIR ARCHIVOS BASIC AL DSK
+bas:
 
 # AÑADIR ARCHIVOS BASIC AL DSK
 bas:
@@ -354,26 +357,34 @@ run:
 		echo "$(YELLOW)Ejecuta 'make' primero para compilar y crear el DSK$(NC)"; \
 		exit 1; \
 	fi
-	@echo "$(CYAN)Emulador:$(NC)       $(RVM_PATH)"
-	@echo "$(CYAN)Modelo CPC:$(NC)     $(CPC_MODEL)"
-	@echo "$(CYAN)DSK:$(NC)            $(DIST_DIR)/$(DSK)"
+	@echo "$(CYAN)Emulador  :$(NC) $(RVM_PATH)"
+	@echo "$(CYAN)Modelo CPC:$(NC) $(CPC_MODEL)"
+	@echo "$(CYAN)DSK       :$(NC) $(DIST_DIR)/$(DSK)"
 	@# Matar procesos existentes de RetroVirtualMachine
 	@RVM_NAME=$$(basename "$(RVM_PATH)"); \
 	if pgrep -f "$$RVM_NAME" > /dev/null 2>&1; then \
-		echo "$(YELLOW)⚠ Cerrando sesión anterior de RetroVirtualMachine...$(NC)"; \
+		echo "$(YELLOW)WARNING   :  Cerrando sesión anterior de RetroVirtualMachine...$(NC)"; \
 		pkill -9 -f "$$RVM_NAME"; \
 		sleep 1; \
 	fi
-	@# Ejecutar RetroVirtualMachine en background
+	@# Ejecutar RetroVirtualMachine
 	@if [ -n "$(RUN_FILE)" ]; then \
-		echo "$(CYAN)Ejecutando:$(NC)     $(RUN_FILE)"; \
+		echo "$(CYAN)Ejecutando: $(NC)$(RUN_FILE)"; \
 		echo ""; \
-		nohup "$(RVM_PATH)" -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" -c='run"$(RUN_FILE)\n' > /dev/null 2>&1 & \
+		if [[ "$$(uname)" == "Darwin" ]]; then \
+			open -a "$(RVM_PATH)" --args -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" -c='run"$(RUN_FILE)\n' & \
+		else \
+			"$(RVM_PATH)" -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" -c='run"$(RUN_FILE)\n' & \
+		fi \
 	else \
-		echo "$(YELLOW)⚠ RUN_FILE no definido, solo se cargará el DSK$(NC)"; \
+		echo "$(YELLOW)WARNING: RUN_FILE no definido, solo se cargará el DSK$(NC)"; \
 		echo ""; \
-		nohup "$(RVM_PATH)" -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" > /dev/null 2>&1 & \
+		if [[ "$$(uname)" == "Darwin" ]]; then \
+			open -a "$(RVM_PATH)" --args -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" & \
+		else \
+			"$(RVM_PATH)" -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" & \
+		fi \
 	fi
-	@sleep 0.5
+	@sleep 1
 	@echo "$(GREEN)✓ RetroVirtualMachine iniciado$(NC)"
 	@echo ""
