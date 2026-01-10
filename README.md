@@ -20,8 +20,7 @@ Sistema de compilación para [8BP](https://github.com/jjaranda13/8BP) utilizando
 
 - Python 3.x
 - Make
-- Git (para submódulos)
-- ABASM (incluido como submódulo con dsk.py)
+- ABASM
 
 ## Instalación
 
@@ -158,6 +157,9 @@ Cada nivel optimiza el código para diferentes tipos de juegos. Define el nivel 
 | `CPC_MODEL` | Modelo de Amstrad CPC para el emulador (464, 6128, etc.) | `464` |
 | `RUN_FILE` | Archivo a ejecutar automáticamente en el emulador (opcional) | - |
 
+> **Nota**: En Mac RVM_PATH se debe poner como ejecutable el binario (/Applications/Retro Virtual Machine 2.app/Contents/MacOS/Retro Virtual Machine 2), no /Applications/Retro Virtual Machine 2.app.
+
+
 ### Variables de Sistema (Automáticas)
 
 | Variable | Descripción |
@@ -279,6 +281,8 @@ make run
 - ✅ **Auto-ejecución**: Si defines `RUN_FILE`, ejecuta automáticamente el archivo con `RUN"archivo"`
 - ✅ **Modelos CPC**: Soporta todos los modelos (464, 664, 6128)
 
+
+
 ### Ejemplo de Salida
 
 ```
@@ -289,7 +293,7 @@ make run
 Emulador:        /Applications/Retro Virtual Machine 2.app/...
 Modelo CPC:      464
 DSK:             dist/MI_JUEGO.dsk
-⚠ Cerrando sesión anterior de RetroVirtualMachine...
+WARNING: Cerrando sesión anterior de RetroVirtualMachine...
 Ejecutando:      8BP0.BIN
 
 ✓ RetroVirtualMachine iniciado
@@ -305,11 +309,11 @@ Ejecutando:      8BP0.BIN
 - ✅ Organización de archivos (obj/ y dist/)
 - ✅ Integración automática de archivos BASIC
 - ✅ Ejecución en RetroVirtualMachine (make run)
+- ✅ Instalador Dev8BP
 - 📌 Gestión de imágenes (tiles, scr, etc)
 - 📌 Generación TAP
 - 📌 Generación de ROMs
 - 📌 Test/Run M4Board
-- 📌 Instalador Dev8BP
 - 📌 ...más...
 
 ---
