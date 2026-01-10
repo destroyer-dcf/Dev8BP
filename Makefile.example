@@ -55,6 +55,17 @@ DIST_DIR := dist
 # Nombre de la imagen DSK
 DSK := $(PROJECT_NAME).dsk
 
+# Configuración RetroVirtualMachine (opcional - para usar 'make run')
+# Descomenta y ajusta la ruta según tu instalación
+# macOS ejemplo:
+# RVM_PATH := /Applications/Retro Virtual Machine 2.app/Contents/MacOS/Retro Virtual Machine 2
+# Linux ejemplo:
+# RVM_PATH := /usr/local/bin/RetroVirtualMachine
+# Windows WSL ejemplo:
+# RVM_PATH := /mnt/c/Program Files/RetroVirtualMachine/RetroVirtualMachine.exe
+# CPC_MODEL := 464
+# RUN_FILE := 8BP0.BIN
+
 # ============================================
 # INCLUIR MAKEFILE PRINCIPAL
 # ============================================

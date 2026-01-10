@@ -51,6 +51,11 @@ DIST_DIR := dist
 # Path imagen DSK
 DSK := $(PROJECT_NAME).dsk
 
+# Configuración RetroVirtualMachine (opcional)
+RVM_PATH := /Applications/Retro Virtual Machine 2.app/Contents/MacOS/Retro Virtual Machine 2
+CPC_MODEL := 6128
+RUN_FILE := loader.bas
+
 # ============================================
 # INCLUIR MAKEFILE PRINCIPAL
 # ============================================

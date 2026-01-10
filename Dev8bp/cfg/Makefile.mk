@@ -39,6 +39,11 @@ ASM_PATH ?= ./8BP_V43/ASM
 # Ruta al directorio BASIC (archivos .bas que se añadirán al DSK)
 BASIC_PATH ?= ./bas
 
+# Configuración del emulador RetroVirtualMachine
+RVM_PATH ?= 
+CPC_MODEL ?= 464
+RUN_FILE ?=
+
 # Nivel de compilación (0-4)
 BUILD_LEVEL ?= 0
 
@@ -65,7 +70,7 @@ NC := \033[0m # No Color
 
 #TARGETS PRINCIPALES
 
-.PHONY: all help clean info dsk bas
+.PHONY: all help clean info dsk bas run
 
 # TARGET POR DEFECTO - Compilar proyecto completo
 all: info _compile
@@ -92,15 +97,21 @@ help:
 	@echo "  info        - Mostrar configuración actual"
 	@echo "  all         - Mostrar info + compilar + crear DSK (por defecto)"
 	@echo "  dsk         - Crear imagen DSK con binario compilado"
+	@echo "  bas         - Añadir archivos BASIC al DSK"
+	@echo "  run         - Ejecutar DSK en RetroVirtualMachine"
 	@echo "  clean       - Limpiar archivos temporales, obj y dist"
 	@echo ""
 	@echo "$(CYAN)Variables:$(NC)"
-	@echo "  ASM_PATH  Ruta al directorio ASM (actual: $(ASM_PATH))"
+	@echo "  ASM_PATH      Ruta al directorio ASM (actual: $(ASM_PATH))"
+	@echo "  BASIC_PATH    Ruta al directorio BASIC (actual: $(BASIC_PATH))"
 	@echo "  BUILD_LEVEL   Nivel de compilación 0-4 (actual: $(BUILD_LEVEL))"
 	@echo "  ABASM_PATH    Ruta a abasm.py (actual: $(ABASM_PATH))"
 	@echo "  OBJ_DIR       Directorio de objetos (actual: $(OBJ_DIR))"
 	@echo "  DIST_DIR      Directorio de salida DSK (actual: $(DIST_DIR))"
 	@echo "  DSK           Nombre de la imagen DSK (actual: $(DSK))"
+	@echo "  RVM_PATH      Ruta a RetroVirtualMachine (actual: $(RVM_PATH))"
+	@echo "  CPC_MODEL     Modelo de CPC (actual: $(CPC_MODEL))"
+	@echo "  RUN_FILE      Archivo a ejecutar (actual: $(RUN_FILE))"
 	@echo ""
 	@echo "$(CYAN)Ejemplos:$(NC)"
 	@echo "  make                        # Compilar proyecto (info + compile + dsk)"
@@ -320,4 +331,49 @@ bas:
 	else \
 		echo "$(GREEN)✓ $$BASIC_COUNT archivo(s) BASIC añadido(s)$(NC)"; \
 	fi
+	@echo ""
+
+# EJECUTAR EN RETROVIRTUALMACHINE
+run:
+	@echo ""
+	@echo "$(BLUE)═══════════════════════════════════════$(NC)"
+	@echo "$(BLUE)  🎮 Ejecutar en RetroVirtualMachine$(NC)"
+	@echo "$(BLUE)═══════════════════════════════════════$(NC)"
+	@echo ""
+	@if [ -z "$(RVM_PATH)" ]; then \
+		echo "$(RED)✗ Error: RVM_PATH no está definida$(NC)"; \
+		echo "$(YELLOW)Define RVM_PATH en tu Makefile con la ruta a RetroVirtualMachine$(NC)"; \
+		exit 1; \
+	fi
+	@if [ ! -f "$(RVM_PATH)" ]; then \
+		echo "$(RED)✗ Error: RetroVirtualMachine no encontrado en: $(RVM_PATH)$(NC)"; \
+		exit 1; \
+	fi
+	@if [ ! -f "$(DIST_DIR)/$(DSK)" ]; then \
+		echo "$(RED)✗ Error: DSK no encontrado en $(DIST_DIR)/$(DSK)$(NC)"; \
+		echo "$(YELLOW)Ejecuta 'make' primero para compilar y crear el DSK$(NC)"; \
+		exit 1; \
+	fi
+	@echo "$(CYAN)Emulador:$(NC)       $(RVM_PATH)"
+	@echo "$(CYAN)Modelo CPC:$(NC)     $(CPC_MODEL)"
+	@echo "$(CYAN)DSK:$(NC)            $(DIST_DIR)/$(DSK)"
+	@# Matar procesos existentes de RetroVirtualMachine
+	@RVM_NAME=$$(basename "$(RVM_PATH)"); \
+	if pgrep -f "$$RVM_NAME" > /dev/null 2>&1; then \
+		echo "$(YELLOW)⚠ Cerrando sesión anterior de RetroVirtualMachine...$(NC)"; \
+		pkill -9 -f "$$RVM_NAME"; \
+		sleep 1; \
+	fi
+	@# Ejecutar RetroVirtualMachine en background
+	@if [ -n "$(RUN_FILE)" ]; then \
+		echo "$(CYAN)Ejecutando:$(NC)     $(RUN_FILE)"; \
+		echo ""; \
+		nohup "$(RVM_PATH)" -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" -c='run"$(RUN_FILE)\n' > /dev/null 2>&1 & \
+	else \
+		echo "$(YELLOW)⚠ RUN_FILE no definido, solo se cargará el DSK$(NC)"; \
+		echo ""; \
+		nohup "$(RVM_PATH)" -b=cpc$(CPC_MODEL) -i "$(CURDIR)/$(DIST_DIR)/$(DSK)" > /dev/null 2>&1 & \
+	fi
+	@sleep 0.5
+	@echo "$(GREEN)✓ RetroVirtualMachine iniciado$(NC)"
 	@echo ""
