@@ -15,23 +15,9 @@ Sistema de compilación moderno basado en scripts bash para [8BP](https://github
 
 Esta idea nace de la necesidad de poder compilar la librería [8BP](https://github.com/jjaranda13/8BP) para Amstrad CPC en sistemas operativos que no fueran Windows de forma nativa. Gracias al ensamblador [ABASM](https://github.com/fragarco/abasm) creado por [fragarco](https://github.com/fragarco) todo esto ha sido posible.
 
-### Para usuarios de Amstrad CPC
-- ✅ **Más simple que Make** - No necesitas aprender Makefiles
-- ✅ **Familiar** - Similar a scripts `.BAT` de MS-DOS
-- ✅ **Mensajes claros** - Output colorido y amigable
-- ✅ **Guiado** - Validaciones y ayudas en cada paso
-- ✅ **Autocontenido** - Incluye todas las herramientas necesarias
-
-### Características principales
-- 🚀 **Un comando, una acción** - `dev8bp build`, `dev8bp run`, etc.
-- 🎨 **Output colorido** - Fácil de entender qué está pasando
-- ✅ **Validaciones automáticas** - Verifica todo antes de compilar
-- 🔧 **Configuración simple** - Archivo `dev8bp.conf` en lugar de Makefile
-- 📦 **Todo incluido** - ABASM, dsk.py, hex2bin integrados
-
 ---
 
-## � ¿Qmué incluye?
+## � ¿Qué incluye?
 
 ### Herramientas integradas
 - ✅ **ABASM** - Ensamblador para Z80
@@ -45,7 +31,7 @@ Esta idea nace de la necesidad de poder compilar la librería [8BP](https://gith
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Como Empezar
 
 ### 1. Instalación
 
