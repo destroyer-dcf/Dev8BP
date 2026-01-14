@@ -45,16 +45,10 @@ Esta idea nace de la necesidad de poder compilar la librería [8BP](https://gith
 - **RetroVirtualMachine** - opcional, solo si usas `dev8bp run`
 
 ### 📌 Roadmap
-- [🚧] Mejoras en la validación de proyectos
-- [🚧] Soporte para más tipos de archivos
-- [🚧] Integración con GitHub Actions
-- [🚧] Plantillas de proyectos preconfigurados
-- [🚧] Soporte para otros ensambladores
-- [🚧] Mejoras en la documentación
-- [🚧] Comandos adicionales (deploy, test)
-- 🚧 En desarrollo: Conversion de imagenes a asm 
-- 🚧 En desarrollo: Muestra información de compilación
-- 🚧 En desarrollo: Pruebas sobre M4Board
+- 🚧 Conversion de imagenes a asm 
+- 🚧 Muestra información de compilación
+- 🚧 Pruebas sobre M4Board
+- 🚧 Soporte para proyectos asm (No 8BP)
 
 
 ---
