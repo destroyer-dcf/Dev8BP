@@ -651,17 +651,17 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 001639  5EB7  C9              	ret
 8bitsDePoder_ 001642  5EB8                  	_ENDXY
 8bitsDePoder_ 001654  5EB8                  	_3D_GET_ZOOM_IMAGE
-8bitsDePoder_ 001658  5EB8  21 0E 93        	ld HL,_BEGIN_3D_ZOOM_IMAGES-1
-8bitsDePoder_ 001659  5EBB  11 10 93        	ld DE,_END_3D_ZOOM_IMAGES-1
+8bitsDePoder_ 001658  5EB8  21 E4 89        	ld HL,_BEGIN_3D_ZOOM_IMAGES-1
+8bitsDePoder_ 001659  5EBB  11 E6 89        	ld DE,_END_3D_ZOOM_IMAGES-1
 8bitsDePoder_ 001660  5EBE  CD E3 6D        	CALL CHECK_DOUBLE_LIMITS
 8bitsDePoder_ 001661  5EC1  D0              	ret NC
 8bitsDePoder_ 001686  5EC2  2A DA C7        	ld hl, (SPR_coordy)
 8bitsDePoder_ 001687  5EC5  CB 7C           	bit 7,h
 8bitsDePoder_ 001688  5EC7  20 0D           	JR NZ, ZOM_mini
-8bitsDePoder_ 001689  5EC9  3A 0F 93        	ld a,(_ZOOM_LIMIT_A)
+8bitsDePoder_ 001689  5EC9  3A E5 89        	ld a,(_ZOOM_LIMIT_A)
 8bitsDePoder_ 001690  5ECC  BD              	cp l
 8bitsDePoder_ 001691  5ECD  38 11           	JR C, ZOM_grande
-8bitsDePoder_ 001693  5ECF  3A 10 93        	ld a,(_ZOOM_LIMIT_B)
+8bitsDePoder_ 001693  5ECF  3A E6 89        	ld a,(_ZOOM_LIMIT_B)
 8bitsDePoder_ 001694  5ED2  A7              	and a
 8bitsDePoder_ 001695  5ED3  BD              	cp l
 8bitsDePoder_ 001696  5ED4  38 05           	JR C, ZOM_medio
@@ -1090,7 +1090,7 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 002782  6198  E5              	push hl
 8bitsDePoder_ 002786  6199  47              	ld b,a
 8bitsDePoder_ 002787  619A  0E 00           	ld c,0
-8bitsDePoder_ 002791  619C  21 0F 84        	ld hl,ALPHA_LIST
+8bitsDePoder_ 002791  619C  21 59 83        	ld hl,ALPHA_LIST
 8bitsDePoder_ 002792  619F  7E              	PAT_busca  ld a,(HL)
 8bitsDePoder_ 002796  61A0  B7              	or a
 8bitsDePoder_ 002797  61A1  28 07           	jr Z, PAT_NOT_found
@@ -1103,19 +1103,19 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 002811  61AA  0D              	dec c
 8bitsDePoder_ 002815  61AB                  	PAT_found
 8bitsDePoder_ 002817  61AB  61              	ld h,c
-8bitsDePoder_ 002818  61AC  3A 0E 84        	ld a, (ALPHA_tamano)
+8bitsDePoder_ 002818  61AC  3A 58 83        	ld a, (ALPHA_tamano)
 8bitsDePoder_ 002819  61AF  5F              	ld e, a
 8bitsDePoder_ 002820  61B0  CD 50 6D        	call _MUL8bit
-8bitsDePoder_ 002821  61B3  01 39 84        	ld bc , ALPHA_LETTERS
+8bitsDePoder_ 002821  61B3  01 83 83        	ld bc , ALPHA_LETTERS
 8bitsDePoder_ 002822  61B6  09              	add hl,bc
 8bitsDePoder_ 002823  61B7  22 D8 C7        	LD (SPR_image_data),HL
 8bitsDePoder_ 002824  61BA  22 E2 C7        	LD (SPR_imagefinal),HL
 8bitsDePoder_ 002827  61BD  3E 01           	ld a,1
 8bitsDePoder_ 002828  61BF  32 D4 EF        	ld (PAT_from),a
-8bitsDePoder_ 002830  61C2  3A 0C 84        	ld a,(ALPHA_ancho)
+8bitsDePoder_ 002830  61C2  3A 56 83        	ld a,(ALPHA_ancho)
 8bitsDePoder_ 002831  61C5  4F              	ld c,a
 8bitsDePoder_ 002832  61C6  32 DE C7        	ld (SPR_ancho), a
-8bitsDePoder_ 002833  61C9  3A 0D 84        	ld a,(ALPHA_alto)
+8bitsDePoder_ 002833  61C9  3A 57 83        	ld a,(ALPHA_alto)
 8bitsDePoder_ 002834  61CC  32 DF C7        	ld (SPR_alto), a
 8bitsDePoder_ 002835  61CF  47              	ld b,a
 8bitsDePoder_ 002836  61D0  ED 43 E0 C7     	ld (SPR_anchoaltofinal),bc
@@ -1125,7 +1125,7 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 002852  61DA  35              	dec (HL)
 8bitsDePoder_ 002853  61DB  28 1A           	jr z, pat_fin
 8bitsDePoder_ 002857  61DD  2A D0 EF        	ld hl, (PAT_coordx)
-8bitsDePoder_ 002858  61E0  3A 0C 84        	ld a,(ALPHA_ancho)
+8bitsDePoder_ 002858  61E0  3A 56 83        	ld a,(ALPHA_ancho)
 8bitsDePoder_ 002859  61E3  4F              	ld c,a
 8bitsDePoder_ 002860  61E4  06 00           	ld b,0
 8bitsDePoder_ 002861  61E6  09              	add hl,bc
@@ -1381,7 +1381,7 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 003554  63A4  09              	add hl,bc
 8bitsDePoder_ 003555  63A5  7E              	ld a,(HL)
 8bitsDePoder_ 003556  63A6  32 D1 C7        	ld (ROU_ID),a
-8bitsDePoder_ 003558  63A9  21 E9 83        	ld HL, ROUTE_LIST
+8bitsDePoder_ 003558  63A9  21 49 83        	ld HL, ROUTE_LIST
 8bitsDePoder_ 003559  63AC  87              	add a,a
 8bitsDePoder_ 003560  63AD  06 00           	ld b,0
 8bitsDePoder_ 003561  63AF  4F              	ld c,a
@@ -1518,7 +1518,7 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 003852  6483  3A F6 C7        	ld a, (ANS_dirmov)
 8bitsDePoder_ 003853  6486  80              	add b
 8bitsDePoder_ 003857  6487  32 F6 C7        	ld (ANS_dirmov),a
-8bitsDePoder_ 003858  648A  21 E0 83        	ld HL, _MACRO_SEQUENCES
+8bitsDePoder_ 003858  648A  21 40 83        	ld HL, _MACRO_SEQUENCES
 8bitsDePoder_ 003859  648D  3A EF C7        	ld a, (ANS_seq_id)
 8bitsDePoder_ 003861  6490  47              	ld b,a
 8bitsDePoder_ 003862  6491  87              	add a
@@ -1591,8 +1591,8 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 004127  64F9                  	PSP_bgSprites
 8bitsDePoder_ 004138  64F9  CD 4F 74        	CALL BG_SPRITES
 8bitsDePoder_ 004144  64FC                  	PSP_CHECK_FLIP
-8bitsDePoder_ 004147  64FC  11 DA 85        	ld DE, _END_FLIP_IMAGES-1
-8bitsDePoder_ 004148  64FF  21 D2 85        	ld HL,_BEGIN_FLIP_IMAGES-1
+8bitsDePoder_ 004147  64FC  11 1C 85        	ld DE, _END_FLIP_IMAGES-1
+8bitsDePoder_ 004148  64FF  21 1C 85        	ld HL,_BEGIN_FLIP_IMAGES-1
 8bitsDePoder_ 004149  6502  CD E3 6D        	CALL CHECK_DOUBLE_LIMITS
 8bitsDePoder_ 004151  6505  38 03           	JR C, hayflip
 8bitsDePoder_ 004152  6507  AF              	xor a
@@ -1689,8 +1689,8 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 004376  65B0  AF              	xor a
 8bitsDePoder_ 004378  65B1  32 EE E7        	ld (SPR_segment),a
 8bitsDePoder_ 004380  65B4  ED 4B D6 C7     	ld BC, (SPR_image)
-8bitsDePoder_ 004381  65B8  21 10 93        	ld HL, _BEGIN_3D_SEGMENTS-1
-8bitsDePoder_ 004382  65BB  11 11 93        	LD DE, _END_3D_SEGMENTS-1
+8bitsDePoder_ 004381  65B8  21 E6 89        	ld HL, _BEGIN_3D_SEGMENTS-1
+8bitsDePoder_ 004382  65BB  11 E7 89        	LD DE, _END_3D_SEGMENTS-1
 8bitsDePoder_ 004383  65BE  CD E3 6D        	CALL CHECK_DOUBLE_LIMITS
 8bitsDePoder_ 004384  65C1  DC 30 5C        	CALL C, _AJUSTA_SEGMENTO
 8bitsDePoder_ 004395  65C4                  	PSP_nosegment
@@ -2432,7 +2432,7 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 005302  6BD8  C3 4F 6E        	DIR_MUSIC  JP _MUSIC_ON
 8bitsDePoder_ 005304  6BDB  C3 96 67        	DIR_SETLIMITS  JP _SET_LIMITS
 8bitsDePoder_ 005305  6BDE  C3 58 5F        	DIR_3D    JP _3D_RENDER3D
-8bitsDePoder_ 005308  6BE1  F2 83           	GET_IMAGE_LIST  DW    IMAGE_LIST
+8bitsDePoder_ 005308  6BE1  52 83           	GET_IMAGE_LIST  DW    IMAGE_LIST
 8bitsDePoder_ 005309  6BE3  00 00 00 00     	RSX_space  db 0,0,0,0
 8bitsDePoder_ 005311  6BE7                  	RSX_NAMETB
 8bitsDePoder_ 005313  6BE7  50 52 49 4E 54 ..	defM "PRINTSPAL"
@@ -3035,7 +3035,7 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 006676  6FDA  A7              	and a
 8bitsDePoder_ 006677  6FDB  ED 42           	sbc hl,bc
 8bitsDePoder_ 006678  6FDD  29              	add hl, hl
-8bitsDePoder_ 006679  6FDE  01 F2 83        	ld bc, IMAGE_LIST
+8bitsDePoder_ 006679  6FDE  01 52 83        	ld bc, IMAGE_LIST
 8bitsDePoder_ 006680  6FE1  09              	add hl,bc
 8bitsDePoder_ 006681  6FE2  4E              	ld c,(hl)
 8bitsDePoder_ 006682  6FE3  23              	inc hl
@@ -3682,8 +3682,8 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 008104  744E                  	BG_BITS
 8bitsDePoder_ 008104  744E  01              	db 1
 8bitsDePoder_ 008106  744F                  	BG_SPRITES
-8bitsDePoder_ 008109  744F  21 DA 85        	ld HL, _BEGIN_BG_IMAGES-1
-8bitsDePoder_ 008110  7452  11 DA 85        	ld DE, _END_BG_IMAGES-1
+8bitsDePoder_ 008109  744F  21 1C 85        	ld HL, _BEGIN_BG_IMAGES-1
+8bitsDePoder_ 008110  7452  11 1C 85        	ld DE, _END_BG_IMAGES-1
 8bitsDePoder_ 008111  7455  CD E3 6D        	CALL CHECK_DOUBLE_LIMITS
 8bitsDePoder_ 008113  7458  30 2A           	JR NC, BG_normal
 8bitsDePoder_ 008138  745A                  	BG_fondo
@@ -3988,12 +3988,12 @@ make_all_myga 000032  4000                  	let ASSEMBLING_OPTION = 0
 8bitsDePoder_ 008758  766C  EB              	ex de,hl
 8bitsDePoder_ 008767  766D  54              	ld d,h
 8bitsDePoder_ 008768  766E  5D              	ld e,l
-8bitsDePoder_ 008769  766F  01 DA 85        	ld bc, _END_FLIP_IMAGES-1
+8bitsDePoder_ 008769  766F  01 1C 85        	ld bc, _END_FLIP_IMAGES-1
 8bitsDePoder_ 008772  7672  AF              	xor a
 8bitsDePoder_ 008773  7673  ED 42           	sbc hl, bc
 8bitsDePoder_ 008774  7675  30 0E           	JR NC, fill_noflip
 8bitsDePoder_ 008778  7677  AF              	xor a
-8bitsDePoder_ 008779  7678  21 D2 85        	ld hl,_BEGIN_FLIP_IMAGES-1
+8bitsDePoder_ 008779  7678  21 1C 85        	ld hl,_BEGIN_FLIP_IMAGES-1
 8bitsDePoder_ 008784  767B  ED 52           	sbc hl,de
 8bitsDePoder_ 008785  767D  30 06           	JR NC,fill_noflip
 8bitsDePoder_ 008793  767F  1A              	ld a, (de)
@@ -5252,640 +5252,300 @@ make_musica_m 000033  7F4D                  	SONG_7
 make_musica_m 000035  7F4D                  	_END_MUSIC
 make_graficos 000007  8340                  	org 33600
 sequences_myg 000015  8340                  	_SEQUENCES_LIST
-sequences_myg 000017  8340  61 87 85 88 F3 ..	dw SOLDADO_R0,SOLDADO_R2,SOLDADO_R1,SOLDADO_R2,0,0,0,0
-sequences_myg 000018  8350  D3 85 D7 85 D5 ..	dw SOLDADO_L0,SOLDADO_L2,SOLDADO_L1,SOLDADO_L2,0,0,0,0
-sequences_myg 000019  8360  D3 85 D7 85 D5 ..	dw SOLDADO_L0,SOLDADO_L2,SOLDADO_L1,SOLDADO_L2,5,0,0,0
-sequences_myg 000020  8370  61 87 85 88 F3 ..	dw SOLDADO_R0,SOLDADO_R2,SOLDADO_R1,SOLDADO_R2,4,0,0,0
-sequences_myg 000021  8380  D3 85 D7 85 D5 ..	dw SOLDADO_L0,SOLDADO_L2,SOLDADO_L1,SOLDADO_L2,5,0,0,0
-sequences_myg 000022  8390  61 87 85 88 F3 ..	dw SOLDADO_R0,SOLDADO_R2,SOLDADO_R1,SOLDADO_R2,4,0,0,0
-sequences_myg 000023  83A0  D3 85 D7 85 D5 ..	dw SOLDADO_L0,SOLDADO_L2,SOLDADO_L1,SOLDADO_L2,5,0,0,0
-sequences_myg 000024  83B0  61 87 85 88 F3 ..	dw SOLDADO_R0,SOLDADO_R2,SOLDADO_R1,SOLDADO_R2,4,0,0,0
-sequences_myg 000025  83C0  07 8F 09 90 0B ..	dw ARTHUR1,ARTHUR2,ARTHUR3,ARTHUR1,0,0,0,0
-sequences_myg 000026  83D0  DB 85 DB 85 7F ..	dw BIRD_UP,BIRD_UP,BIRD_DW,BIRD_DW,0,0,0,0
-sequences_myg 000034  83E0                  	_MACRO_SEQUENCES
-sequences_myg 000035  83E0  00 02 01 03 05 ..	db 0,2,1,3,5,3,4,6,4
-routes_mygame 000005  83E9                  	ROUTE_LIST
-routes_mygame 000006  83E9  EF 83           	dw ROUTE0
-routes_mygame 000007  83EB  F0 83           	dw ROUTE1
-routes_mygame 000008  83ED  F1 83           	dw ROUTE2
-routes_mygame 000012  83EF                  	ROUTE0
-routes_mygame 000014  83EF  00              	db 0
-routes_mygame 000016  83F0                  	ROUTE1
-routes_mygame 000018  83F0  00              	db 0
-routes_mygame 000021  83F1                  	ROUTE2
-routes_mygame 000022  83F1  00              	db 0
-images_mygame 000001  83F2                  	IMAGE_LIST
-images_mygame 000012  83F2  61 87           	dw SOLDADO_R0
-images_mygame 000013  83F4  F3 87           	dw SOLDADO_R1
-images_mygame 000014  83F6  85 88           	dw SOLDADO_R2
-images_mygame 000015  83F8  23 87           	dw DISPARO
-images_mygame 000016  83FA  17 89           	dw BLOCK
-images_mygame 000017  83FC  39 8B           	dw BLOCK2
-images_mygame 000018  83FE  D3 85           	dw SOLDADO_L0
-images_mygame 000019  8400  3D 8E           	dw borra
-images_mygame 000020  8402  3B 8D           	dw TIERRA2
-images_mygame 000021  8404  07 8F           	dw ARTHUR1
-images_mygame 000022  8406  DB 85           	dw BIRD_UP
-images_mygame 000023  8408  7F 86           	dw BIRD_DW
-images_mygame 000024  840A  0D 92           	dw HBAR
-images_mygame 000029  840C                  	_BEGIN_ALPHABET
-alphabet_defa 000002  840C                  	ALPHABET
-alphabet_defa 000016  840C  02              	ALPHA_ancho db 2
-alphabet_defa 000017  840D  05              	ALPHA_alto  db 5
-alphabet_defa 000018  840E  0A              	ALPHA_tamano db 2*5
-alphabet_defa 000028  840F                  	ALPHA_LIST
-alphabet_defa 000029  840F  30 31 32 33 34 ..	db "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ:! ,."
-alphabet_defa 000030  8438  00              	db 0
-alphabet_defa 000032  8439                  	ALPHA_LETTERS
-alphabet_defa 000039  8439  0C 08           	db 12 , 8
-alphabet_defa 000040  843B  08 08           	db 8 , 8
-alphabet_defa 000041  843D  08 08           	db 8 , 8
-alphabet_defa 000042  843F  20 20           	db 32 , 32
-alphabet_defa 000043  8441  30 20           	db 48 , 32
-alphabet_defa 000047  8443  04 00           	db 4 , 0
-alphabet_defa 000048  8445  0C 00           	db 12 , 0
-alphabet_defa 000049  8447  10 00           	db 16 , 0
-alphabet_defa 000050  8449  10 00           	db 16 , 0
-alphabet_defa 000051  844B  30 20           	db 48 , 32
-alphabet_defa 000055  844D  0C 08           	db 12 , 8
-alphabet_defa 000056  844F  00 08           	db 0 , 8
-alphabet_defa 000057  8451  0C 08           	db 12 , 8
-alphabet_defa 000058  8453  20 00           	db 32 , 0
-alphabet_defa 000059  8455  30 20           	db 48 , 32
-alphabet_defa 000063  8457  0C 08           	db 12 , 8
-alphabet_defa 000064  8459  00 08           	db 0 , 8
-alphabet_defa 000065  845B  04 08           	db 4 , 8
-alphabet_defa 000066  845D  00 20           	db 0 , 32
-alphabet_defa 000067  845F  30 20           	db 48 , 32
-alphabet_defa 000071  8461  08 08           	db 8 , 8
-alphabet_defa 000072  8463  08 08           	db 8 , 8
-alphabet_defa 000073  8465  0C 08           	db 12 , 8
-alphabet_defa 000074  8467  00 20           	db 0 , 32
-alphabet_defa 000075  8469  00 20           	db 0 , 32
-alphabet_defa 000079  846B  0C 08           	db 12 , 8
-alphabet_defa 000080  846D  08 00           	db 8 , 0
-alphabet_defa 000081  846F  0C 08           	db 12 , 8
-alphabet_defa 000082  8471  00 20           	db 0 , 32
-alphabet_defa 000083  8473  30 20           	db 48 , 32
-alphabet_defa 000087  8475  0C 08           	db 12 , 8
-alphabet_defa 000088  8477  08 00           	db 8 , 0
-alphabet_defa 000089  8479  0C 08           	db 12 , 8
-alphabet_defa 000090  847B  20 20           	db 32 , 32
-alphabet_defa 000091  847D  30 20           	db 48 , 32
-alphabet_defa 000095  847F  0C 08           	db 12 , 8
-alphabet_defa 000096  8481  00 08           	db 0 , 8
-alphabet_defa 000097  8483  00 08           	db 0 , 8
-alphabet_defa 000098  8485  10 00           	db 16 , 0
-alphabet_defa 000099  8487  10 00           	db 16 , 0
-alphabet_defa 000103  8489  0C 08           	db 12 , 8
-alphabet_defa 000104  848B  08 08           	db 8 , 8
-alphabet_defa 000105  848D  0C 08           	db 12 , 8
-alphabet_defa 000106  848F  20 20           	db 32 , 32
-alphabet_defa 000107  8491  30 20           	db 48 , 32
-alphabet_defa 000111  8493  0C 08           	db 12 , 8
-alphabet_defa 000112  8495  08 08           	db 8 , 8
-alphabet_defa 000113  8497  0C 08           	db 12 , 8
-alphabet_defa 000114  8499  00 20           	db 0 , 32
-alphabet_defa 000115  849B  00 20           	db 0 , 32
-alphabet_defa 000119  849D  04 00           	db 4 , 0
-alphabet_defa 000120  849F  08 08           	db 8 , 8
-alphabet_defa 000121  84A1  0C 08           	db 12 , 8
-alphabet_defa 000122  84A3  20 20           	db 32 , 32
-alphabet_defa 000123  84A5  20 20           	db 32 , 32
-alphabet_defa 000127  84A7  0C 00           	db 12 , 0
-alphabet_defa 000128  84A9  08 08           	db 8 , 8
-alphabet_defa 000129  84AB  0C 08           	db 12 , 8
-alphabet_defa 000130  84AD  20 20           	db 32 , 32
-alphabet_defa 000131  84AF  30 20           	db 48 , 32
-alphabet_defa 000135  84B1  0C 08           	db 12 , 8
-alphabet_defa 000136  84B3  08 00           	db 8 , 0
-alphabet_defa 000137  84B5  08 00           	db 8 , 0
-alphabet_defa 000138  84B7  20 00           	db 32 , 0
-alphabet_defa 000139  84B9  30 20           	db 48 , 32
-alphabet_defa 000143  84BB  0C 00           	db 12 , 0
-alphabet_defa 000144  84BD  08 08           	db 8 , 8
-alphabet_defa 000145  84BF  08 20           	db 8 , 32
-alphabet_defa 000146  84C1  20 20           	db 32 , 32
-alphabet_defa 000147  84C3  30 00           	db 48 , 0
-alphabet_defa 000151  84C5  0C 08           	db 12 , 8
-alphabet_defa 000152  84C7  08 00           	db 8 , 0
-alphabet_defa 000153  84C9  18 00           	db 24 , 0
-alphabet_defa 000154  84CB  20 00           	db 32 , 0
-alphabet_defa 000155  84CD  30 20           	db 48 , 32
-alphabet_defa 000159  84CF  0C 08           	db 12 , 8
-alphabet_defa 000160  84D1  08 00           	db 8 , 0
-alphabet_defa 000161  84D3  18 00           	db 24 , 0
-alphabet_defa 000162  84D5  20 00           	db 32 , 0
-alphabet_defa 000163  84D7  20 00           	db 32 , 0
-alphabet_defa 000167  84D9  0C 08           	db 12 , 8
-alphabet_defa 000168  84DB  08 00           	db 8 , 0
-alphabet_defa 000169  84DD  08 08           	db 8 , 8
-alphabet_defa 000170  84DF  20 20           	db 32 , 32
-alphabet_defa 000171  84E1  30 20           	db 48 , 32
-alphabet_defa 000175  84E3  08 08           	db 8 , 8
-alphabet_defa 000176  84E5  08 08           	db 8 , 8
-alphabet_defa 000177  84E7  0C 08           	db 12 , 8
-alphabet_defa 000178  84E9  20 20           	db 32 , 32
-alphabet_defa 000179  84EB  20 20           	db 32 , 32
-alphabet_defa 000184  84ED  04 00           	db 4 , 0
-alphabet_defa 000185  84EF  04 00           	db 4 , 0
-alphabet_defa 000186  84F1  04 00           	db 4 , 0
-alphabet_defa 000187  84F3  10 00           	db 16 , 0
-alphabet_defa 000188  84F5  10 00           	db 16 , 0
-alphabet_defa 000193  84F7  0C 08           	db 12 , 8
-alphabet_defa 000194  84F9  00 08           	db 0 , 8
-alphabet_defa 000195  84FB  00 20           	db 0 , 32
-alphabet_defa 000196  84FD  00 20           	db 0 , 32
-alphabet_defa 000197  84FF  30 00           	db 48 , 0
-alphabet_defa 000201  8501  08 08           	db 8 , 8
-alphabet_defa 000202  8503  0C 00           	db 12 , 0
-alphabet_defa 000203  8505  18 00           	db 24 , 0
-alphabet_defa 000204  8507  08 20           	db 8 , 32
-alphabet_defa 000205  8509  20 20           	db 32 , 32
-alphabet_defa 000209  850B  08 00           	db 8 , 0
-alphabet_defa 000210  850D  08 00           	db 8 , 0
-alphabet_defa 000211  850F  08 00           	db 8 , 0
-alphabet_defa 000212  8511  08 00           	db 8 , 0
-alphabet_defa 000213  8513  30 20           	db 48 , 32
-alphabet_defa 000217  8515  08 08           	db 8 , 8
-alphabet_defa 000218  8517  0C 08           	db 12 , 8
-alphabet_defa 000219  8519  24 20           	db 36 , 32
-alphabet_defa 000220  851B  20 20           	db 32 , 32
-alphabet_defa 000221  851D  20 20           	db 32 , 32
-alphabet_defa 000225  851F  0C 08           	db 12 , 8
-alphabet_defa 000226  8521  08 08           	db 8 , 8
-alphabet_defa 000227  8523  20 08           	db 32 , 8
-alphabet_defa 000228  8525  20 20           	db 32 , 32
-alphabet_defa 000229  8527  20 20           	db 32 , 32
-alphabet_defa 000233  8529  0C 08           	db 12 , 8
-alphabet_defa 000234  852B  08 08           	db 8 , 8
-alphabet_defa 000235  852D  20 08           	db 32 , 8
-alphabet_defa 000236  852F  20 20           	db 32 , 32
-alphabet_defa 000237  8531  30 20           	db 48 , 32
-alphabet_defa 000241  8533  0C 08           	db 12 , 8
-alphabet_defa 000242  8535  08 08           	db 8 , 8
-alphabet_defa 000243  8537  24 08           	db 36 , 8
-alphabet_defa 000244  8539  20 00           	db 32 , 0
-alphabet_defa 000245  853B  20 00           	db 32 , 0
-alphabet_defa 000249  853D  0C 08           	db 12 , 8
-alphabet_defa 000250  853F  08 08           	db 8 , 8
-alphabet_defa 000251  8541  20 08           	db 32 , 8
-alphabet_defa 000252  8543  30 20           	db 48 , 32
-alphabet_defa 000253  8545  00 20           	db 0 , 32
-alphabet_defa 000257  8547  04 08           	db 4 , 8
-alphabet_defa 000258  8549  08 00           	db 8 , 0
-alphabet_defa 000259  854B  20 00           	db 32 , 0
-alphabet_defa 000260  854D  20 00           	db 32 , 0
-alphabet_defa 000261  854F  20 00           	db 32 , 0
-alphabet_defa 000265  8551  0C 08           	db 12 , 8
-alphabet_defa 000266  8553  08 00           	db 8 , 0
-alphabet_defa 000267  8555  0C 08           	db 12 , 8
-alphabet_defa 000268  8557  00 20           	db 0 , 32
-alphabet_defa 000269  8559  30 20           	db 48 , 32
-alphabet_defa 000273  855B  0C 08           	db 12 , 8
-alphabet_defa 000274  855D  04 00           	db 4 , 0
-alphabet_defa 000275  855F  04 00           	db 4 , 0
-alphabet_defa 000276  8561  10 00           	db 16 , 0
-alphabet_defa 000277  8563  10 00           	db 16 , 0
-alphabet_defa 000281  8565  08 08           	db 8 , 8
-alphabet_defa 000282  8567  08 08           	db 8 , 8
-alphabet_defa 000283  8569  08 20           	db 8 , 32
-alphabet_defa 000284  856B  20 20           	db 32 , 32
-alphabet_defa 000285  856D  30 20           	db 48 , 32
-alphabet_defa 000289  856F  08 08           	db 8 , 8
-alphabet_defa 000290  8571  08 08           	db 8 , 8
-alphabet_defa 000291  8573  08 20           	db 8 , 32
-alphabet_defa 000292  8575  20 20           	db 32 , 32
-alphabet_defa 000293  8577  10 00           	db 16 , 0
-alphabet_defa 000297  8579  08 08           	db 8 , 8
-alphabet_defa 000298  857B  08 08           	db 8 , 8
-alphabet_defa 000299  857D  0C 20           	db 12 , 32
-alphabet_defa 000300  857F  30 20           	db 48 , 32
-alphabet_defa 000301  8581  20 20           	db 32 , 32
-alphabet_defa 000305  8583  08 08           	db 8 , 8
-alphabet_defa 000306  8585  08 08           	db 8 , 8
-alphabet_defa 000307  8587  04 00           	db 4 , 0
-alphabet_defa 000308  8589  20 20           	db 32 , 32
-alphabet_defa 000309  858B  20 20           	db 32 , 32
-alphabet_defa 000313  858D  08 08           	db 8 , 8
-alphabet_defa 000314  858F  08 08           	db 8 , 8
-alphabet_defa 000315  8591  04 00           	db 4 , 0
-alphabet_defa 000316  8593  10 00           	db 16 , 0
-alphabet_defa 000317  8595  10 00           	db 16 , 0
-alphabet_defa 000321  8597  0C 08           	db 12 , 8
-alphabet_defa 000322  8599  00 08           	db 0 , 8
-alphabet_defa 000323  859B  04 00           	db 4 , 0
-alphabet_defa 000324  859D  08 00           	db 8 , 0
-alphabet_defa 000325  859F  30 20           	db 48 , 32
-alphabet_defa 000329  85A1  00 00           	db 0 , 0
-alphabet_defa 000330  85A3  04 00           	db 4 , 0
-alphabet_defa 000331  85A5  00 00           	db 0 , 0
-alphabet_defa 000332  85A7  10 00           	db 16 , 0
-alphabet_defa 000333  85A9  00 00           	db 0 , 0
-alphabet_defa 000337  85AB  04 00           	db 4 , 0
-alphabet_defa 000338  85AD  04 00           	db 4 , 0
-alphabet_defa 000339  85AF  10 00           	db 16 , 0
-alphabet_defa 000340  85B1  00 00           	db 0 , 0
-alphabet_defa 000341  85B3  10 00           	db 16 , 0
-alphabet_defa 000345  85B5  00 00           	db 0 , 0
-alphabet_defa 000346  85B7  00 00           	db 0 , 0
-alphabet_defa 000347  85B9  00 00           	db 0 , 0
-alphabet_defa 000348  85BB  00 00           	db 0 , 0
-alphabet_defa 000349  85BD  00 00           	db 0 , 0
-alphabet_defa 000353  85BF  00 00           	db 0 , 0
-alphabet_defa 000354  85C1  00 00           	db 0 , 0
-alphabet_defa 000355  85C3  04 00           	db 4 , 0
-alphabet_defa 000356  85C5  10 00           	db 16 , 0
-alphabet_defa 000357  85C7  20 00           	db 32 , 0
-alphabet_defa 000361  85C9  00 00           	db 0 , 0
-alphabet_defa 000362  85CB  00 00           	db 0 , 0
-alphabet_defa 000363  85CD  00 00           	db 0 , 0
-alphabet_defa 000364  85CF  00 00           	db 0 , 0
-alphabet_defa 000365  85D1  10 00           	db 16 , 0
-images_mygame 000031  85D3                  	_END_ALPHABET
-images_mygame 000033  85D3                  	_BEGIN_FLIP_IMAGES
-images_mygame 000038  85D3  61 87           	SOLDADO_L0 dw SOLDADO_R0
-images_mygame 000039  85D5  F3 87           	SOLDADO_L1 dw SOLDADO_R1
-images_mygame 000040  85D7  85 88           	SOLDADO_L2 dw SOLDADO_R2
-images_mygame 000041  85D9  3B 8D           	TIERRA dw TIERRA2
-images_mygame 000044  85DB                  	_END_FLIP_IMAGES
-images_mygame 000050  85DB                  	_BEGIN_BG_IMAGES
-images_mygame 000060  85DB                  	_END_BG_IMAGES
-images_mygame 000066  85DB                  	_BEGIN_IMAGES
-images_mygame 000070  85DB                  	BIRD_UP
-images_mygame 000071  85DB  09              	db 9
-images_mygame 000072  85DC  12              	db 18
-images_mygame 000073  85DD  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000074  85E6  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000075  85EF  00 00 00 01 20 ..	db 0,0 , 0 , 1 , 32 , 0 , 16 , 2 , 0
-images_mygame 000076  85F8  00 00 00 01 12 ..	db 0,0 , 0 , 1 , 18 , 0 , 33 , 3 , 0
-images_mygame 000077  8601  00 00 00 00 12 ..	db 0,0 , 0 , 0 , 18 , 16 , 3 , 41 , 0
-images_mygame 000078  860A  00 00 01 02 01 ..	db 0,0 , 1 , 2 , 1 , 16 , 22 , 3 , 0
-images_mygame 000079  8613  00 00 03 03 01 ..	db 0,0 , 3 , 3 , 1 , 3 , 3 , 40 , 0
-images_mygame 000080  861C  00 00 01 21 28 ..	db 0,0 , 1 , 33 , 40 , 33 , 22 , 2 , 0
-images_mygame 000081  8625  00 45 8B 03 03 ..	db 0,69 , 139 , 3 , 3 , 3 , 3 , 0 , 0
-images_mygame 000082  862E  00 ED CF 03 03 ..	db 0,237 , 207 , 3 , 3 , 22 , 22 , 0 , 0
-images_mygame 000083  8637  00 CF CF 02 03 ..	db 0,207 , 207 , 2 , 3 , 3 , 41 , 41 , 0
-images_mygame 000084  8640  00 CF 41 00 01 ..	db 0,207 , 65 , 0 , 1 , 3 , 3 , 3 , 0
-images_mygame 000085  8649  00 8A 82 00 00 ..	db 0,138 , 130 , 0 , 0 , 3 , 1 , 2 , 0
-images_mygame 000086  8652  00 8A 00 00 00 ..	db 0,138 , 0 , 0 , 0 , 69 , 69 , 0 , 0
-images_mygame 000087  865B  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 138 , 207 , 0
-images_mygame 000088  8664  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 138 , 69 , 0
-images_mygame 000089  866D  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000090  8676  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000093  867F                  	BIRD_DW
-images_mygame 000094  867F  09              	db 9
-images_mygame 000095  8680  12              	db 18
-images_mygame 000096  8681  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000097  868A  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000098  8693  00 00 01 02 00 ..	db 0,0 , 1 , 2 , 0 , 0 , 0 , 0 , 0
-images_mygame 000099  869C  00 00 03 03 00 ..	db 0,0 , 3 , 3 , 0 , 0 , 0 , 0 , 0
-images_mygame 000100  86A5  00 00 01 21 29 ..	db 0,0 , 1 , 33 , 41 , 3 , 0 , 0 , 0
-images_mygame 000101  86AE  00 45 8B 03 03 ..	db 0,69 , 139 , 3 , 3 , 3 , 2 , 0 , 0
-images_mygame 000102  86B7  00 ED CF 03 03 ..	db 0,237 , 207 , 3 , 3 , 3 , 3 , 0 , 0
-images_mygame 000103  86C0  00 CF CF 02 03 ..	db 0,207 , 207 , 2 , 3 , 3 , 3 , 2 , 0
-images_mygame 000104  86C9  00 CF 41 00 01 ..	db 0,207 , 65 , 0 , 1 , 3 , 3 , 3 , 0
-images_mygame 000105  86D2  00 8A 82 00 01 ..	db 0,138 , 130 , 0 , 1 , 3 , 3 , 1 , 0
-images_mygame 000106  86DB  00 8A 00 00 00 ..	db 0,138 , 0 , 0 , 0 , 3 , 2 , 0 , 0
-images_mygame 000107  86E4  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 3 , 3 , 0 , 0
-images_mygame 000108  86ED  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 3 , 2 , 0 , 0
-images_mygame 000109  86F6  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 3 , 3 , 0 , 0
-images_mygame 000110  86FF  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 1 , 3 , 2 , 0
-images_mygame 000111  8708  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 1 , 3 , 0 , 0
-images_mygame 000112  8711  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000113  871A  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000118  8723                  	DISPARO
-images_mygame 000119  8723  06              	db 6
-images_mygame 000120  8724  0A              	db 10
-images_mygame 000121  8725  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 ,0
-images_mygame 000122  872B  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 ,0
-images_mygame 000123  8731  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 ,0
-images_mygame 000124  8737  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 ,0
-images_mygame 000125  873D  00 00 00 00 00 ..	db 0,0 , 0 , 0 , 0 ,0
-images_mygame 000126  8743  00 00 10 20 00 ..	db 0,0 , 16 , 32 , 0 ,0
-images_mygame 000127  8749  00 00 64 98 00 ..	db 0,0 , 100 , 152 , 0 ,0
-images_mygame 000128  874F  00 00 64 98 00 ..	db 0,0 , 100 , 152 , 0 ,0
-images_mygame 000129  8755  00 00 64 98 00 ..	db 0,0 , 100 , 152 , 0 ,0
-images_mygame 000130  875B  00 00 10 20 00 ..	db 0,0 , 16 , 32 , 0 ,0
-images_mygame 000137  8761                  	SOLDADO_R0
-images_mygame 000138  8761  06              	db 6
-images_mygame 000139  8762  18              	db 24
-images_mygame 000140  8763  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000141  8769  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000142  876F  00 00 30 30 00 ..	db 0 , 0 , 48 , 48 , 0 , 0
-images_mygame 000143  8775  00 10 38 30 20 ..	db 0 , 16 , 56 , 48 , 32 , 0
-images_mygame 000144  877B  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000145  8781  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000146  8787  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000147  878D  00 0C 24 70 F0 ..	db 0 , 12 , 36 , 112 , 240 , 0
-images_mygame 000148  8793  00 A4 F0 E5 CF ..	db 0 , 164 , 240 , 229 , 207 , 0
-images_mygame 000149  8799  00 45 CF CF CF ..	db 0 , 69 , 207 , 207 , 207 , 0
-images_mygame 000150  879F  00 50 CF CF DA ..	db 0 , 80 , 207 , 207 , 218 , 0
-images_mygame 000151  87A5  00 00 E5 CF F8 ..	db 0 , 0 , 229 , 207 , 248 , 0
-images_mygame 000152  87AB  00 00 50 F0 F0 ..	db 0 , 0 , 80 , 240 , 240 , 0
-images_mygame 000153  87B1  00 10 30 30 50 ..	db 0 , 16 , 48 , 48 , 80 , 0
-images_mygame 000154  87B7  00 10 25 30 5A ..	db 0 , 16 , 37 , 48 , 90 , 0
-images_mygame 000155  87BD  00 10 0F 1A 4F ..	db 0 , 16 , 15 , 26 , 79 , 0
-images_mygame 000156  87C3  00 10 25 30 4F ..	db 0 , 16 , 37 , 48 , 79 , 0
-images_mygame 000157  87C9  00 00 25 25 00 ..	db 0 , 0 , 37 , 37 , 0 , 0
-images_mygame 000158  87CF  00 00 30 25 00 ..	db 0 , 0 , 48 , 37 , 0 , 0
-images_mygame 000159  87D5  00 00 10 0F 00 ..	db 0 , 0 , 16 , 15 , 0 , 0
-images_mygame 000160  87DB  00 00 20 10 20 ..	db 0 , 0 , 32 , 16 , 32 , 0
-images_mygame 000161  87E1  00 00 30 10 30 ..	db 0 , 0 , 48 , 16 , 48 , 0
-images_mygame 000162  87E7  00 00 3C 3C 3C ..	db 0 , 0 , 60 , 60 , 60 , 0
-images_mygame 000163  87ED  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000166  87F3                  	SOLDADO_R1
-images_mygame 000167  87F3  06              	db 6
-images_mygame 000168  87F4  18              	db 24
-images_mygame 000169  87F5  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000170  87FB  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000171  8801  00 00 30 30 00 ..	db 0 , 0 , 48 , 48 , 0 , 0
-images_mygame 000172  8807  00 10 38 30 20 ..	db 0 , 16 , 56 , 48 , 32 , 0
-images_mygame 000173  880D  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000174  8813  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000175  8819  00 34 30 F0 F0 ..	db 0 , 52 , 48 , 240 , 240 , 0
-images_mygame 000176  881F  00 58 F0 E5 DA ..	db 0 , 88 , 240 , 229 , 218 , 0
-images_mygame 000177  8825  00 A4 CF CF CF ..	db 0 , 164 , 207 , 207 , 207 , 0
-images_mygame 000178  882B  00 45 CF CF CF ..	db 0 , 69 , 207 , 207 , 207 , 0
-images_mygame 000179  8831  00 50 CF CF DA ..	db 0 , 80 , 207 , 207 , 218 , 0
-images_mygame 000180  8837  00 00 E5 CF F8 ..	db 0 , 0 , 229 , 207 , 248 , 0
-images_mygame 000181  883D  00 10 30 30 F0 ..	db 0 , 16 , 48 , 48 , 240 , 0
-images_mygame 000182  8843  00 10 25 30 50 ..	db 0 , 16 , 37 , 48 , 80 , 0
-images_mygame 000183  8849  00 10 0F 1A 4F ..	db 0 , 16 , 15 , 26 , 79 , 0
-images_mygame 000184  884F  00 10 25 30 4F ..	db 0 , 16 , 37 , 48 , 79 , 0
-images_mygame 000185  8855  00 50 25 25 5A ..	db 0 , 80 , 37 , 37 , 90 , 0
-images_mygame 000186  885B  00 00 30 25 00 ..	db 0 , 0 , 48 , 37 , 0 , 0
-images_mygame 000187  8861  00 00 B0 0F 00 ..	db 0 , 0 , 176 , 15 , 0 , 0
-images_mygame 000188  8867  00 30 50 0F B0 ..	db 0 , 48 , 80 , 15 , 176 , 0
-images_mygame 000189  886D  00 30 A0 50 30 ..	db 0 , 48 , 160 , 80 , 48 , 0
-images_mygame 000190  8873  00 10 70 10 70 ..	db 0 , 16 , 112 , 16 , 112 , 0
-images_mygame 000191  8879  00 00 3C 3C 3C ..	db 0 , 0 , 60 , 60 , 60 , 0
-images_mygame 000192  887F  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000195  8885                  	SOLDADO_R2
-images_mygame 000196  8885  06              	db 6
-images_mygame 000197  8886  18              	db 24
-images_mygame 000198  8887  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000199  888D  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000200  8893  00 00 30 30 00 ..	db 0 , 0 , 48 , 48 , 0 , 0
-images_mygame 000201  8899  00 10 38 30 20 ..	db 0 , 16 , 56 , 48 , 32 , 0
-images_mygame 000202  889F  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000203  88A5  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000204  88AB  00 34 30 30 30 ..	db 0 , 52 , 48 , 48 , 48 , 0
-images_mygame 000205  88B1  00 0C 24 70 F0 ..	db 0 , 12 , 36 , 112 , 240 , 0
-images_mygame 000206  88B7  00 A4 F0 E5 CF ..	db 0 , 164 , 240 , 229 , 207 , 0
-images_mygame 000207  88BD  00 45 CF CF CF ..	db 0 , 69 , 207 , 207 , 207 , 0
-images_mygame 000208  88C3  00 50 CF CF DA ..	db 0 , 80 , 207 , 207 , 218 , 0
-images_mygame 000209  88C9  00 00 E5 CF F8 ..	db 0 , 0 , 229 , 207 , 248 , 0
-images_mygame 000210  88CF  00 00 50 F0 F0 ..	db 0 , 0 , 80 , 240 , 240 , 0
-images_mygame 000211  88D5  00 10 30 30 50 ..	db 0 , 16 , 48 , 48 , 80 , 0
-images_mygame 000212  88DB  00 10 25 30 5A ..	db 0 , 16 , 37 , 48 , 90 , 0
-images_mygame 000213  88E1  00 10 0F 1A 5A ..	db 0 , 16 , 15 , 26 , 90 , 0
-images_mygame 000214  88E7  00 10 25 30 5A ..	db 0 , 16 , 37 , 48 , 90 , 0
-images_mygame 000215  88ED  00 00 25 25 00 ..	db 0 , 0 , 37 , 37 , 0 , 0
-images_mygame 000216  88F3  00 00 30 25 8A ..	db 0 , 0 , 48 , 37 , 138 , 0
-images_mygame 000217  88F9  00 00 10 4F 8A ..	db 0 , 0 , 16 , 79 , 138 , 0
-images_mygame 000218  88FF  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000219  8905  00 00 10 20 00 ..	db 0 , 0 , 16 , 32 , 0 , 0
-images_mygame 000220  890B  00 00 10 20 00 ..	db 0 , 0 , 16 , 32 , 0 , 0
-images_mygame 000221  8911  00 00 10 30 00 ..	db 0 , 0 , 16 , 48 , 0 , 0
-images_mygame 000223  8917                  	BLOCK
-images_mygame 000224  8917  10              	db 16
-images_mygame 000225  8918  20              	db 32
-images_mygame 000226  8919  00 00 00 00 00 ..	db 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
-images_mygame 000227  8929  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000228  8939  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000229  8949  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000230  8959  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000231  8969  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000232  8979  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000233  8989  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000234  8999  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000236  89A9  00 00 00 00 00 ..	db 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
-images_mygame 000237  89B9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000238  89C9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000239  89D9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000240  89E9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000241  89F9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000242  8A09  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000243  8A19  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000245  8A29  00 00 00 00 00 ..	db 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
-images_mygame 000246  8A39  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000247  8A49  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000248  8A59  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000249  8A69  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000250  8A79  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000251  8A89  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000252  8A99  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000254  8AA9  00 00 00 00 00 ..	db 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
-images_mygame 000255  8AB9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000256  8AC9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000257  8AD9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000258  8AE9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000259  8AF9  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000260  8B09  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000261  8B19  00 00 03 03 03 ..	db 0,0,3,3, 3,3,3,3, 3,3,3,3, 3,3,0,0
-images_mygame 000263  8B29  00 00 00 00 00 ..	db 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
-images_mygame 000265  8B39                  	BLOCK2
-images_mygame 000266  8B39  10              	db 16
-images_mygame 000267  8B3A  20              	db 32
-images_mygame 000268  8B3B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000269  8B4B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000270  8B5B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000271  8B6B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000272  8B7B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000273  8B8B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000274  8B9B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000275  8BAB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000277  8BBB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000278  8BCB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000279  8BDB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000280  8BEB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000281  8BFB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000282  8C0B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000283  8C1B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000284  8C2B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000286  8C3B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000287  8C4B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000288  8C5B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000289  8C6B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000290  8C7B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000291  8C8B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000292  8C9B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000293  8CAB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000295  8CBB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000296  8CCB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000297  8CDB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000298  8CEB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000299  8CFB  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000300  8D0B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000301  8D1B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000302  8D2B  FF FF FF FF FF ..	db 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255
-images_mygame 000307  8D3B                  	TIERRA2
-images_mygame 000308  8D3B  08              	db 8
-images_mygame 000309  8D3C  20              	db 32
-images_mygame 000310  8D3D  44 00 00 00 00 ..	db 68 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000311  8D45  44 44 00 44 00 ..	db 68 , 68 , 0 , 68 , 0 , 0 , 136 , 0
-images_mygame 000312  8D4D  44 44 00 44 88 ..	db 68 , 68 , 0 , 68 , 136 , 136 , 136 , 136
-images_mygame 000313  8D55  00 88 44 08 00 ..	db 0 , 136 , 68 , 8 , 0 , 136 , 136 , 204
-images_mygame 000314  8D5D  CC 8C CC 88 08 ..	db 204 , 140 , 204 , 136 , 8 , 204 , 68 , 68
-images_mygame 000315  8D65  4C 08 CC 88 CC ..	db 76 , 8 , 204 , 136 , 204 , 204 , 8 , 8
-images_mygame 000316  8D6D  04 08 04 44 4C ..	db 4 , 8 , 4 , 68 , 76 , 136 , 12 , 0
-images_mygame 000317  8D75  04 0C 08 08 04 ..	db 4 , 12 , 8 , 8 , 4 , 4 , 136 , 8
-images_mygame 000318  8D7D  00 88 00 44 CC ..	db 0 , 136 , 0 , 68 , 204 , 4 , 140 , 200
-images_mygame 000319  8D85  8C 88 8C 44 CC ..	db 140 , 136 , 140 , 68 , 204 , 76 , 0 , 204
-images_mygame 000320  8D8D  88 CC 88 08 44 ..	db 136 , 204 , 136 , 8 , 68 , 196 , 0 , 196
-images_mygame 000321  8D95  88 48 40 08 88 ..	db 136 , 72 , 64 , 8 , 136 , 8 , 140 , 204
-images_mygame 000322  8D9D  44 40 44 08 C8 ..	db 68 , 64 , 68 , 8 , 200 , 0 , 200 , 64
-images_mygame 000323  8DA5  4C 4C C4 80 80 ..	db 76 , 76 , 196 , 128 , 128 , 128 , 136 , 76
-images_mygame 000324  8DAD  4C C4 40 44 44 ..	db 76 , 196 , 64 , 68 , 68 , 0 , 0 , 76
-images_mygame 000325  8DB5  00 00 80 00 80 ..	db 0 , 0 , 128 , 0 , 128 , 0 , 192 , 0
-images_mygame 000326  8DBD  C0 C0 40 04 80 ..	db 192 , 192 , 64 , 4 , 128 , 4 , 192 , 128
-images_mygame 000327  8DC5  40 40 00 08 80 ..	db 64 , 64 , 0 , 8 , 128 , 4 , 192 , 0
-images_mygame 000328  8DCD  C0 80 40 40 84 ..	db 192 , 128 , 64 , 64 , 132 , 64 , 128 , 4
-images_mygame 000329  8DD5  40 80 C0 80 00 ..	db 64 , 128 , 192 , 128 , 0 , 72 , 192 , 0
-images_mygame 000330  8DDD  C0 00 04 C0 80 ..	db 192 , 0 , 4 , 192 , 128 , 72 , 128 , 64
-images_mygame 000331  8DE5  00 80 80 80 80 ..	db 0 , 128 , 128 , 128 , 128 , 192 , 192 , 72
-images_mygame 000332  8DED  C0 40 84 C0 00 ..	db 192 , 64 , 132 , 192 , 0 , 192 , 128 , 64
-images_mygame 000333  8DF5  40 00 00 80 84 ..	db 64 , 0 , 0 , 128 , 132 , 128 , 128 , 64
-images_mygame 000334  8DFD  40 04 C0 80 00 ..	db 64 , 4 , 192 , 128 , 0 , 192 , 0 , 8
-images_mygame 000335  8E05  40 00 C0 C0 40 ..	db 64 , 0 , 192 , 192 , 64 , 192 , 64 , 64
-images_mygame 000336  8E0D  40 00 80 C0 48 ..	db 64 , 0 , 128 , 192 , 72 , 64 , 0 , 192
-images_mygame 000337  8E15  C0 84 C0 C0 40 ..	db 192 , 132 , 192 , 192 , 64 , 0 , 128 , 128
-images_mygame 000338  8E1D  40 80 80 84 C0 ..	db 64 , 128 , 128 , 132 , 192 , 128 , 4 , 192
-images_mygame 000339  8E25  04 40 C0 40 C0 ..	db 4 , 64 , 192 , 64 , 192 , 192 , 0 , 128
-images_mygame 000340  8E2D  84 40 C0 04 00 ..	db 132 , 64 , 192 , 4 , 0 , 128 , 0 , 128
-images_mygame 000341  8E35  84 40 40 00 80 ..	db 132 , 64 , 64 , 0 , 128 , 4 , 0 , 0
-images_mygame 000346  8E3D                  	borra
-images_mygame 000347  8E3D  02              	db 2
-images_mygame 000348  8E3E  64              	db 100
-images_mygame 000351  8E3F  00 00 00 00 00 ..	ds 200
-images_mygame 000355  8F07                  	ARTHUR1
-images_mygame 000356  8F07  08              	db 8
-images_mygame 000357  8F08  20              	db 32
-images_mygame 000358  8F09  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000359  8F11  00 00 00 00 03 ..	db 0 , 0 , 0 , 0 , 3 , 0 , 0 , 0
-images_mygame 000360  8F19  00 00 00 01 30 ..	db 0 , 0 , 0 , 1 , 48 , 2 , 0 , 0
-images_mygame 000361  8F21  00 00 00 12 30 ..	db 0 , 0 , 0 , 18 , 48 , 32 , 0 , 0
-images_mygame 000362  8F29  00 00 00 12 03 ..	db 0 , 0 , 0 , 18 , 3 , 2 , 0 , 0
-images_mygame 000363  8F31  00 00 01 21 30 ..	db 0 , 0 , 1 , 33 , 48 , 0 , 0 , 0
-images_mygame 000364  8F39  00 00 01 12 30 ..	db 0 , 0 , 1 , 18 , 48 , 32 , 0 , 0
-images_mygame 000365  8F41  00 00 01 12 10 ..	db 0 , 0 , 1 , 18 , 16 , 0 , 0 , 0
-images_mygame 000366  8F49  00 00 01 30 30 ..	db 0 , 0 , 1 , 48 , 48 , 32 , 0 , 0
-images_mygame 000367  8F51  00 00 00 32 30 ..	db 0 , 0 , 0 , 50 , 48 , 32 , 0 , 0
-images_mygame 000368  8F59  00 00 00 32 33 ..	db 0 , 0 , 0 , 50 , 51 , 34 , 0 , 0
-images_mygame 000369  8F61  00 01 03 31 33 ..	db 0 , 1 , 3 , 49 , 51 , 35 , 0 , 0
-images_mygame 000370  8F69  00 01 21 31 33 ..	db 0 , 1 , 33 , 49 , 51 , 50 , 0 , 0
-images_mygame 000371  8F71  00 12 30 30 33 ..	db 0 , 18 , 48 , 48 , 51 , 50 , 0 , 0
-images_mygame 000372  8F79  00 03 21 30 31 ..	db 0 , 3 , 33 , 48 , 49 , 48 , 0 , 0
-images_mygame 000373  8F81  00 10 03 12 30 ..	db 0 , 16 , 3 , 18 , 48 , 33 , 0 , 0
-images_mygame 000374  8F89  00 30 01 03 12 ..	db 0 , 48 , 1 , 3 , 18 , 3 , 48 , 0
-images_mygame 000375  8F91  00 30 10 30 30 ..	db 0 , 48 , 16 , 48 , 48 , 33 , 32 , 0
-images_mygame 000376  8F99  00 21 00 12 30 ..	db 0 , 33 , 0 , 18 , 48 , 33 , 0 , 0
-images_mygame 000377  8FA1  01 12 02 03 21 ..	db 1 , 18 , 2 , 3 , 33 , 33 , 0 , 0
-images_mygame 000378  8FA9  01 30 02 33 33 ..	db 1 , 48 , 2 , 51 , 51 , 34 , 0 , 0
-images_mygame 000379  8FB1  01 30 02 12 30 ..	db 1 , 48 , 2 , 18 , 48 , 32 , 0 , 0
-images_mygame 000380  8FB9  00 12 00 03 30 ..	db 0 , 18 , 0 , 3 , 48 , 32 , 0 , 0
-images_mygame 000381  8FC1  00 01 00 01 30 ..	db 0 , 1 , 0 , 1 , 48 , 2 , 0 , 0
-images_mygame 000382  8FC9  00 00 00 30 01 ..	db 0 , 0 , 0 , 48 , 1 , 2 , 0 , 0
-images_mygame 000383  8FD1  00 00 00 12 01 ..	db 0 , 0 , 0 , 18 , 1 , 33 , 0 , 0
-images_mygame 000384  8FD9  00 00 10 02 01 ..	db 0 , 0 , 16 , 2 , 1 , 3 , 0 , 0
-images_mygame 000385  8FE1  00 00 30 20 00 ..	db 0 , 0 , 48 , 32 , 0 , 33 , 0 , 0
-images_mygame 000386  8FE9  00 00 30 00 00 ..	db 0 , 0 , 48 , 0 , 0 , 33 , 0 , 0
-images_mygame 000387  8FF1  00 10 30 00 00 ..	db 0 , 16 , 48 , 0 , 0 , 33 , 0 , 0
-images_mygame 000388  8FF9  00 10 30 20 00 ..	db 0 , 16 , 48 , 32 , 0 , 33 , 2 , 0
-images_mygame 000389  9001  00 00 30 20 00 ..	db 0 , 0 , 48 , 32 , 0 , 48 , 3 , 0
-images_mygame 000392  9009                  	ARTHUR2
-images_mygame 000393  9009  08              	db 8
-images_mygame 000394  900A  20              	db 32
-images_mygame 000395  900B  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0 , 0,0
-images_mygame 000396  9013  00 00 00 00 01 ..	db 0,0 , 0 , 0 , 1 , 2 , 0 , 0
-images_mygame 000397  901B  00 00 00 00 12 ..	db 0,0 , 0 , 0 , 18 , 33 , 0 , 0
-images_mygame 000398  9023  00 00 00 01 30 ..	db 0,0 , 0 , 1 , 48 , 48 , 0 , 0
-images_mygame 000399  902B  00 00 00 01 21 ..	db 0,0 , 0 , 1 , 33 , 3 , 0 , 0
-images_mygame 000400  9033  00 00 00 12 12 ..	db 0,0 , 0 , 18 , 18 , 32 , 0 , 0
-images_mygame 000401  903B  00 00 00 03 30 ..	db 0,0 , 0 , 3 , 48 , 48 , 0 , 0
-images_mygame 000402  9043  00 00 00 03 20 ..	db 0,0 , 0 , 3 , 32 , 32 , 0 , 0
-images_mygame 000403  904B  00 00 00 12 30 ..	db 0,0 , 0 , 18 , 48 , 48 , 0 , 0
-images_mygame 000404  9053  00 00 00 11 30 ..	db 0,0 , 0 , 17 , 48 , 48 , 0 , 0
-images_mygame 000405  905B  00 00 00 11 31 ..	db 0,0 , 0 , 17 , 49 , 51 , 0 , 0
-images_mygame 000406  9063  00 00 03 12 33 ..	db 0,0 , 3 , 18 , 51 , 51 , 2 , 0
-images_mygame 000407  906B  00 00 12 12 33 ..	db 0,0 , 18 , 18 , 51 , 51 , 32 , 0
-images_mygame 000408  9073  00 01 30 30 31 ..	db 0,1 , 48 , 48 , 49 , 51 , 32 , 0
-images_mygame 000409  907B  00 01 12 12 30 ..	db 0,1 , 18 , 18 , 48 , 50 , 32 , 0
-images_mygame 000410  9083  00 00 21 03 30 ..	db 0,0 , 33 , 3 , 48 , 48 , 2 , 0
-images_mygame 000411  908B  00 10 20 03 03 ..	db 0,16 , 32 , 3 , 3 , 33 , 18 , 32
-images_mygame 000412  9093  00 10 20 30 30 ..	db 0,16 , 32 , 48 , 48 , 48 , 18 , 0
-images_mygame 000413  909B  00 10 02 01 30 ..	db 0,16 , 2 , 1 , 48 , 48 , 2 , 0
-images_mygame 000414  90A3  00 03 21 01 12 ..	db 0,3 , 33 , 1 , 18 , 18 , 2 , 0
-images_mygame 000415  90AB  00 12 21 11 33 ..	db 0,18 , 33 , 17 , 51 , 51 , 0 , 0
-images_mygame 000416  90B3  00 12 21 01 30 ..	db 0,18 , 33 , 1 , 48 , 48 , 0 , 0
-images_mygame 000417  90BB  00 01 20 01 12 ..	db 0,1 , 32 , 1 , 18 , 48 , 0 , 0
-images_mygame 000418  90C3  00 00 02 00 12 ..	db 0,0 , 2 , 0 , 18 , 33 , 0 , 0
-images_mygame 000419  90CB  00 00 00 10 20 ..	db 0,0 , 0 , 16 , 32 , 3 , 0 , 0
-images_mygame 000420  90D3  00 00 00 01 20 ..	db 0,0 , 0 , 1 , 32 , 18 , 2 , 0
-images_mygame 000421  90DB  00 00 00 21 00 ..	db 0,0 , 0 , 33 , 0 , 3 , 2 , 0
-images_mygame 000422  90E3  00 00 10 30 00 ..	db 0,0 , 16 , 48 , 0 , 16 , 2 , 0
-images_mygame 000423  90EB  00 00 10 20 00 ..	db 0,0 , 16 , 32 , 0 , 16 , 2 , 0
-images_mygame 000424  90F3  00 00 30 20 00 ..	db 0,0 , 48 , 32 , 0 , 16 , 2 , 0
-images_mygame 000425  90FB  00 00 30 30 00 ..	db 0,0 , 48 , 48 , 0 , 16 , 3 , 0
-images_mygame 000426  9103  00 00 10 30 00 ..	db 0,0 , 16 , 48 , 0 , 16 , 33 , 2
-images_mygame 000431  910B                  	ARTHUR3
-images_mygame 000432  910B  08              	db 8
-images_mygame 000433  910C  20              	db 32
-images_mygame 000434  910D  00 00 00 00 00 ..	db 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0
-images_mygame 000435  9115  00 00 00 00 03 ..	db 0 , 0 , 0 , 0 , 3 , 0 , 0 , 0
-images_mygame 000436  911D  00 00 00 01 30 ..	db 0 , 0 , 0 , 1 , 48 , 2 , 0 , 0
-images_mygame 000437  9125  00 00 00 12 30 ..	db 0 , 0 , 0 , 18 , 48 , 32 , 0 , 0
-images_mygame 000438  912D  00 00 00 12 03 ..	db 0 , 0 , 0 , 18 , 3 , 2 , 0 , 0
-images_mygame 000439  9135  00 00 01 21 30 ..	db 0 , 0 , 1 , 33 , 48 , 0 , 0 , 0
-images_mygame 000440  913D  00 00 01 12 30 ..	db 0 , 0 , 1 , 18 , 48 , 32 , 0 , 0
-images_mygame 000441  9145  00 00 01 12 10 ..	db 0 , 0 , 1 , 18 , 16 , 0 , 0 , 0
-images_mygame 000442  914D  00 00 01 30 30 ..	db 0 , 0 , 1 , 48 , 48 , 32 , 0 , 0
-images_mygame 000443  9155  00 00 00 32 30 ..	db 0 , 0 , 0 , 50 , 48 , 32 , 0 , 0
-images_mygame 000444  915D  00 00 00 32 33 ..	db 0 , 0 , 0 , 50 , 51 , 34 , 0 , 0
-images_mygame 000445  9165  00 01 03 31 33 ..	db 0 , 1 , 3 , 49 , 51 , 35 , 0 , 0
-images_mygame 000446  916D  00 01 21 31 33 ..	db 0 , 1 , 33 , 49 , 51 , 50 , 0 , 0
-images_mygame 000447  9175  00 12 30 30 33 ..	db 0 , 18 , 48 , 48 , 51 , 50 , 0 , 0
-images_mygame 000448  917D  00 03 21 30 31 ..	db 0 , 3 , 33 , 48 , 49 , 48 , 0 , 0
-images_mygame 000449  9185  00 10 03 12 30 ..	db 0 , 16 , 3 , 18 , 48 , 33 , 0 , 0
-images_mygame 000450  918D  00 10 21 03 12 ..	db 0 , 16 , 33 , 3 , 18 , 3 , 0 , 0
-images_mygame 000451  9195  00 10 21 30 30 ..	db 0 , 16 , 33 , 48 , 48 , 32 , 0 , 0
-images_mygame 000452  919D  00 00 21 12 30 ..	db 0 , 0 , 33 , 18 , 48 , 48 , 0 , 0
-images_mygame 000453  91A5  00 00 12 21 21 ..	db 0 , 0 , 18 , 33 , 33 , 48 , 0 , 0
-images_mygame 000454  91AD  00 00 12 21 33 ..	db 0 , 0 , 18 , 33 , 51 , 34 , 0 , 0
-images_mygame 000455  91B5  00 00 00 21 30 ..	db 0 , 0 , 0 , 33 , 48 , 32 , 0 , 0
-images_mygame 000456  91BD  00 00 00 03 30 ..	db 0 , 0 , 0 , 3 , 48 , 32 , 0 , 0
-images_mygame 000457  91C5  00 00 00 01 12 ..	db 0 , 0 , 0 , 1 , 18 , 0 , 0 , 0
-images_mygame 000458  91CD  00 00 00 00 21 ..	db 0 , 0 , 0 , 0 , 33 , 0 , 0 , 0
-images_mygame 000459  91D5  00 00 00 10 21 ..	db 0 , 0 , 0 , 16 , 33 , 0 , 0 , 0
-images_mygame 000460  91DD  00 00 00 01 12 ..	db 0 , 0 , 0 , 1 , 18 , 0 , 0 , 0
-images_mygame 000461  91E5  00 00 00 00 30 ..	db 0 , 0 , 0 , 0 , 48 , 0 , 0 , 0
-images_mygame 000462  91ED  00 00 00 01 30 ..	db 0 , 0 , 0 , 1 , 48 , 0 , 0 , 0
-images_mygame 000463  91F5  00 00 00 21 30 ..	db 0 , 0 , 0 , 33 , 48 , 32 , 0 , 0
-images_mygame 000464  91FD  00 00 00 21 30 ..	db 0 , 0 , 0 , 33 , 48 , 48 , 0 , 0
-images_mygame 000465  9205  00 00 00 30 00 ..	db 0 , 0 , 0 , 48 , 0 , 0 , 0,0
-images_mygame 000468  920D                  	HBAR
-images_mygame 000469  920D  20              	db 32
-images_mygame 000470  920E  08              	db 8
-images_mygame 000471  920F  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000472  922F  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000473  924F  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000474  926F  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000475  928F  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000476  92AF  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000477  92CF  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000478  92EF  00 FF FF FF FF ..	db 0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0
-images_mygame 000481  930F                  	_END_IMAGES
-images_mygame 000485  930F                  	_BEGIN_3D_ZOOM_IMAGES
-images_mygame 000490  930F                  	_ZOOM_LIMIT_A
-images_mygame 000491  930F  78              	db 120
-images_mygame 000493  9310                  	_ZOOM_LIMIT_B
-images_mygame 000494  9310  32              	db 50
-images_mygame 000508  9311                  	_END_3D_ZOOM_IMAGES
-images_mygame 000512  9311                  	_BEGIN_3D_SEGMENTS
-images_mygame 000518  9311  00              	db 0
-images_mygame 000532  9312                  	_END_3D_SEGMENTS
-images_mygame 000536  9312                  	_END_GRAPH
+sequences_myg 000034  8340                  	_MACRO_SEQUENCES
+sequences_myg 000035  8340  00 02 01 03 05 ..	db 0,2,1,3,5,3,4,6,4
+routes_mygame 000005  8349                  	ROUTE_LIST
+routes_mygame 000006  8349  4F 83           	dw ROUTE0
+routes_mygame 000007  834B  50 83           	dw ROUTE1
+routes_mygame 000008  834D  51 83           	dw ROUTE2
+routes_mygame 000012  834F                  	ROUTE0
+routes_mygame 000014  834F  00              	db 0
+routes_mygame 000016  8350                  	ROUTE1
+routes_mygame 000018  8350  00              	db 0
+routes_mygame 000021  8351                  	ROUTE2
+routes_mygame 000022  8351  00              	db 0
+images_mygame 000001  8352                  	IMAGE_LIST
+images_mygame 000012  8352  1D 85           	dw LOGO
+images_mygame 000013  8354  63 89           	dw SPRITE
+images_mygame 000019  8356                  	_BEGIN_ALPHABET
+alphabet_defa 000002  8356                  	ALPHABET
+alphabet_defa 000016  8356  02              	ALPHA_ancho db 2
+alphabet_defa 000017  8357  05              	ALPHA_alto  db 5
+alphabet_defa 000018  8358  0A              	ALPHA_tamano db 2*5
+alphabet_defa 000028  8359                  	ALPHA_LIST
+alphabet_defa 000029  8359  30 31 32 33 34 ..	db "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ:! ,."
+alphabet_defa 000030  8382  00              	db 0
+alphabet_defa 000032  8383                  	ALPHA_LETTERS
+alphabet_defa 000039  8383  0C 08           	db 12 , 8
+alphabet_defa 000040  8385  08 08           	db 8 , 8
+alphabet_defa 000041  8387  08 08           	db 8 , 8
+alphabet_defa 000042  8389  20 20           	db 32 , 32
+alphabet_defa 000043  838B  30 20           	db 48 , 32
+alphabet_defa 000047  838D  04 00           	db 4 , 0
+alphabet_defa 000048  838F  0C 00           	db 12 , 0
+alphabet_defa 000049  8391  10 00           	db 16 , 0
+alphabet_defa 000050  8393  10 00           	db 16 , 0
+alphabet_defa 000051  8395  30 20           	db 48 , 32
+alphabet_defa 000055  8397  0C 08           	db 12 , 8
+alphabet_defa 000056  8399  00 08           	db 0 , 8
+alphabet_defa 000057  839B  0C 08           	db 12 , 8
+alphabet_defa 000058  839D  20 00           	db 32 , 0
+alphabet_defa 000059  839F  30 20           	db 48 , 32
+alphabet_defa 000063  83A1  0C 08           	db 12 , 8
+alphabet_defa 000064  83A3  00 08           	db 0 , 8
+alphabet_defa 000065  83A5  04 08           	db 4 , 8
+alphabet_defa 000066  83A7  00 20           	db 0 , 32
+alphabet_defa 000067  83A9  30 20           	db 48 , 32
+alphabet_defa 000071  83AB  08 08           	db 8 , 8
+alphabet_defa 000072  83AD  08 08           	db 8 , 8
+alphabet_defa 000073  83AF  0C 08           	db 12 , 8
+alphabet_defa 000074  83B1  00 20           	db 0 , 32
+alphabet_defa 000075  83B3  00 20           	db 0 , 32
+alphabet_defa 000079  83B5  0C 08           	db 12 , 8
+alphabet_defa 000080  83B7  08 00           	db 8 , 0
+alphabet_defa 000081  83B9  0C 08           	db 12 , 8
+alphabet_defa 000082  83BB  00 20           	db 0 , 32
+alphabet_defa 000083  83BD  30 20           	db 48 , 32
+alphabet_defa 000087  83BF  0C 08           	db 12 , 8
+alphabet_defa 000088  83C1  08 00           	db 8 , 0
+alphabet_defa 000089  83C3  0C 08           	db 12 , 8
+alphabet_defa 000090  83C5  20 20           	db 32 , 32
+alphabet_defa 000091  83C7  30 20           	db 48 , 32
+alphabet_defa 000095  83C9  0C 08           	db 12 , 8
+alphabet_defa 000096  83CB  00 08           	db 0 , 8
+alphabet_defa 000097  83CD  00 08           	db 0 , 8
+alphabet_defa 000098  83CF  10 00           	db 16 , 0
+alphabet_defa 000099  83D1  10 00           	db 16 , 0
+alphabet_defa 000103  83D3  0C 08           	db 12 , 8
+alphabet_defa 000104  83D5  08 08           	db 8 , 8
+alphabet_defa 000105  83D7  0C 08           	db 12 , 8
+alphabet_defa 000106  83D9  20 20           	db 32 , 32
+alphabet_defa 000107  83DB  30 20           	db 48 , 32
+alphabet_defa 000111  83DD  0C 08           	db 12 , 8
+alphabet_defa 000112  83DF  08 08           	db 8 , 8
+alphabet_defa 000113  83E1  0C 08           	db 12 , 8
+alphabet_defa 000114  83E3  00 20           	db 0 , 32
+alphabet_defa 000115  83E5  00 20           	db 0 , 32
+alphabet_defa 000119  83E7  04 00           	db 4 , 0
+alphabet_defa 000120  83E9  08 08           	db 8 , 8
+alphabet_defa 000121  83EB  0C 08           	db 12 , 8
+alphabet_defa 000122  83ED  20 20           	db 32 , 32
+alphabet_defa 000123  83EF  20 20           	db 32 , 32
+alphabet_defa 000127  83F1  0C 00           	db 12 , 0
+alphabet_defa 000128  83F3  08 08           	db 8 , 8
+alphabet_defa 000129  83F5  0C 08           	db 12 , 8
+alphabet_defa 000130  83F7  20 20           	db 32 , 32
+alphabet_defa 000131  83F9  30 20           	db 48 , 32
+alphabet_defa 000135  83FB  0C 08           	db 12 , 8
+alphabet_defa 000136  83FD  08 00           	db 8 , 0
+alphabet_defa 000137  83FF  08 00           	db 8 , 0
+alphabet_defa 000138  8401  20 00           	db 32 , 0
+alphabet_defa 000139  8403  30 20           	db 48 , 32
+alphabet_defa 000143  8405  0C 00           	db 12 , 0
+alphabet_defa 000144  8407  08 08           	db 8 , 8
+alphabet_defa 000145  8409  08 20           	db 8 , 32
+alphabet_defa 000146  840B  20 20           	db 32 , 32
+alphabet_defa 000147  840D  30 00           	db 48 , 0
+alphabet_defa 000151  840F  0C 08           	db 12 , 8
+alphabet_defa 000152  8411  08 00           	db 8 , 0
+alphabet_defa 000153  8413  18 00           	db 24 , 0
+alphabet_defa 000154  8415  20 00           	db 32 , 0
+alphabet_defa 000155  8417  30 20           	db 48 , 32
+alphabet_defa 000159  8419  0C 08           	db 12 , 8
+alphabet_defa 000160  841B  08 00           	db 8 , 0
+alphabet_defa 000161  841D  18 00           	db 24 , 0
+alphabet_defa 000162  841F  20 00           	db 32 , 0
+alphabet_defa 000163  8421  20 00           	db 32 , 0
+alphabet_defa 000167  8423  0C 08           	db 12 , 8
+alphabet_defa 000168  8425  08 00           	db 8 , 0
+alphabet_defa 000169  8427  08 08           	db 8 , 8
+alphabet_defa 000170  8429  20 20           	db 32 , 32
+alphabet_defa 000171  842B  30 20           	db 48 , 32
+alphabet_defa 000175  842D  08 08           	db 8 , 8
+alphabet_defa 000176  842F  08 08           	db 8 , 8
+alphabet_defa 000177  8431  0C 08           	db 12 , 8
+alphabet_defa 000178  8433  20 20           	db 32 , 32
+alphabet_defa 000179  8435  20 20           	db 32 , 32
+alphabet_defa 000184  8437  04 00           	db 4 , 0
+alphabet_defa 000185  8439  04 00           	db 4 , 0
+alphabet_defa 000186  843B  04 00           	db 4 , 0
+alphabet_defa 000187  843D  10 00           	db 16 , 0
+alphabet_defa 000188  843F  10 00           	db 16 , 0
+alphabet_defa 000193  8441  0C 08           	db 12 , 8
+alphabet_defa 000194  8443  00 08           	db 0 , 8
+alphabet_defa 000195  8445  00 20           	db 0 , 32
+alphabet_defa 000196  8447  00 20           	db 0 , 32
+alphabet_defa 000197  8449  30 00           	db 48 , 0
+alphabet_defa 000201  844B  08 08           	db 8 , 8
+alphabet_defa 000202  844D  0C 00           	db 12 , 0
+alphabet_defa 000203  844F  18 00           	db 24 , 0
+alphabet_defa 000204  8451  08 20           	db 8 , 32
+alphabet_defa 000205  8453  20 20           	db 32 , 32
+alphabet_defa 000209  8455  08 00           	db 8 , 0
+alphabet_defa 000210  8457  08 00           	db 8 , 0
+alphabet_defa 000211  8459  08 00           	db 8 , 0
+alphabet_defa 000212  845B  08 00           	db 8 , 0
+alphabet_defa 000213  845D  30 20           	db 48 , 32
+alphabet_defa 000217  845F  08 08           	db 8 , 8
+alphabet_defa 000218  8461  0C 08           	db 12 , 8
+alphabet_defa 000219  8463  24 20           	db 36 , 32
+alphabet_defa 000220  8465  20 20           	db 32 , 32
+alphabet_defa 000221  8467  20 20           	db 32 , 32
+alphabet_defa 000225  8469  0C 08           	db 12 , 8
+alphabet_defa 000226  846B  08 08           	db 8 , 8
+alphabet_defa 000227  846D  20 08           	db 32 , 8
+alphabet_defa 000228  846F  20 20           	db 32 , 32
+alphabet_defa 000229  8471  20 20           	db 32 , 32
+alphabet_defa 000233  8473  0C 08           	db 12 , 8
+alphabet_defa 000234  8475  08 08           	db 8 , 8
+alphabet_defa 000235  8477  20 08           	db 32 , 8
+alphabet_defa 000236  8479  20 20           	db 32 , 32
+alphabet_defa 000237  847B  30 20           	db 48 , 32
+alphabet_defa 000241  847D  0C 08           	db 12 , 8
+alphabet_defa 000242  847F  08 08           	db 8 , 8
+alphabet_defa 000243  8481  24 08           	db 36 , 8
+alphabet_defa 000244  8483  20 00           	db 32 , 0
+alphabet_defa 000245  8485  20 00           	db 32 , 0
+alphabet_defa 000249  8487  0C 08           	db 12 , 8
+alphabet_defa 000250  8489  08 08           	db 8 , 8
+alphabet_defa 000251  848B  20 08           	db 32 , 8
+alphabet_defa 000252  848D  30 20           	db 48 , 32
+alphabet_defa 000253  848F  00 20           	db 0 , 32
+alphabet_defa 000257  8491  04 08           	db 4 , 8
+alphabet_defa 000258  8493  08 00           	db 8 , 0
+alphabet_defa 000259  8495  20 00           	db 32 , 0
+alphabet_defa 000260  8497  20 00           	db 32 , 0
+alphabet_defa 000261  8499  20 00           	db 32 , 0
+alphabet_defa 000265  849B  0C 08           	db 12 , 8
+alphabet_defa 000266  849D  08 00           	db 8 , 0
+alphabet_defa 000267  849F  0C 08           	db 12 , 8
+alphabet_defa 000268  84A1  00 20           	db 0 , 32
+alphabet_defa 000269  84A3  30 20           	db 48 , 32
+alphabet_defa 000273  84A5  0C 08           	db 12 , 8
+alphabet_defa 000274  84A7  04 00           	db 4 , 0
+alphabet_defa 000275  84A9  04 00           	db 4 , 0
+alphabet_defa 000276  84AB  10 00           	db 16 , 0
+alphabet_defa 000277  84AD  10 00           	db 16 , 0
+alphabet_defa 000281  84AF  08 08           	db 8 , 8
+alphabet_defa 000282  84B1  08 08           	db 8 , 8
+alphabet_defa 000283  84B3  08 20           	db 8 , 32
+alphabet_defa 000284  84B5  20 20           	db 32 , 32
+alphabet_defa 000285  84B7  30 20           	db 48 , 32
+alphabet_defa 000289  84B9  08 08           	db 8 , 8
+alphabet_defa 000290  84BB  08 08           	db 8 , 8
+alphabet_defa 000291  84BD  08 20           	db 8 , 32
+alphabet_defa 000292  84BF  20 20           	db 32 , 32
+alphabet_defa 000293  84C1  10 00           	db 16 , 0
+alphabet_defa 000297  84C3  08 08           	db 8 , 8
+alphabet_defa 000298  84C5  08 08           	db 8 , 8
+alphabet_defa 000299  84C7  0C 20           	db 12 , 32
+alphabet_defa 000300  84C9  30 20           	db 48 , 32
+alphabet_defa 000301  84CB  20 20           	db 32 , 32
+alphabet_defa 000305  84CD  08 08           	db 8 , 8
+alphabet_defa 000306  84CF  08 08           	db 8 , 8
+alphabet_defa 000307  84D1  04 00           	db 4 , 0
+alphabet_defa 000308  84D3  20 20           	db 32 , 32
+alphabet_defa 000309  84D5  20 20           	db 32 , 32
+alphabet_defa 000313  84D7  08 08           	db 8 , 8
+alphabet_defa 000314  84D9  08 08           	db 8 , 8
+alphabet_defa 000315  84DB  04 00           	db 4 , 0
+alphabet_defa 000316  84DD  10 00           	db 16 , 0
+alphabet_defa 000317  84DF  10 00           	db 16 , 0
+alphabet_defa 000321  84E1  0C 08           	db 12 , 8
+alphabet_defa 000322  84E3  00 08           	db 0 , 8
+alphabet_defa 000323  84E5  04 00           	db 4 , 0
+alphabet_defa 000324  84E7  08 00           	db 8 , 0
+alphabet_defa 000325  84E9  30 20           	db 48 , 32
+alphabet_defa 000329  84EB  00 00           	db 0 , 0
+alphabet_defa 000330  84ED  04 00           	db 4 , 0
+alphabet_defa 000331  84EF  00 00           	db 0 , 0
+alphabet_defa 000332  84F1  10 00           	db 16 , 0
+alphabet_defa 000333  84F3  00 00           	db 0 , 0
+alphabet_defa 000337  84F5  04 00           	db 4 , 0
+alphabet_defa 000338  84F7  04 00           	db 4 , 0
+alphabet_defa 000339  84F9  10 00           	db 16 , 0
+alphabet_defa 000340  84FB  00 00           	db 0 , 0
+alphabet_defa 000341  84FD  10 00           	db 16 , 0
+alphabet_defa 000345  84FF  00 00           	db 0 , 0
+alphabet_defa 000346  8501  00 00           	db 0 , 0
+alphabet_defa 000347  8503  00 00           	db 0 , 0
+alphabet_defa 000348  8505  00 00           	db 0 , 0
+alphabet_defa 000349  8507  00 00           	db 0 , 0
+alphabet_defa 000353  8509  00 00           	db 0 , 0
+alphabet_defa 000354  850B  00 00           	db 0 , 0
+alphabet_defa 000355  850D  04 00           	db 4 , 0
+alphabet_defa 000356  850F  10 00           	db 16 , 0
+alphabet_defa 000357  8511  20 00           	db 32 , 0
+alphabet_defa 000361  8513  00 00           	db 0 , 0
+alphabet_defa 000362  8515  00 00           	db 0 , 0
+alphabet_defa 000363  8517  00 00           	db 0 , 0
+alphabet_defa 000364  8519  00 00           	db 0 , 0
+alphabet_defa 000365  851B  10 00           	db 16 , 0
+images_mygame 000021  851D                  	_END_ALPHABET
+images_mygame 000023  851D                  	_BEGIN_FLIP_IMAGES
+images_mygame 000035  851D                  	_END_FLIP_IMAGES
+images_mygame 000041  851D                  	_BEGIN_BG_IMAGES
+images_mygame 000051  851D                  	_END_BG_IMAGES
+images_mygame 000057  851D                  	_BEGIN_IMAGES
+sprites.asm   000003  851D                  	LOGO
+sprites.asm   000005  851D  2A              	db 42
+sprites.asm   000006  851E  1A              	db 26
+sprites.asm   000007  851F  00 C0 C0 C0 C0 ..	db 0, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 128
+sprites.asm   000008  8549  40 C0 C0 C0 C0 ..	db 64, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 128
+sprites.asm   000009  8573  40 C0 4C 8C 48 ..	db 64, 192, 76, 140, 72, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 48, 48, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 96, 192, 192, 192, 192, 128
+sprites.asm   000010  859D  40 C0 D8 F0 E4 ..	db 64, 192, 216, 240, 228, 96, 192, 192, 48, 48, 96, 192, 192, 192, 48, 48, 48, 48, 48, 48, 48, 192, 144, 48, 48, 48, 96, 192, 192, 192, 48, 48, 48, 48, 96, 144, 48, 48, 144, 48, 192, 128
+sprites.asm   000011  85C7  40 C0 9C 3C 78 ..	db 64, 192, 156, 60, 120, 228, 200, 192, 144, 48, 192, 192, 192, 196, 48, 192, 192, 192, 192, 48, 96, 192, 192, 48, 100, 204, 48, 96, 192, 192, 192, 48, 152, 96, 192, 144, 48, 152, 144, 48, 192, 128
+sprites.asm   000012  85F1  40 C0 9C 3C 3C ..	db 64, 192, 156, 60, 60, 120, 228, 192, 192, 192, 132, 204, 240, 240, 228, 192, 192, 196, 204, 240, 228, 192, 192, 216, 240, 240, 228, 48, 48, 36, 204, 240, 240, 228, 192, 192, 216, 228, 192, 48, 192, 128
+sprites.asm   000013  861B  40 C0 9C 3C B4 ..	db 64, 192, 156, 60, 180, 60, 120, 140, 192, 196, 216, 240, 180, 60, 120, 140, 216, 240, 180, 60, 120, 224, 132, 240, 60, 60, 240, 140, 76, 240, 180, 60, 60, 240, 192, 196, 180, 60, 204, 48, 192, 128
+sprites.asm   000014  8645  40 C0 9C 78 D8 ..	db 64, 192, 156, 120, 216, 180, 60, 164, 192, 216, 60, 60, 60, 60, 120, 216, 180, 60, 60, 60, 120, 164, 88, 60, 60, 60, 60, 164, 180, 60, 60, 60, 60, 228, 72, 88, 60, 60, 228, 200, 192, 128
+sprites.asm   000015  866F  40 C0 9C 78 48 ..	db 64, 192, 156, 120, 72, 216, 180, 120, 72, 156, 60, 60, 120, 240, 228, 216, 60, 60, 120, 240, 240, 72, 88, 60, 60, 60, 60, 164, 180, 60, 60, 120, 240, 140, 76, 180, 60, 60, 120, 200, 192, 128
+sprites.asm   000016  8699  40 C0 D8 3C 48 ..	db 64, 192, 216, 60, 72, 192, 88, 60, 224, 156, 60, 60, 204, 140, 12, 88, 60, 60, 228, 140, 192, 132, 180, 120, 140, 88, 60, 240, 180, 60, 240, 204, 200, 192, 216, 180, 60, 60, 120, 200, 192, 128
+sprites.asm   000017  86C3  40 48 9C 3C 98 ..	db 64, 72, 156, 60, 152, 192, 12, 60, 224, 88, 60, 120, 204, 72, 192, 208, 60, 120, 240, 140, 192, 76, 180, 120, 240, 180, 60, 228, 180, 60, 228, 204, 72, 132, 180, 60, 164, 180, 120, 200, 192, 128
+sprites.asm   000018  86ED  40 48 9C 3C 48 ..	db 64, 72, 156, 60, 72, 192, 88, 60, 228, 28, 60, 60, 120, 228, 96, 208, 60, 60, 120, 240, 96, 216, 60, 60, 60, 60, 60, 164, 180, 60, 60, 120, 200, 132, 180, 60, 240, 180, 120, 200, 192, 128
+sprites.asm   000019  8717  40 48 9C 3C 48 ..	db 64, 72, 156, 60, 72, 76, 180, 60, 164, 156, 60, 60, 60, 240, 192, 216, 60, 60, 60, 240, 152, 216, 60, 60, 60, 60, 120, 164, 180, 60, 60, 60, 224, 132, 60, 60, 60, 60, 120, 72, 192, 128
+sprites.asm   000020  8741  40 4C B4 3C 0C ..	db 64, 76, 180, 60, 12, 240, 60, 60, 164, 180, 60, 60, 120, 228, 192, 216, 60, 60, 60, 240, 96, 216, 60, 60, 60, 60, 228, 204, 60, 60, 60, 120, 224, 208, 60, 60, 60, 60, 228, 72, 192, 128
+sprites.asm   000021  876B  40 4C B4 3C B4 ..	db 64, 76, 180, 60, 180, 60, 60, 120, 204, 60, 120, 76, 140, 200, 196, 180, 120, 172, 12, 12, 192, 88, 60, 120, 240, 140, 12, 216, 60, 120, 140, 76, 12, 88, 60, 60, 120, 228, 192, 192, 192, 128
+sprites.asm   000022  8795  40 4C 3C 3C 3C ..	db 64, 76, 60, 60, 60, 60, 120, 164, 88, 60, 44, 12, 12, 204, 204, 60, 120, 12, 12, 76, 140, 88, 60, 228, 152, 192, 192, 240, 60, 164, 12, 12, 140, 88, 60, 60, 120, 200, 192, 192, 192, 128
+sprites.asm   000023  87BF  40 4C 3C 3C 3C ..	db 64, 76, 60, 60, 60, 120, 228, 200, 88, 60, 60, 240, 180, 120, 228, 60, 60, 60, 240, 240, 228, 88, 60, 164, 144, 48, 192, 240, 60, 120, 240, 240, 120, 240, 60, 60, 60, 240, 228, 72, 192, 128
+sprites.asm   000024  87E9  40 4C B4 3C 3C ..	db 64, 76, 180, 60, 60, 240, 192, 192, 88, 60, 60, 60, 60, 60, 228, 60, 60, 60, 60, 60, 228, 216, 120, 140, 144, 48, 192, 216, 60, 60, 60, 60, 120, 240, 60, 60, 60, 60, 240, 228, 192, 128
+sprites.asm   000025  8813  40 4C F0 F0 E4 ..	db 64, 76, 240, 240, 228, 72, 192, 192, 196, 180, 60, 60, 60, 240, 228, 180, 60, 60, 60, 120, 164, 216, 240, 200, 192, 192, 192, 208, 60, 60, 60, 60, 240, 216, 240, 12, 240, 60, 60, 120, 192, 128
+sprites.asm   000026  883D  40 18 F0 E4 C8 ..	db 64, 24, 240, 228, 200, 192, 48, 192, 196, 216, 240, 240, 240, 204, 12, 216, 240, 240, 240, 204, 72, 88, 228, 96, 192, 192, 192, 132, 240, 240, 240, 240, 140, 76, 228, 12, 76, 240, 240, 240, 192, 128
+sprites.asm   000027  8867  40 30 60 C0 C0 ..	db 64, 48, 96, 192, 192, 144, 48, 96, 144, 48, 204, 152, 96, 192, 192, 192, 192, 192, 192, 192, 192, 48, 48, 48, 48, 48, 48, 48, 96, 132, 192, 192, 192, 144, 96, 192, 192, 196, 204, 200, 192, 128
+sprites.asm   000028  8891  40 30 60 C0 90 ..	db 64, 48, 96, 192, 144, 48, 48, 48, 48, 96, 192, 192, 192, 192, 192, 192, 192, 144, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 96, 144, 48, 48, 48, 48, 96, 192, 128
+sprites.asm   000029  88BB  40 30 60 C0 C0 ..	db 64, 48, 96, 192, 192, 48, 96, 144, 48, 48, 48, 192, 192, 192, 192, 144, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 192, 128
+sprites.asm   000030  88E5  40 90 60 C0 C0 ..	db 64, 144, 96, 192, 192, 192, 192, 192, 192, 144, 48, 96, 192, 192, 192, 144, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 144, 144, 48, 48, 48, 48, 48, 192, 8
+sprites.asm   000031  890F  40 90 C0 C0 C0 ..	db 64, 144, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 128
+sprites.asm   000032  8939  00 81 03 03 03 ..	db 0, 129, 3, 3, 3, 3, 66, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 66, 192, 2
+sprites.asm   000045  8963                  	SPRITE
+sprites.asm   000047  8963  08              	db 8
+sprites.asm   000048  8964  10              	db 16
+sprites.asm   000049  8965  00 00 00 00 00 ..	db 0, 0, 0, 0, 0, 0, 0, 0
+sprites.asm   000050  896D  00 C0 80 00 00 ..	db 0, 192, 128, 0, 0, 192, 0, 0
+sprites.asm   000051  8975  00 84 C0 00 40 ..	db 0, 132, 192, 0, 64, 192, 128, 0
+sprites.asm   000052  897D  40 84 48 00 84 ..	db 64, 132, 72, 0, 132, 12, 72, 0
+sprites.asm   000053  8985  40 0C 0C 80 84 ..	db 64, 12, 12, 128, 132, 140, 72, 0
+sprites.asm   000054  898D  40 0C 0C C0 0C ..	db 64, 12, 12, 192, 12, 76, 72, 0
+sprites.asm   000055  8995  40 0C 0C 48 0C ..	db 64, 12, 12, 72, 12, 76, 72, 0
+sprites.asm   000056  899D  40 0C 0C 0C 0C ..	db 64, 12, 12, 12, 12, 12, 72, 0
+sprites.asm   000057  89A5  40 0C 0C 0C 0C ..	db 64, 12, 12, 12, 12, 12, 72, 0
+sprites.asm   000058  89AD  40 0C 0C 0C 0C ..	db 64, 12, 12, 12, 12, 12, 72, 0
+sprites.asm   000059  89B5  40 84 0C 0C 0C ..	db 64, 132, 12, 12, 12, 12, 192, 0
+sprites.asm   000060  89BD  00 84 0C 0C 0C ..	db 0, 132, 12, 12, 12, 72, 128, 0
+sprites.asm   000061  89C5  00 C0 0C 0C 0C ..	db 0, 192, 12, 12, 12, 192, 0, 0
+sprites.asm   000062  89CD  00 40 C0 0C 48 ..	db 0, 64, 192, 12, 72, 0, 0, 0
+sprites.asm   000063  89D5  00 00 00 84 80 ..	db 0, 0, 0, 132, 128, 0, 0, 0
+sprites.asm   000064  89DD  00 00 00 40 00 ..	db 0, 0, 0, 64, 0, 0, 0, 0
+images_mygame 000062  89E5                  	_END_IMAGES
+images_mygame 000066  89E5                  	_BEGIN_3D_ZOOM_IMAGES
+images_mygame 000071  89E5                  	_ZOOM_LIMIT_A
+images_mygame 000072  89E5  78              	db 120
+images_mygame 000074  89E6                  	_ZOOM_LIMIT_B
+images_mygame 000075  89E6  32              	db 50
+images_mygame 000089  89E7                  	_END_3D_ZOOM_IMAGES
+images_mygame 000093  89E7                  	_BEGIN_3D_SEGMENTS
+images_mygame 000099  89E7  00              	db 0
+images_mygame 000113  89E8                  	_END_3D_SEGMENTS
+images_mygame 000117  89E8                  	_END_GRAPH
 make_graficos 000022  6978                  	org 27000
 sprites_table 000004  6978                  	org 27000
 sprites_table 000006  6978  01              	sprite0    db 1
@@ -5907,31 +5567,12 @@ map_table_myg 000032  A438                  	_MAP_TABLE
 map_table_myg 000035  A438  30 00           	MAX_SP_HEIGHT  dw 48
 map_table_myg 000036  A43A  9C FF           	MAX_SP_WIDTH   dw -100
 map_table_myg 000037  A43C  13              	MAPITEMS db 19
-map_table_myg 000066  A43D  28 00 00 00 3B ..	dw 40,0,TIERRA2
-map_table_myg 000067  A443  28 00 08 00 3B ..	dw 40,8,TIERRA2
-map_table_myg 000068  A449  28 00 10 00 3B ..	dw 40,16,TIERRA2
-map_table_myg 000069  A44F  28 00 18 00 3B ..	dw 40,24,TIERRA2
-map_table_myg 000070  A455  28 00 20 00 3B ..	dw 40,32,TIERRA2
-map_table_myg 000071  A45B  28 00 28 00 3B ..	dw 40,40,TIERRA2
-map_table_myg 000072  A461  28 00 30 00 3B ..	dw 40,48,TIERRA2
-map_table_myg 000073  A467  28 00 38 00 3B ..	dw 40,56,TIERRA2
-map_table_myg 000074  A46D  28 00 40 00 3B ..	dw 40,64,TIERRA2
-map_table_myg 000075  A473  28 00 48 00 3B ..	dw 40,72,TIERRA2
-map_table_myg 000076  A479  28 00 50 00 3B ..	dw 40,80,TIERRA2
-map_table_myg 000077  A47F  28 00 58 00 3B ..	dw 40,88,TIERRA2
-map_table_myg 000078  A485  28 00 60 00 3B ..	dw 40,96,TIERRA2
-map_table_myg 000079  A48B  28 00 68 00 3B ..	dw 40,104,TIERRA2
-map_table_myg 000080  A491  28 00 70 00 3B ..	dw 40,112,TIERRA2
-map_table_myg 000081  A497  28 00 78 00 3B ..	dw 40,120,TIERRA2
-map_table_myg 000082  A49D  48 00 80 00 3B ..	dw 72,128,TIERRA2
-map_table_myg 000083  A4A3  A0 00 80 00 3B ..	dw 160,128,TIERRA2
-map_table_myg 000085  A4A9  A0 00 A0 00 3B ..	dw 160,160,TIERRA2
-map_table_myg 000087  A4AF                  	_END_MAP
-make_graficos 000029  A4AF                  	endif
-make_all_myga 000049  A4AF                  	if ASSEMBLING_OPTION = 0
-make_all_myga 000050  A4AF                  	SAVE "8BP0.bin",23600,19120
-make_all_myga 000051  A4AF                  	elseif ASSEMBLING_OPTION = 1
-make_all_myga 000053  A4AF                  	elseif ASSEMBLING_OPTION = 2
-make_all_myga 000055  A4AF                  	elseif ASSEMBLING_OPTION = 3
-make_all_myga 000057  A4AF                  	elseif ASSEMBLING_OPTION = 4
-make_all_myga 000059  A4AF                  	endif
+map_table_myg 000087  A43D                  	_END_MAP
+make_graficos 000029  A43D                  	endif
+make_all_myga 000049  A43D                  	if ASSEMBLING_OPTION = 0
+make_all_myga 000050  A43D                  	SAVE "8BP0.bin",23600,19120
+make_all_myga 000051  A43D                  	elseif ASSEMBLING_OPTION = 1
+make_all_myga 000053  A43D                  	elseif ASSEMBLING_OPTION = 2
+make_all_myga 000055  A43D                  	elseif ASSEMBLING_OPTION = 3
+make_all_myga 000057  A43D                  	elseif ASSEMBLING_OPTION = 4
+make_all_myga 000059  A43D                  	endif

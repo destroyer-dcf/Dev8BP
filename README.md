@@ -9,9 +9,16 @@
 
 ---
 
+
+
 ## 🎯 ¿Por qué Dev8BP CLI?
 
-Esta idea nace de la necesidad de poder compilar la librería [8BP](https://github.com/jjaranda13/8BP) para Amstrad CPC en sistemas operativos que no fueran Windows de forma nativa. Gracias al ensamblador [ABASM](https://github.com/fragarco/abasm) creado por [fragarco](https://github.com/fragarco) todo esto ha sido posible.
+Esta idea nace de la necesidad de poder compilar la librería [8BP](https://github.com/jjaranda13/8BP) para Amstrad CPC en sistemas operativos que no fueran Windows de forma nativa. Gracias al ensamblador [ABASM](https://github.com/fragarco/abasm) creado por [fragarco](https://github.com/fragarco) todo esto ha sido posible. En este proyecto se encuentran las herramientas necesarias para poder realizar todo esto.
+
+<p align="center">
+  <img src="docs/images/help.png" alt="Dev8BP Help" width="800"/>
+</p>
+
 
 ---
 
@@ -27,9 +34,15 @@ Esta idea nace de la necesidad de poder compilar la librería [8BP](https://gith
 - ✅ **MI_JUEGO.DSK** - Generacion de DSK
 
 ### Herramientas integradas
-- ✅ **ABASM** - Ensamblador para Z80
-- ✅ **dsk.py** - Gestión de imágenes DSK
+- ✅ **[ABASM](https://github.com/fragarco/abasm)** - Ensamblador para Z80
+- ✅ **[dsk.py](https://github.com/fragarco/abasm)** - Gestión de imágenes DSK
 - ✅ **hex2bin** - Conversión para código C (multiplataforma)
+- ✅ **[png2asm.py](https://github.com/javy-fernandez/8bp-graphics-converter)** - Conversión automática de PNG a ASM
+
+### Herramientas Opcionales
+
+- [SDCC](http://sdcc.sourceforge.net/) Small Device C Compiler
+- [RetroVirtualMachine](https://www.retrovirtualmachine.org/) Emulaodr Amstrad CPC
 
 ### Plataformas soportadas
 - ✅ macOS (ARM64 y x86_64)
@@ -42,14 +55,27 @@ Esta idea nace de la necesidad de poder compilar la librería [8BP](https://gith
 - **SDCC** (compilador C) - opcional, solo si usas C
 - **RetroVirtualMachine** - opcional, solo si usas `dev8bp run`
 
+‼️ **Importante:** Solo esta soportada la version v2.0 BETA-1 R7 (10/07/2019) de Retro Virtual Machine que es la unica que tiene las opciones de desarrollo activadas, tal y como se indica en su su [Web](https://www.retrovirtualmachine.org/blog/future/).
+
+Si decides utilizar la conversion de imagenes a ASM necesitaras instalar la libreria de python Pillow en tu sistema.
+
+1. **Python 3 y Pillow**
+   ```bash
+   # Instalar Pillow
+   pip3 install Pillow
+   
+   # Verificar
+   python3 -c "import PIL; print('Pillow OK')"
+   ```
+
+
 ### 📌 Roadmap
-- 🚧 Conversion de imagenes a asm 
-- 🚧 Muestra información de compilación
-- 🚧 Pruebas sobre M4Board
+- ✅ Conversion de imagenes a asm 
+- 🚧 Creacion de imagenes de cinta CDT
+- 🚧 Soporte para pruebas en M4Board
 - 🚧 Soporte para proyectos asm (No 8BP)
+- 🚧 Compilacion bas a binarios con abasc
 
-
----
 
 ## 🚀 Como Empezar
 
@@ -137,7 +163,7 @@ dev8bp new mi-super-juego
 ```
 
 **Crea:**
-- Directorios: `ASM/`, `bas/`, `obj/`, `dist/`
+- Directorios: `ASM/`, `bas/`, `obj/`, `dist/`, `assets/sprites/`, `assets/screens/`
 - Archivo de configuración: `dev8bp.conf`
 - `README.md` con instrucciones
 - `.gitignore` configurado
@@ -152,15 +178,16 @@ dev8bp build
 ```
 
 **Proceso:**
-1. ✅ Compila código ASM con ABASM (si `BP_ASM_PATH` está definido)
-2. ✅ Verifica límites de gráficos (`_END_GRAPH < 42040`)
-3. ✅ Crea imagen DSK
-4. ✅ Añade binario ASM al DSK (8BP0.bin, 8BP1.bin, etc.)
-5. ✅ Añade archivos BASIC al DSK (si `BASIC_PATH` está definido)
-6. ✅ Añade archivos RAW al DSK (si `RAW_PATH` está definido)
-7. ✅ Compila código C con SDCC (si `C_PATH` está definido)
-8. ✅ Verifica límites de memoria C (< 23999)
-9. ✅ Muestra catálogo del DSK
+1. ✅ Convierte sprites PNG a ASM (si `SPRITES_PATH` está definido)
+2. ✅ Compila código ASM con ABASM (si `BP_ASM_PATH` está definido)
+3. ✅ Verifica límites de gráficos (`_END_GRAPH < 42040`)
+4. ✅ Crea imagen DSK
+5. ✅ Añade binario ASM al DSK (8BP0.bin, 8BP1.bin, etc.)
+6. ✅ Añade archivos BASIC al DSK (si `BASIC_PATH` está definido)
+7. ✅ Añade archivos RAW al DSK (si `RAW_PATH` está definido)
+8. ✅ Compila código C con SDCC (si `C_PATH` está definido)
+9. ✅ Verifica límites de memoria C (< 23999)
+10. ✅ Muestra catálogo del DSK
 
 
 **Ejemplo de salida:**
@@ -303,6 +330,8 @@ Muestra ayuda general.
 dev8bp help
 ```
 
+
+
 ---
 
 ### `dev8bp version`
@@ -407,11 +436,17 @@ mi-juego/
 │   ├── make_all_mygame.asm    # Archivo principal
 │   ├── images_mygame.asm      # Gráficos
 │   ├── music_mygame.asm       # Música
-│   └── ...
+│   └── sprites.asm            # Sprites generados (si usas SPRITES_PATH)
 │
 ├── bas/                # Archivos BASIC (BASIC_PATH)
 │   ├── loader.bas      # Cargador
 │   └── menu.bas        # Menú
+│
+├── assets/             # Recursos del proyecto
+│   └── sprites/        # Sprites PNG (SPRITES_PATH por defecto)
+│       ├── player.png
+│       ├── enemies/
+│       └── tiles/
 │
 ├── raw/                # Archivos RAW (RAW_PATH) - opcional
 │   └── data.bin        # Datos sin encabezado AMSDOS
@@ -449,6 +484,258 @@ mi-juego/
 | `RVM_PATH` | Ruta al emulador | `"/path/to/RVM"` | ❌ Opcional |
 | `CPC_MODEL` | Modelo de CPC | `464` | ❌ Opcional |
 | `RUN_FILE` | Archivo a ejecutar | `"8BP0.BIN"` | ❌ Opcional |
+| `SPRITES_PATH` | Ruta a PNG para convertir | `"GRAFICOS"` | ❌ Opcional |
+| `MODE` | Modo CPC (0, 1 o 2) | `0` | ❌ Opcional |
+| `SPRITES_OUT_FILE` | Archivo ASM de salida | `"sprites.asm"` | ❌ Opcional |
+| `SPRITES_TOLERANCE` | Tolerancia RGB | `8` | ❌ Opcional |
+| `SPRITES_TRANSPARENT_INK` | INK transparente (0-26) | `""` | ❌ Opcional |
+
+---
+
+## 🎨 Conversión de Gráficos PNG a ASM
+
+Dev8BP incluye una herramienta automática para convertir tus sprites PNG a formato ASM compatible con Amstrad CPC.
+
+
+### Configuración
+
+```bash
+# En dev8bp.conf
+
+# Ruta donde están tus PNG (búsqueda recursiva)
+SPRITES_PATH="assets/sprites"
+
+# Modo CPC (0=16 colores, 1=4 colores, 2=2 colores)
+MODE=0
+
+# Archivo ASM de salida (puede incluir ruta)
+SPRITES_OUT_FILE="ASM/sprites.asm"
+
+# Tolerancia RGB (0=exacto, 8=recomendado, -1=automático)
+SPRITES_TOLERANCE=8
+
+# INK para píxeles transparentes (opcional, 0-26)
+SPRITES_TRANSPARENT_INK=""
+```
+
+### Modos CPC
+
+| Modo | Colores | Píxeles/byte | Bits/píxel | Resolución |
+|------|---------|--------------|------------|------------|
+| **0** | 16 | 2 | 4 | 160x200 |
+| **1** | 4 | 4 | 2 | 320x200 |
+| **2** | 2 | 8 | 1 | 640x200 |
+
+### Paleta de Colores CPC
+
+La herramienta convierte automáticamente los colores RGB de tus PNG a los 27 INKs del Amstrad CPC:
+
+```
+INK 0  = Negro (0,0,0)
+INK 1  = Azul oscuro (0,0,128)
+INK 2  = Azul (0,0,255)
+INK 3  = Rojo oscuro (128,0,0)
+INK 4  = Magenta oscuro (128,0,128)
+INK 5  = Magenta (128,0,255)
+INK 6  = Rojo (255,0,0)
+INK 7  = Rosa (255,0,128)
+INK 8  = Rosa claro (255,0,255)
+INK 9  = Verde oscuro (0,128,0)
+INK 10 = Cian oscuro (0,128,128)
+INK 11 = Cian (0,128,255)
+INK 12 = Amarillo oscuro (128,128,0)
+INK 13 = Gris (128,128,128)
+INK 14 = Azul pastel (128,128,255)
+INK 15 = Naranja (255,128,0)
+INK 16 = Rosa pastel (255,128,128)
+INK 17 = Lila (255,128,255)
+INK 18 = Verde (0,255,0)
+INK 19 = Verde agua (0,255,128)
+INK 20 = Cian claro (0,255,255)
+INK 21 = Amarillo verdoso (128,255,0)
+INK 22 = Verde pastel (128,255,128)
+INK 23 = Cian pastel (128,255,255)
+INK 24 = Amarillo (255,255,0)
+INK 25 = Amarillo pastel (255,255,128)
+INK 26 = Blanco (255,255,255)
+```
+
+### Estructura de Carpetas
+
+```
+mi-juego/
+├── assets/                # Recursos del proyecto
+│   └── sprites/           # Tus PNG originales
+│       ├── player.png
+│       ├── enemies/
+│       │   ├── enemy1.png
+│       │   └── enemy2.png
+│       └── tiles/
+│           ├── tile1.png
+│           └── tile2.png
+│
+└── ASM/
+    └── sprites.asm        # Generado automáticamente
+```
+
+### Uso
+
+```bash
+# 1. Coloca tus PNG en la carpeta assets/sprites/
+# 2. Configura SPRITES_PATH en dev8bp.conf
+SPRITES_PATH="assets/sprites"
+# 3. Compila normalmente
+dev8bp build
+```
+
+La conversión se ejecuta automáticamente antes de compilar el ASM.
+
+### Formato del ASM Generado
+
+```asm
+; MODE 0
+
+PLAYER
+;------ BEGIN IMAGE --------
+  db 2 ; ancho en bytes
+  db 16 ; alto
+  db 0, 0
+  db 0, 0
+  db 85, 85
+  ; ... más bytes
+;------ END IMAGE --------
+  ; Paleta (PEN -> INK) detectada en el PNG
+  ; INK 0,0
+  ; INK 1,24
+  ; INK 2,6
+
+ENEMY1
+;------ BEGIN IMAGE --------
+  db 2 ; ancho en bytes
+  db 16 ; alto
+  ; ... bytes
+;------ END IMAGE --------
+  ; INK 0,0
+  ; INK 1,2
+```
+
+### Requisitos de los PNG
+
+1. **Ancho**: Debe ser múltiplo de:
+   - Modo 0: múltiplo de 2 píxeles
+   - Modo 1: múltiplo de 4 píxeles
+   - Modo 2: múltiplo de 8 píxeles
+
+2. **Colores**: Máximo:
+   - Modo 0: 16 colores
+   - Modo 1: 4 colores
+   - Modo 2: 2 colores
+
+3. **Paleta**: Usa colores de la paleta CPC (o cercanos con tolerancia)
+
+### Tolerancia RGB
+
+La tolerancia define cuánto puede diferir un color del PNG de la paleta CPC:
+
+```bash
+# Exacto (solo colores CPC exactos)
+SPRITES_TOLERANCE=0
+
+# Recomendado (permite pequeñas variaciones)
+SPRITES_TOLERANCE=8
+
+# Automático (siempre encuentra el color más cercano)
+SPRITES_TOLERANCE=-1
+```
+
+### Transparencia
+
+Puedes definir un INK para píxeles transparentes (alpha=0):
+
+```bash
+# Píxeles transparentes = INK 0 (negro)
+SPRITES_TRANSPARENT_INK=0
+```
+
+### Ejemplo Completo
+
+```bash
+# 1. Crear proyecto
+dev8bp new mi-juego
+cd mi-juego
+
+# 2. Copiar tus PNG a la carpeta de sprites
+cp /ruta/a/sprites/*.png assets/sprites/
+
+# 3. Configurar dev8bp.conf
+SPRITES_PATH="assets/sprites"
+MODE=0
+SPRITES_OUT_FILE="ASM/sprites.asm"
+SPRITES_TOLERANCE=8
+
+# 4. Compilar
+dev8bp build
+```
+
+**Salida:**
+```
+═══════════════════════════════════════
+  Convertir Sprites PNG a ASM
+═══════════════════════════════════════
+
+ℹ Ruta sprites:    assets/sprites
+ℹ Modo CPC:        0
+ℹ Archivo salida:  ASM/sprites.asm
+ℹ Tolerancia RGB:  8
+
+ℹ Ejecutando png2asm.py...
+
+OK: ASM/sprites.asm
+PNGs encontrados: 3  | Convertidos OK: 3  | Errores: 0
+
+Resumen:
+PNG           Label      Size(px)  Bytes/line  Colors  Fallback  Status
+player.png    player     16x16     2           4       no        OK
+enemy1.png    enemy1     16x16     2           3       no        OK
+tile1.png     tile1      8x8       1           2       no        OK
+
+✓ Sprites convertidos exitosamente
+```
+
+### Usar los Sprites en tu Código
+
+```asm
+; En tu make_all_mygame.asm
+include "sprites.asm"
+
+; Usar los sprites
+ld hl, PLAYER
+call |PSPRITE
+
+ld hl, ENEMY1
+call |PSPRITE
+```
+
+### Solución de Problemas
+
+**Error: "Pillow no instalado"**
+```bash
+pip3 install Pillow
+```
+
+**Error: "ancho no divisible"**
+- Modo 0: ancho debe ser par (2, 4, 6, 8, 10, 12, 14, 16...)
+- Modo 1: ancho debe ser múltiplo de 4 (4, 8, 12, 16, 20...)
+- Modo 2: ancho debe ser múltiplo de 8 (8, 16, 24, 32...)
+
+**Error: "usa X INKs pero MODE permite Y"**
+- Reduce los colores de tu PNG
+- Usa un modo con más colores (0 = 16, 1 = 4, 2 = 2)
+
+**Error: "Color no coincide con paleta CPC"**
+- Aumenta la tolerancia: `SPRITES_TOLERANCE=16`
+- O usa tolerancia automática: `SPRITES_TOLERANCE=-1`
+- O ajusta los colores del PNG a la paleta CPC
 
 ---
 
@@ -537,26 +824,11 @@ dev8bp run
 ### Características
 
 - ✅ Cierra sesiones anteriores automáticamente
-- ✅ Carga el DSK generado
+- ✅ Carga el DSK/CDT generado
 - ✅ Auto-ejecuta el archivo especificado
 - ✅ Funciona en background
 
 ---
-
-## ❓ Preguntas Frecuentes (FAQ)
-
-### ¿Por qué BP_ASM_PATH y no ASM_PATH?
-
-Las variables en bash no pueden empezar con números. `8BP_ASM_PATH` no es válido, por lo que usamos `BP_ASM_PATH` (BP = 8-Bit Power).
-
-### ¿Puedo usar solo BASIC sin ASM?
-
-Sí, todas las rutas son opcionales. Simplemente comenta `BP_ASM_PATH` en tu `dev8bp.conf`:
-
-```bash
-#BP_ASM_PATH="ASM"
-BASIC_PATH="bas"
-```
 
 ### ¿Qué es BUILD_LEVEL?
 
@@ -615,172 +887,6 @@ git pull origin main
 ### ¿Dónde está la documentación de 8BP?
 
 La documentación completa de 8BP está en el [repositorio oficial de 8BP](https://github.com/jjaranda13/8BP).
-
-### ¿Puedo contribuir al proyecto?
-
-¡Por supuesto! Abre un issue o pull request en GitHub.
-
----
-
-## 🐛 Solución de Problemas
-
-### Error: "ABASM no encontrado"
-
-```bash
-# Verificar que Dev8bp/tools/abasm existe
-ls -la Dev8bp/tools/abasm/
-
-# Si no existe, reinstalar
-./setup.sh
-```
-
-### Error: "Python no encontrado"
-
-```bash
-# Instalar Python 3
-# macOS
-brew install python3
-
-# Linux
-sudo apt-get install python3
-
-# Verificar
-python3 --version
-```
-
-### Error: "SDCC no instalado"
-
-```bash
-# Solo necesario si compilas código C
-# macOS
-brew install sdcc
-
-# Linux
-sudo apt-get install sdcc
-```
-
-### Error: "_END_GRAPH excede 42040"
-
-Tu proyecto usa demasiados gráficos (más de 8440 bytes). **Soluciones:**
-
-1. **Reducir gráficos** - Elimina sprites o tiles no usados
-2. **Optimizar gráficos** - Comprime o reutiliza tiles
-3. **Ensamblar en otra zona de memoria:**
-   ```asm
-   ; En tu código ASM (make_all_mygame.asm)
-   org 22000
-   ; Gráficos extra aquí
-   incbin "extra_graphics.bin"
-   ```
-   ```basic
-   ' En BASIC
-   MEMORY 21999
-   ```
-
-**Explicación:** La librería 8BP usa memoria desde 33600 hasta 42040 (8440 bytes) para gráficos. Si `_END_GRAPH >= 42040`, estarás sobrescribiendo el intérprete BASIC.
-
-### Error: "Código C excede 23999"
-
-Tu código C es demasiado grande y sobrescribe la librería 8BP. **Soluciones:**
-
-1. **Usar dirección más baja:**
-   ```bash
-   # En dev8bp.conf
-   C_CODE_LOC=19000
-   ```
-   ```basic
-   ' En BASIC
-   MEMORY 18999
-   ```
-
-2. **Optimizar código:**
-   - Usa flags de optimización de SDCC
-   - Reduce el tamaño del código
-   - Elimina funciones no usadas
-
-3. **Verificar el .map:**
-   ```bash
-   # Ver el archivo obj/main.map
-   cat obj/main.map | grep "Highest address"
-   ```
-
-**Explicación:** La librería 8BP se carga en 23600-42620. Tu código C debe estar por debajo de 23999 para no destruirla.
-
----
-
-## 💡 Consejos y Trucos
-
-### Workflow recomendado
-
-```bash
-# 1. Validar antes de compilar
-dev8bp validate
-
-# 2. Compilar
-dev8bp build
-
-# 3. Si hay errores, limpiar y reintentar
-dev8bp clean
-dev8bp build
-
-# 4. Ejecutar para probar
-dev8bp run
-```
-
-### Organización de código ASM
-
-```
-ASM/
-├── make_all_mygame.asm      # Archivo principal (incluye todo)
-├── images_mygame.asm        # Definición de gráficos
-├── music_mygame.asm         # Música y efectos
-├── sprites/                 # Sprites individuales
-│   ├── player.asm
-│   └── enemies.asm
-└── tiles/                   # Tiles del mapa
-    └── tileset.asm
-```
-
-### Variables importantes en make_all_mygame.asm
-
-```asm
-; Nivel de compilación (modificado automáticamente por dev8bp)
-let ASSEMBLING_OPTION = 0
-
-; Etiquetas importantes
-_START_GRAPH:     ; Inicio de gráficos (33600)
-_END_GRAPH:       ; Fin de gráficos (debe ser < 42040)
-```
-
-### Compilación rápida
-
-```bash
-# Alias útil (añadir a ~/.bashrc)
-alias d8b='dev8bp'
-
-# Uso
-d8b build
-d8b run
-```
-
-### Ver solo errores
-
-```bash
-dev8bp build 2>&1 | grep -E "(✗|Error)"
-```
-
-### Compilar múltiples niveles
-
-```bash
-# Compilar nivel 0
-dev8bp build
-
-# Cambiar a nivel 2 en dev8bp.conf
-# BUILD_LEVEL=2
-
-# Compilar nivel 2
-dev8bp build
-```
 
 ---
 
@@ -863,7 +969,7 @@ MIT License - Copyright (c) 2026 Destroyer
 
 - **[jjaranda13](https://github.com/jjaranda13)** - Creador de [8BP](https://github.com/jjaranda13/8BP)
 - **[fragarco](https://github.com/fragarco)** - Creador de [ABASM](https://github.com/fragarco/abasm)
-
+- **[Javi Fernandez](https://github.com/javy-fernandez)** - Creador de [8bp-graphics-converter](https://github.com/javy-fernandez/8bp-graphics-converter)
 ---
 
 ## 📚 Recursos Adicionales
@@ -874,35 +980,15 @@ MIT License - Copyright (c) 2026 Destroyer
 - [Manual de 8BP (PDF)](https://github.com/jjaranda13/8BP/blob/master/8BP_MANUAL.pdf)
 - [Ejemplos de 8BP](https://github.com/jjaranda13/8BP/tree/master/examples)
 
-### Herramientas
-
-- [ABASM - Ensamblador Z80](https://github.com/fragarco/abasm)
-- [SDCC - Small Device C Compiler](http://sdcc.sourceforge.net/)
-- [RetroVirtualMachine](https://www.retrovirtualmachine.org/)
-
-### Comunidad Amstrad CPC
-
-- [CPCWiki](https://www.cpcwiki.eu/)
-- [Amstrad.es](https://www.amstrad.es/)
-- [CPCRulez](https://www.cpcrulez.fr/)
-
-### Tutoriales
-
-- [Programación en Z80 para CPC](https://www.cpcwiki.eu/index.php/Programming)
-- [Gráficos en Amstrad CPC](https://www.cpcwiki.eu/index.php/Video_modes)
-- [Música con WYZTracker](https://www.cpcwiki.eu/index.php/WYZTracker)
 
 ---
 
-## 🎮 Showcase
+## 🐞 Bugs
 
-¿Has creado algo con Dev8BP? ¡Compártelo!
+Si encuentras un Bug o deseas plantear alguna mejora ¡Compártelo!
 
-Abre un issue en GitHub con:
-- Nombre de tu proyecto
-- Captura de pantalla o GIF
-- Breve descripción
-- Link al código (opcional)
+- [Bugs - Mejoras](https://github.com/destroyer-dcf/Dev8BP/issues)
+
 
 ---
 

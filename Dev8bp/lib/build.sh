@@ -15,6 +15,7 @@ build_project() {
     source "$DEV8BP_LIB/compile_asm.sh"
     source "$DEV8BP_LIB/compile_c.sh"
     source "$DEV8BP_LIB/dsk.sh"
+    source "$DEV8BP_LIB/graphics.sh"
     
     header "Compilar Proyecto: $PROJECT_NAME"
     
@@ -28,7 +29,20 @@ build_project() {
     
     local has_errors=0
     
-    # 1. Compilar ASM si está configurado
+    # 1. Convertir sprites PNG a ASM si está configurado
+    if [[ -n "$SPRITES_PATH" ]]; then
+        if ! convert_sprites; then
+            has_errors=1
+        fi
+    fi
+    
+    # Si hubo errores en conversión de sprites, no continuar
+    if [[ $has_errors -eq 1 ]]; then
+        error "Conversión de sprites fallida"
+        exit 1
+    fi
+    
+    # 2. Compilar ASM si está configurado
     if [[ -n "$BP_ASM_PATH" ]]; then
         if ! compile_asm; then
             has_errors=1
@@ -41,7 +55,7 @@ build_project() {
         exit 1
     fi
     
-    # 2. Crear DSK
+    # 3. Crear DSK
     header "Crear Imagen DSK"
     
     info "DSK: $DSK"
@@ -55,7 +69,7 @@ build_project() {
     
     echo ""
     
-    # 3. Añadir binario ASM al DSK si existe
+    # 4. Añadir binario ASM al DSK si existe
     if [[ -n "$BP_ASM_PATH" && -f "$OBJ_DIR/8BP${BUILD_LEVEL}.bin" ]]; then
         local load_addr=$(get_load_addr_for_level $BUILD_LEVEL)
         if ! add_bin_to_dsk "$DSK" "8BP${BUILD_LEVEL}.bin" "$load_addr" "$load_addr"; then
@@ -65,7 +79,7 @@ build_project() {
         echo ""
     fi
     
-    # 4. Compilar C si está configurado
+    # 5. Compilar C si está configurado
     if [[ -n "$C_PATH" ]]; then
         if ! compile_c; then
             error "Compilación C fallida\n"
@@ -73,13 +87,13 @@ build_project() {
         fi
     fi
     
-    # 5. Añadir archivos BASIC
+    # 6. Añadir archivos BASIC
     add_basic_to_dsk || true
     
-    # 6. Añadir archivos RAW
+    # 7. Añadir archivos RAW
     add_raw_to_dsk || true
     
-    # 7. Mostrar catálogo del DSK
+    # 8. Mostrar catálogo del DSK
     show_dsk_catalog
     
     # Resumen final

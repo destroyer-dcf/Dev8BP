@@ -13,7 +13,8 @@ if [[ -z "$DEV8BP_PATH" ]]; then
 fi
 
 export DEV8BP_CLI_ROOT="$DEV8BP_PATH"
-DEV8BP_LIB="$DEV8BP_PATH/lib"
+export DEV8BP_LIB="$DEV8BP_PATH/lib"
+export DEV8BP_TOOLS="$DEV8BP_PATH/tools"
 
 # Cargar librerías
 source "$DEV8BP_LIB/colors.sh"
