@@ -149,11 +149,9 @@ compile_c() {
             info "Uso desde BASIC:"
             echo "  1) Carga o ensambla 8BP con tus gráficos, música, etc."
             echo "  2) Carga tu juego BASIC"
-            echo "  3) LOAD \"$basename.BIN\", $code_loc"
-            echo "  4) CALL <dirección de _main del .map>"
-            echo ""
-            
-            return 0
+            echo "  3) LOAD\"$basename.BIN\""
+            echo "  4) CALL <dirección de _main del .map (en formato &XXXX)>"
+            echo ""            return 0
         else
             error "Error al convertir .ihx a .bin"
             echo "$hex2bin_output"

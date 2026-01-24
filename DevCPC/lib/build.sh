@@ -191,9 +191,10 @@ build_project() {
         echo "  LOAD\"8BP${BUILD_LEVEL}.bin\""
         echo "  CALL &6B78"
     elif [[ -n "$ASM_PATH" && -n "$TARGET" && -n "$LOADADDR" ]]; then
-        # Modo ASM puro
-        echo "  LOAD\"${TARGET}.bin\",${LOADADDR}"
-        echo "  CALL ${LOADADDR}"
+        # Modo ASM puro - convertir 0x a & para BASIC
+        local basic_addr="${LOADADDR/0x/&}"
+        echo "  LOAD\"${TARGET}.bin\""
+        echo "  CALL ${basic_addr}"
     else
         echo "  (No hay código ASM compilado)"
     fi
