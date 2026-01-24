@@ -6,23 +6,45 @@
 
 # Cargar utilidades si no están cargadas
 if [[ -z "$(type -t register_in_map)" ]]; then
-    source "${DEV8BP_LIB:-$(dirname "$0")}/utils.sh"
+    source "${DEVCPC_LIB:-$(dirname "$0")}/utils.sh"
 fi
 
 compile_asm() {
-    if [[ -z "$BP_ASM_PATH" ]]; then
+    if [[ -z "$ASM_PATH" ]]; then
         return 0
     fi
     
-    if [[ ! -d "$BP_ASM_PATH" ]]; then
-        warning "BP_ASM_PATH no existe: $BP_ASM_PATH"
+    # Verificar que ASM_PATH existe (puede ser archivo o directorio)
+    if [[ ! -e "$ASM_PATH" ]]; then
+        warning "ASM_PATH no existe: $ASM_PATH"
         return 0
     fi
     
-    local asm_file="$BP_ASM_PATH/make_all_mygame.asm"
+    # Detectar modo de compilación: 8BP (con BUILD_LEVEL) o ASM puro
+    if [[ -n "$BUILD_LEVEL" ]]; then
+        # =========================================
+        # MODO 8BP: Compilación con BUILD_LEVEL
+        # =========================================
+        compile_asm_8bp
+    else
+        # =========================================
+        # MODO ASM PURO: Compilación estándar
+        # =========================================
+        compile_asm_pure
+    fi
+}
+
+# ==============================================================================
+# Compilación 8BP (con BUILD_LEVEL)
+# ==============================================================================
+compile_asm_8bp() {
+    local asm_file="$ASM_PATH"
+    
+    # Para 8BP, ASM_PATH debe ser un archivo
     if [[ ! -f "$asm_file" ]]; then
-        warning "No se encontró make_all_mygame.asm en $BP_ASM_PATH"
-        return 0
+        error "Para proyectos 8BP, ASM_PATH debe ser un archivo"
+        error "Ruta actual: $ASM_PATH"
+        return 1
     fi
     
     header "Compilar ASM - Build Level $BUILD_LEVEL"
@@ -87,19 +109,21 @@ EOF
     
     local project_root="$(pwd)"
     local compile_output
+    local asm_dir="$(dirname "$asm_file")"
+    local asm_filename="$(basename "$asm_file")"
     
-    if compile_output=$(cd "$BP_ASM_PATH" && $python_cmd "$abasm_path" "make_all_mygame.asm" --tolerance 2 2>&1); then
+    if compile_output=$(cd "$asm_dir" && $python_cmd "$abasm_path" "$asm_filename" --tolerance 2 2>&1); then
         # Mover archivos generados
-        if [[ -f "$BP_ASM_PATH/8BP${BUILD_LEVEL}.bin" ]]; then
-            mv "$BP_ASM_PATH/8BP${BUILD_LEVEL}.bin" "$OBJ_DIR/"
-            [[ -f "$BP_ASM_PATH/make_all_mygame.bin" ]] && mv "$BP_ASM_PATH/make_all_mygame.bin" "$OBJ_DIR/"
+        if [[ -f "$asm_dir/8BP${BUILD_LEVEL}.bin" ]]; then
+            mv "$asm_dir/8BP${BUILD_LEVEL}.bin" "$OBJ_DIR/"
+            [[ -f "$asm_dir/make_all_mygame.bin" ]] && mv "$asm_dir/make_all_mygame.bin" "$OBJ_DIR/"
             
             # Mover .lst y .map
-            find "$BP_ASM_PATH" -name "*.lst" -exec mv {} "$OBJ_DIR/" \; 2>/dev/null || true
-            find "$BP_ASM_PATH" -name "*.map" -exec mv {} "$OBJ_DIR/" \; 2>/dev/null || true
+            find "$asm_dir" -name "*.lst" -exec mv {} "$OBJ_DIR/" \; 2>/dev/null || true
+            find "$asm_dir" -name "*.map" -exec mv {} "$OBJ_DIR/" \; 2>/dev/null || true
             
             # Limpiar binarios en ASM
-            rm -f "$BP_ASM_PATH"/*.bin
+            rm -f "$asm_dir"/*.bin
             
             # Restaurar backup
             mv "$asm_file.backup_build" "$asm_file"
@@ -183,3 +207,118 @@ verify_graphics_limit() {
     echo ""
     return 0
 }
+
+# ==============================================================================
+# Compilación ASM pura (sin BUILD_LEVEL, para proyectos ASM estándar)
+# ==============================================================================
+compile_asm_pure() {
+    header "Compilar ASM Puro"
+    
+    # Validar variables requeridas
+    if [[ -z "$LOADADDR" ]]; then
+        error "LOADADDR no está definido en devcpc.conf"
+        echo ""
+        info "Para proyectos ASM sin 8BP, necesitas:"
+        echo "  LOADADDR=0x1200    # Dirección de carga"
+        echo "  SOURCE=\"main\"      # Archivo fuente (sin .asm)"
+        echo "  TARGET=\"program\"   # Nombre del binario"
+        return 1
+    fi
+    
+    if [[ -z "$SOURCE" ]]; then
+        error "SOURCE no está definido en devcpc.conf"
+        return 1
+    fi
+    
+    if [[ -z "$TARGET" ]]; then
+        error "TARGET no está definido en devcpc.conf"
+        return 1
+    fi
+    
+    # Verificar ABASM
+    local abasm_path="$DEVCPC_CLI_ROOT/tools/abasm/src/abasm.py"
+    if [[ ! -f "$abasm_path" ]]; then
+        error "ABASM no encontrado en: $abasm_path"
+        return 1
+    fi
+    
+    local python_cmd=$(command -v python3 || command -v python)
+    
+    # Determinar archivo fuente
+    local source_file="${SOURCE%.asm}.asm"
+    local source_path
+    local source_dir
+    
+    # Buscar el archivo
+    if [[ -f "$ASM_PATH" ]]; then
+        # ASM_PATH es un archivo directo
+        source_path="$ASM_PATH"
+        source_dir="$(dirname "$ASM_PATH")"
+    elif [[ -d "$ASM_PATH" ]]; then
+        # ASM_PATH es un directorio, buscar SOURCE dentro
+        source_path="$ASM_PATH/$source_file"
+        source_dir="$ASM_PATH"
+    else
+        # Buscar en directorio actual
+        source_path="$source_file"
+        source_dir="."
+    fi
+    
+    if [[ ! -f "$source_path" ]]; then
+        error "No se encontró el archivo fuente: $source_path"
+        echo ""
+        info "Verifica en devcpc.conf:"
+        echo "  ASM_PATH=\"$(dirname "$source_path")\""
+        echo "  SOURCE=\"${SOURCE%.asm}\""
+        return 1
+    fi
+    
+    info "Archivo:      $(basename "$source_path")"
+    info "Ruta:         $source_path"
+    info "Target:       ${TARGET}.bin"
+    info "Load Addr:    $LOADADDR"
+    info "ABASM:        $abasm_path"
+    echo ""
+    
+    # Compilar
+    step "Compilando con ABASM..."
+    
+    local compile_output
+    local source_name="$(basename "$source_path")"
+    
+    if compile_output=$(cd "$source_dir" && $python_cmd "$abasm_path" "$source_name" --tolerance 2 2>&1); then
+        # Buscar binario generado
+        local generated_bin="$source_dir/${SOURCE%.asm}.bin"
+        
+        if [[ -f "$generated_bin" ]]; then
+            # Mover y renombrar
+            mv "$generated_bin" "$OBJ_DIR/${TARGET}.bin"
+            
+            # Mover .lst y .map si existen
+            [[ -f "$source_dir/${SOURCE%.asm}.lst" ]] && mv "$source_dir/${SOURCE%.asm}.lst" "$OBJ_DIR/"
+            [[ -f "$source_dir/${SOURCE%.asm}.map" ]] && mv "$source_dir/${SOURCE%.asm}.map" "$OBJ_DIR/"
+            
+            local size=$(get_file_size "$OBJ_DIR/${TARGET}.bin")
+            echo ""
+            success "Compilación exitosa"
+            info "Archivo:   ${TARGET}.bin"
+            info "Ubicación: $OBJ_DIR/${TARGET}.bin"
+            info "Tamaño:    $size bytes"
+            echo ""
+            
+            # Registrar en map.cfg (convertir LOADADDR hex a decimal)
+            local load_dec=$(hex_to_dec "${LOADADDR#0x}")
+            register_in_map "${TARGET}.bin" "bin" "$load_dec" "$load_dec"
+            
+            return 0
+        else
+            error "No se generó el binario ${SOURCE%.asm}.bin"
+            return 1
+        fi
+    else
+        error "Error en la compilación:"
+        echo "$compile_output"
+        return 1
+    fi
+}
+

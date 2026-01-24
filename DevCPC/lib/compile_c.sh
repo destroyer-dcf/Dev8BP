@@ -6,7 +6,7 @@
 
 # Cargar utilidades si no están cargadas
 if [[ -z "$(type -t register_in_map)" ]]; then
-    source "${DEV8BP_LIB:-$(dirname "$0")}/utils.sh"
+    source "${DEVCPC_LIB:-$(dirname "$0")}/utils.sh"
 fi
 
 compile_c() {
@@ -36,10 +36,10 @@ compile_c() {
         return 1
     fi
     
-    # Verificar hex2bin (usar desde dev8bp-cli/tools)
+    # Verificar hex2bin (usar desde devcpc-cli/tools)
     local os=$(detect_os)
     local arch=$(detect_arch)
-    local hex2bin_path="$DEV8BP_CLI_ROOT/tools/hex2bin"
+    local hex2bin_path="$DEVCPC_CLI_ROOT/tools/hex2bin"
     
     case "$os-$arch" in
         macos-arm64)    hex2bin_path="$hex2bin_path/mac-arm64/hex2bin" ;;

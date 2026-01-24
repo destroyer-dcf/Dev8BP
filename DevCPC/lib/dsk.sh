@@ -6,7 +6,7 @@
 
 # Cargar utilidades si no están cargadas
 if [[ -z "$(type -t register_in_map)" ]]; then
-    source "${DEV8BP_LIB:-$(dirname "$0")}/utils.sh"
+    source "${DEVCPC_LIB:-$(dirname "$0")}/utils.sh"
 fi
 
 create_dsk() {
@@ -51,7 +51,7 @@ add_bin_to_dsk() {
         return 1
     fi
     
-    local dsk_tool="$DEV8BP_CLI_ROOT/tools/abasm/src/dsk.py"
+    local dsk_tool="$DEVCPC_CLI_ROOT/tools/abasm/src/dsk.py"
     local python_cmd=$(command -v python3 || command -v python)
     
     step "Añadiendo binario: $bin_file"
@@ -82,7 +82,7 @@ add_basic_to_dsk() {
     echo ""
     step "Añadiendo archivos BASIC..."
     
-    local dsk_tool="$DEV8BP_CLI_ROOT/tools/abasm/src/dsk.py"
+    local dsk_tool="$DEVCPC_CLI_ROOT/tools/abasm/src/dsk.py"
     local python_cmd=$(command -v python3 || command -v python)
     local dsk_path="$DIST_DIR/$DSK"
     local count=0
@@ -135,7 +135,7 @@ add_raw_to_dsk() {
     echo ""
     step "Añadiendo archivos RAW..."
     
-    local dsk_tool="$DEV8BP_CLI_ROOT/tools/abasm/src/dsk.py"
+    local dsk_tool="$DEVCPC_CLI_ROOT/tools/abasm/src/dsk.py"
     local python_cmd=$(command -v python3 || command -v python)
     local dsk_path="$DIST_DIR/$DSK"
     local count=0
@@ -173,11 +173,11 @@ show_dsk_catalog() {
         return 0
     fi
     
-    local dsk_tool="$DEV8BP_CLI_ROOT/tools/abasm/src/dsk.py"
+    local dsk_tool="$DEVCPC_CLI_ROOT/tools/abasm/src/dsk.py"
     local python_cmd=$(command -v python3 || command -v python)
     
     echo ""
-    step "Catálogo del DSK:"
+    step "Contenido del DSK:\n"
     $python_cmd "$dsk_tool" "$dsk_path" --cat 2>/dev/null || true
     echo ""
 }

@@ -40,10 +40,10 @@ validate_project() {
     
     local has_source=0
     
-    if [[ -n "$BP_ASM_PATH" ]]; then
-        if [[ -d "$BP_ASM_PATH" ]]; then
-            success "BP_ASM_PATH: $BP_ASM_PATH"
-            if [[ -f "$BP_ASM_PATH/make_all_mygame.asm" ]]; then
+    if [[ -n "$ASM_PATH" ]]; then
+        if [[ -d "$ASM_PATH" ]]; then
+            success "ASM_PATH: $ASM_PATH"
+            if [[ -f "$ASM_PATH/make_all_mygame.asm" ]]; then
                 success "  make_all_mygame.asm encontrado"
                 ((has_source++))
             else
@@ -51,7 +51,7 @@ validate_project() {
                 ((warnings++))
             fi
         else
-            error "BP_ASM_PATH no existe: $BP_ASM_PATH"
+            error "ASM_PATH no existe: $ASM_PATH"
             ((errors++))
         fi
     fi

@@ -118,7 +118,7 @@ register_in_map() {
     local load_addr="$3"
     local exec_addr="$4"
     
-    local map_file="$OBJ_DIR/DevCPC_map.cfg"
+    local map_file="$OBJ_DIR/${PROJECT_NAME}.map"
     local map_tool="$DEVCPC_CLI_ROOT/tools/map/map.py"
     
     # Verificar que existe map.py

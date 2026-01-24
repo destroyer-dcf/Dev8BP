@@ -13,11 +13,12 @@ build_project() {
     load_config
     
     # Cargar librerías de compilación
-    source "$DEV8BP_LIB/compile_asm.sh"
-    source "$DEV8BP_LIB/compile_c.sh"
-    source "$DEV8BP_LIB/dsk.sh"
-    source "$DEV8BP_LIB/graphics.sh"
-    source "$DEV8BP_LIB/screens.sh"
+    source "$DEVCPC_LIB/compile_asm.sh"
+    source "$DEVCPC_LIB/compile_c.sh"
+    source "$DEVCPC_LIB/dsk.sh"
+    source "$DEVCPC_LIB/cdt.sh"
+    source "$DEVCPC_LIB/graphics.sh"
+    source "$DEVCPC_LIB/screens.sh"
     
     header "Compilar Proyecto: $PROJECT_NAME"
     
@@ -34,8 +35,12 @@ build_project() {
     local arch_name=$(detect_arch)
     
     info "Sistema: $os_name ($arch_name)"
-    info "Build Level: $BUILD_LEVEL ($(get_level_description $BUILD_LEVEL))"
-    info "Memoria BASIC: MEMORY $(get_memory_for_level $BUILD_LEVEL)"
+    if [[ -n "$BUILD_LEVEL" ]]; then
+        info "Build Level: $BUILD_LEVEL ($(get_level_description $BUILD_LEVEL))"
+        info "Memoria BASIC: MEMORY $(get_memory_for_level $BUILD_LEVEL)"
+    else
+        info "Modo: ASM Puro (sin BUILD_LEVEL)"
+    fi
     echo ""
     
     # Crear directorios
@@ -43,7 +48,7 @@ build_project() {
     ensure_dir "$DIST_DIR"
     
     # Limpiar map.cfg anterior
-    rm -f "${OBJ_DIR}/DevCPC_map.cfg"
+    rm -f "${OBJ_DIR}/${PROJECT_NAME}.map"
     
     local has_errors=0
     
@@ -74,7 +79,7 @@ build_project() {
     fi
     
     # 2. Compilar ASM si está configurado
-    if [[ -n "$BP_ASM_PATH" ]]; then
+    if [[ -n "$ASM_PATH" ]]; then
         if ! compile_asm; then
             has_errors=1
         fi
@@ -101,13 +106,23 @@ build_project() {
     echo ""
     
     # 4. Añadir binario ASM al DSK si existe
-    if [[ -n "$BP_ASM_PATH" && -f "$OBJ_DIR/8BP${BUILD_LEVEL}.bin" ]]; then
-        local load_addr=$(get_load_addr_for_level $BUILD_LEVEL)
-        if ! add_bin_to_dsk "$DSK" "8BP${BUILD_LEVEL}.bin" "$load_addr" "$load_addr"; then
-            error "Error al añadir binario ASM al DSK"
-            exit 1
+    if [[ -n "$ASM_PATH" ]]; then
+        # Proyecto 8BP: usar 8BP${BUILD_LEVEL}.bin
+        if [[ -n "$BUILD_LEVEL" && -f "$OBJ_DIR/8BP${BUILD_LEVEL}.bin" ]]; then
+            local load_addr=$(get_load_addr_for_level $BUILD_LEVEL)
+            if ! add_bin_to_dsk "$DSK" "8BP${BUILD_LEVEL}.bin" "$load_addr" "$load_addr"; then
+                error "Error al añadir binario ASM al DSK"
+                exit 1
+            fi
+            echo ""
+        # Proyecto ASM puro: usar ${TARGET}.bin
+        elif [[ -z "$BUILD_LEVEL" && -n "$TARGET" && -f "$OBJ_DIR/${TARGET}.bin" ]]; then
+            if ! add_bin_to_dsk "$DSK" "${TARGET}.bin" "$LOADADDR" "$LOADADDR"; then
+                error "Error al añadir binario ASM al DSK"
+                exit 1
+            fi
+            echo ""
         fi
-        echo ""
     fi
     
     # 4.5. Añadir pantallas de carga al DSK si existen
@@ -132,8 +147,17 @@ build_project() {
     # 7. Añadir archivos RAW
     add_raw_to_dsk || true
     
-    # 8. Mostrar catálogo del DSK
+    # 8. Mostrar contenido del DSK
     show_dsk_catalog
+    
+    # 9. Crear CDT si está configurado
+    if [[ -n "$CDT" && -n "$CDT_FILES" ]]; then
+        if ! create_cdt; then
+            error "Error al crear cinta CDT"
+            exit 1
+        fi
+        show_cdt_catalog
+    fi
     
     # Resumen final
     header "Compilación Completada"
@@ -144,23 +168,40 @@ build_project() {
     info "Archivos generados:"
     echo "  DSK: $DIST_DIR/$DSK"
     
-    if [[ -n "$BP_ASM_PATH" && -f "$OBJ_DIR/8BP${BUILD_LEVEL}.bin" ]]; then
+    # Mostrar binario 8BP
+    if [[ -n "$ASM_PATH" && -n "$BUILD_LEVEL" && -f "$OBJ_DIR/8BP${BUILD_LEVEL}.bin" ]]; then
         echo "  BIN: $OBJ_DIR/8BP${BUILD_LEVEL}.bin"
+    fi
+    
+    # Mostrar binario ASM puro
+    if [[ -n "$ASM_PATH" && -z "$BUILD_LEVEL" && -n "$TARGET" && -f "$OBJ_DIR/${TARGET}.bin" ]]; then
+        echo "  BIN: $OBJ_DIR/${TARGET}.bin"
+    fi
+    
+    if [[ -n "$CDT" && -f "$DIST_DIR/$CDT" ]]; then
+        echo "  CDT: $DIST_DIR/$CDT"
     fi
     
     echo ""
     
     info "Uso desde BASIC:"
-    echo "  MEMORY $(get_memory_for_level $BUILD_LEVEL)"
-    if [[ -n "$BP_ASM_PATH" ]]; then
+    if [[ -n "$BUILD_LEVEL" ]]; then
+        # Modo 8BP
+        echo "  MEMORY $(get_memory_for_level $BUILD_LEVEL)"
         echo "  LOAD\"8BP${BUILD_LEVEL}.bin\""
         echo "  CALL &6B78"
+    elif [[ -n "$ASM_PATH" && -n "$TARGET" && -n "$LOADADDR" ]]; then
+        # Modo ASM puro
+        echo "  LOAD\"${TARGET}.bin\",${LOADADDR}"
+        echo "  CALL ${LOADADDR}"
+    else
+        echo "  (No hay código ASM compilado)"
     fi
     
     echo ""
     
     if [[ -n "$RVM_PATH" ]]; then
-        info "Para ejecutar: dev8bp run"
+        info "Para ejecutar: devcpc run"
     else
         info "Configura RVM_PATH en devcpc.conf para usar 'devcpc run'"
     fi

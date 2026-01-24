@@ -6,7 +6,7 @@
 
 # Cargar utilidades si no están cargadas
 if [[ -z "$(type -t register_in_map)" ]]; then
-    source "${DEV8BP_LIB:-$(dirname "$0")}/utils.sh"
+    source "${DEVCPC_LIB:-$(dirname "$0")}/utils.sh"
 fi
 
 # Convertir pantallas de carga PNG a formato SCN

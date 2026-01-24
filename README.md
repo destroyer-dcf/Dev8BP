@@ -30,11 +30,14 @@ Esta idea nace de la necesidad de poder compilar la librería [8BP](https://gith
 - ✅ **RAW** - Archivos binarios sin encabezado AMSDOS
 - ✅ **C** - Código C compilado con SDCC
 - ✅ **8BP0.BIN** - Archivo binario de 8BP (make_all_*.bin)
-- ✅ **MI_JUEGO.DSK** - Generacion de DSK
+- ✅ **MI_JUEGO.DSK** - Generación de DSK (disco)
+- ✅ **MI_JUEGO.CDT** - Generación de CDT (cinta)
 
 ### Herramientas integradas
 - ✅ **[ABASM](https://github.com/fragarco/abasm)** - Ensamblador para Z80
 - ✅ **[dsk.py](https://github.com/fragarco/abasm)** - Gestión de imágenes DSK
+- ✅ **[cdt.py](https://github.com/fragarco/abasm)** - Gestión de imágenes CDT (cintas)
+- ✅ **[map.py](https://github.com/fragarco/abasm)** - Gestión de archivos de configuración INI
 - ✅ **hex2bin** - Conversión para código C (multiplataforma)
 - ✅ **[png2asm.py](https://github.com/javy-fernandez/8bp-graphics-converter)** - Conversión automática de PNG a ASM (sprites)
 - ✅ **[img.py](https://github.com/fragarco/abasm)** - Conversión automática de PNG a SCN (pantallas)
@@ -51,11 +54,10 @@ Esta idea nace de la necesidad de poder compilar la librería [8BP](https://gith
 
 ## 📦 Requisitos
 - **Python 3.x** (para scripts)
-- **ABASM** (ensamblador Z80) - instalado automáticamente
 - **SDCC** (compilador C) - opcional, solo si usas C
 - **RetroVirtualMachine** - opcional, solo si usas `devcpc run`
 
-‼️ **Importante:** Solo esta soportada la version v2.0 BETA-1 R7 (10/07/2019) de Retro Virtual Machine que es la unica que tiene las opciones de desarrollo activadas, tal y como se indica en su su [Web](https://www.retrovirtualmachine.org/blog/future/).
+‼️ **Importante:** Solo esta soportada la version **v2.0 BETA-1 R7 (10/07/2019)** de Retro Virtual Machine que es la unica que tiene las opciones de desarrollo activadas, tal y como se indica en su su [Web](https://www.retrovirtualmachine.org/blog/future/).
 
 Si decides utilizar la conversion de imagenes a ASM necesitaras instalar la libreria de python Pillow en tu sistema.
 
@@ -72,7 +74,8 @@ Si decides utilizar la conversion de imagenes a ASM necesitaras instalar la libr
 ### 📌 Roadmap
 - ✅ Conversion de imagenes a asm (sprites)
 - ✅ Conversion de imagenes a scn (pantallas de carga)
-- 🚧 Creacion de imagenes de cinta CDT
+- ✅ Creacion de imagenes de cinta CDT
+- ✅ Ejecución flexible DSK/CDT con auto-detección
 - 🚧 Soporte para pruebas en M4Board
 - 🚧 Soporte para proyectos asm (No 8BP)
 - 🚧 Compilacion bas con abasc
@@ -118,7 +121,7 @@ PROJECT_NAME="mi-juego"
 BUILD_LEVEL=0
 
 # Rutas (comenta las que no uses)
-BP_ASM_PATH="ASM"
+ASM_PATH="asm/make_all_mygame.asm"
 BASIC_PATH="bas"
 #RAW_PATH="raw"
 #C_PATH="C"
@@ -185,16 +188,18 @@ devcpc build
 **Proceso:**
 1. ✅ Convierte sprites PNG a ASM (si `SPRITES_PATH` está definido)
 2. ✅ Convierte pantallas PNG a SCN (si `LOADER_SCREEN` está definido)
-3. ✅ Compila código ASM con ABASM (si `BP_ASM_PATH` está definido)
+3. ✅ Compila código ASM con ABASM (si `ASM_PATH` está definido)
 4. ✅ Verifica límites de gráficos (`_END_GRAPH < 42040`)
 5. ✅ Crea imagen DSK
 6. ✅ Añade binario ASM al DSK (8BP0.bin, 8BP1.bin, etc.)
 7. ✅ Añade pantallas SCN al DSK (si `LOADER_SCREEN` está definido)
-8. ✅ Añade archivos BASIC al DSK (si `BASIC_PATH` está definido)
-9. ✅ Añade archivos RAW al DSK (si `RAW_PATH` está definido)
-10. ✅ Compila código C con SDCC (si `C_PATH` está definido)
-11. ✅ Verifica límites de memoria C (< 23999)
-12. ✅ Muestra catálogo del DSK
+8. ✅ Compila código C con SDCC (si `C_PATH` está definido)
+9. ✅ Verifica límites de memoria C (< 23999)
+10. ✅ Añade archivos BASIC al DSK (si `BASIC_PATH` está definido)
+11. ✅ Añade archivos RAW al DSK (si `RAW_PATH` está definido)
+12. ✅ Muestra contenido del DSK
+13. ✅ Crea cinta CDT (si `CDT` y `CDT_FILES` están configurados)
+14. ✅ Muestra catálogo del CDT
 
 
 **Ejemplo de salida:**
@@ -211,7 +216,7 @@ devcpc build
 ✓ DSK creado
 ✓ 1 archivo(s) BASIC añadidos
 
-Catálogo del DSK:
+Contenido del DSK:
 0: 8BP0    .BIN  [ st: 0 extend: 0 data pages: 128 ]
 1: LOADER  .BAS  [ st: 0 extend: 0 data pages: 3 ]
 
@@ -293,7 +298,7 @@ devcpc validate
 ✓ BUILD_LEVEL: 0 (Todas las funcionalidades)
 
 → Validando rutas...
-✓ BP_ASM_PATH: ASM
+✓ ASM_PATH: ASM
 ✓   make_all_mygame.asm encontrado
 ✓ BASIC_PATH: bas (2 archivo(s) .bas)
 
@@ -310,10 +315,12 @@ devcpc validate
 ---
 
 ### `devcpc run`
-Ejecuta el DSK en RetroVirtualMachine.
+Ejecuta el proyecto en RetroVirtualMachine (DSK o CDT).
 
 ```bash
-devcpc run
+devcpc run           # Usa RUN_MODE del config (auto por defecto)
+devcpc run --dsk     # Fuerza ejecución desde DSK (disco)
+devcpc run --cdt     # Fuerza ejecución desde CDT (cinta)
 ```
 
 **Requisitos:**
@@ -322,8 +329,13 @@ devcpc run
 
 **Características:**
 - Cierra sesiones anteriores automáticamente
-- Carga el DSK generado
-- Auto-ejecuta archivo si `RUN_FILE` está configurado
+- **Modo auto**: Detecta automáticamente si usar DSK o CDT
+  - Si `CDT` y `CDT_FILES` están configurados → usa CDT
+  - Sino → usa DSK
+- **DSK**: Carga el disco y auto-ejecuta `RUN_FILE` si está configurado
+- **CDT**: Monta la cinta y ejecuta `RUN"` con auto-play
+  - En CPC 664/6128 usa automáticamente `|TAPE` para cambiar a cinta
+- Los argumentos `--dsk` y `--cdt` permiten forzar el medio sin editar la configuración
 
 > **‼️ Importante:**
 > Para poder probar sobre el Emulador RetroVirtualMachine, es necesario tener instalada la version **v2.0 BETA-1 R7 10/07/2019** Que tal y como informa su desarrollador en la [Web](https://www.retrovirtualmachine.org/blog/future/) es la que tiene habilitada la funcionalidad para desarrollo.
@@ -374,7 +386,7 @@ BUILD_LEVEL=0
 
 ```bash
 # Código ensamblador 8BP
-BP_ASM_PATH="ASM"
+ASM_PATH="asm/make_all_mygame.asm"
 
 # Archivos BASIC (se añaden al DSK automáticamente)
 BASIC_PATH="bas"
@@ -394,7 +406,7 @@ MODE=0                             # Modo CPC (0, 1 o 2)
 ```
 
 **Nota:** 
-- `BP_ASM_PATH`: Ruta al código ensamblador 8BP (make_all_mygame.asm)
+- `ASM_PATH`: **Archivo** de código ensamblador 8BP (no directorio). Debe apuntar a `asm/make_all_mygame.asm`
 - `SPRITES_PATH`: Convierte PNG a ASM (sprites para el juego)
 - `LOADER_SCREEN`: Convierte PNG a SCN (pantallas completas)
 - Todas las rutas son opcionales - comenta las que no uses
@@ -411,7 +423,20 @@ DIST_DIR="dist"
 
 # Nombre del DSK
 DSK="${PROJECT_NAME}.dsk"
+
+# Nombre del CDT (cinta - opcional)
+CDT="${PROJECT_NAME}.cdt"
+
+# Archivos a incluir en la cinta (orden importa)
+CDT_FILES="loader.bas 8BP0.bin main.bin"
 ```
+
+**Nota sobre CDT:**
+- `CDT`: Nombre del archivo de cinta a generar
+- `CDT_FILES`: Lista de archivos a incluir **en el orden de carga**
+- Los archivos deben existir en `obj/` y estar en `${PROJECT_NAME}.map`
+- Si comentas `CDT` o `CDT_FILES`, no se genera la cinta
+- Tipos soportados: `.bas` (BASIC), `.bin` (binarios), `.scn` (pantallas), `.txt` (raw)
 
 ### Emulador (opcional)
 
@@ -428,8 +453,25 @@ RVM_PATH="/Applications/Retro Virtual Machine 2.app/Contents/MacOS/Retro Virtual
 # Modelo de CPC
 CPC_MODEL=464
 
-# Archivo a ejecutar automáticamente
+# Archivo a ejecutar automáticamente (solo para DSK)
 RUN_FILE="8BP0.BIN"
+
+# Modo de ejecución: "auto", "dsk" o "cdt"
+RUN_MODE="auto"
+```
+
+**Modos de ejecución (RUN_MODE):**
+
+| Modo | Descripción | Uso |
+|------|-------------|-----|
+| `auto` | Detecta automáticamente | Si CDT existe y está configurado → CDT, sino → DSK |
+| `dsk` | Siempre usa DSK | Monta disco y ejecuta RUN_FILE |
+| `cdt` | Siempre usa CDT | Monta cinta con auto-play |
+
+**Override desde CLI:**
+```bash
+devcpc run --dsk    # Ignora RUN_MODE, siempre DSK
+devcpc run --cdt    # Ignora RUN_MODE, siempre CDT
 ```
 
 ---
@@ -444,7 +486,7 @@ mi-juego/
 ├── README.md            # Documentación
 ├── .gitignore          # Git ignore
 │
-├── ASM/                # Código ensamblador 8BP (BP_ASM_PATH)
+├── ASM/                # Código ensamblador 8BP (ASM_PATH)
 │   ├── make_all_mygame.asm    # Archivo principal
 │   ├── images_mygame.asm      # Gráficos
 │   ├── music_mygame.asm       # Música
@@ -479,8 +521,9 @@ mi-juego/
 │   ├── *.scn.info      # Info de paleta de pantallas
 │   └── *.ihx           # Intel HEX (C)
 │
-└── dist/               # Generado: DSK final
-    └── mi-juego.dsk    # Imagen DSK lista para usar
+└── dist/               # Generado: DSK y CDT finales
+    ├── mi-juego.dsk    # Imagen DSK (disco)
+    └── mi-juego.cdt    # Imagen CDT (cinta) - opcional
 ```
 
 ### Variables de configuración
@@ -488,25 +531,173 @@ mi-juego/
 | Variable | Descripción | Ejemplo | Requerido |
 |----------|-------------|---------|-----------|
 | `PROJECT_NAME` | Nombre del proyecto | `"MI_JUEGO"` | ✅ Sí |
-| `BUILD_LEVEL` | Nivel de compilación (0-4) | `0` | ✅ Sí |
-| `BP_ASM_PATH` | Ruta al código ASM 8BP | `"ASM"` | ❌ Opcional |
+| `BUILD_LEVEL` | Nivel de compilación (0-4) | `0` | ✅ Sí (8BP) |
+| `ASM_PATH` | **Archivo** ASM 8BP | `"asm/make_all_mygame.asm"` | ❌ Opcional |
 | `BASIC_PATH` | Ruta a archivos BASIC | `"bas"` | ❌ Opcional |
 | `RAW_PATH` | Ruta a archivos RAW | `"raw"` | ❌ Opcional |
 | `C_PATH` | Ruta a código C | `"C"` | ❌ Opcional |
 | `C_SOURCE` | Archivo C principal | `"main.c"` | ❌ Si C_PATH |
 | `C_CODE_LOC` | Dirección de carga C | `20000` | ❌ Si C_PATH |
+| `LOADADDR` | Dirección carga ASM puro | `0x1200` | ❌ ASM sin 8BP |
+| `SOURCE` | Archivo fuente ASM puro | `"main"` | ❌ ASM sin 8BP |
+| `TARGET` | Binario ASM puro | `"program"` | ❌ ASM sin 8BP |
 | `OBJ_DIR` | Directorio objetos | `"obj"` | ❌ Opcional |
 | `DIST_DIR` | Directorio salida | `"dist"` | ❌ Opcional |
 | `DSK` | Nombre del DSK | `"${PROJECT_NAME}.dsk"` | ❌ Opcional |
+| `CDT` | Nombre del CDT (cinta) | `"${PROJECT_NAME}.cdt"` | ❌ Opcional |
+| `CDT_FILES` | Archivos en la cinta | `"loader.bas 8BP0.bin"` | ❌ Si CDT |
 | `RVM_PATH` | Ruta al emulador | `"/path/to/RVM"` | ❌ Opcional |
 | `CPC_MODEL` | Modelo de CPC | `464` | ❌ Opcional |
-| `RUN_FILE` | Archivo a ejecutar | `"8BP0.BIN"` | ❌ Opcional |
+| `RUN_FILE` | Archivo a ejecutar (DSK) | `"8BP0.BIN"` | ❌ Opcional |
+| `RUN_MODE` | Modo ejecución (auto/dsk/cdt) | `"auto"` | ❌ Opcional |
 | `SPRITES_PATH` | Ruta a PNG sprites | `"assets/sprites"` | ❌ Opcional |
 | `SPRITES_OUT_FILE` | Archivo ASM de salida | `"sprites.asm"` | ❌ Opcional |
 | `SPRITES_TOLERANCE` | Tolerancia RGB sprites | `8` | ❌ Opcional |
 | `SPRITES_TRANSPARENT_INK` | INK transparente (0-26) | `""` | ❌ Opcional |
 | `LOADER_SCREEN` | Ruta a PNG pantallas | `"assets/screen"` | ❌ Opcional |
 | `MODE` | Modo CPC (0, 1 o 2) | `0` | ❌ Opcional |
+
+---
+
+## 💾 Creación de Cintas CDT
+
+DevCPC puede generar archivos CDT (cintas) además de DSK, permitiendo ejecutar tus juegos desde cinta en emuladores o hardware real.
+
+### ¿Qué es un CDT?
+
+CDT (Cass Data Tape) es el formato estándar para cintas de Amstrad CPC. A diferencia del DSK que almacena archivos en disco, el CDT graba los datos secuencialmente como en una cinta real.
+
+### Configuración Básica
+
+```bash
+# En devcpc.conf
+
+# Activar generación de CDT
+CDT="${PROJECT_NAME}.cdt"
+
+# Lista de archivos en orden de carga
+CDT_FILES="loader.bas 8BP0.bin main.bin"
+```
+
+### ⚠️ Orden Importante
+
+El orden en `CDT_FILES` es **crítico** - los archivos se grabarán y cargarán en ese orden secuencial:
+
+```bash
+# ✅ Correcto: loader primero, luego binarios
+CDT_FILES="loader.bas 8BP0.bin game.bin"
+
+# ❌ Incorrecto: intentará cargar binarios antes del loader
+CDT_FILES="game.bin 8BP0.bin loader.bas"
+```
+
+### Tipos de Archivos Soportados
+
+| Tipo | Extensión | Descripción | Uso en CPC |
+|------|-----------|-------------|------------|
+| **BASIC** | `.bas` | Programas BASIC tokenizados | `RUN"` |
+| **Binario** | `.bin` | Código máquina con cabecera | `RUN"ARCHIVO"` |
+| **Pantalla** | `.scn` | Pantallas 16KB en &C000 | `RUN"SCREEN"` |
+| **RAW** | `.txt`, etc | Datos sin cabecera AMSDOS | Lectura directa |
+
+### Proceso de Generación
+
+Durante `devcpc build`, si CDT está configurado:
+
+1. **Lee `${PROJECT_NAME}.map`**: Obtiene tipo, load address y execute address de cada archivo
+2. **Valida archivos**: Verifica que todos los archivos en `CDT_FILES` existen
+3. **Crea CDT vacío**: Inicializa el archivo de cinta
+4. **Añade archivos en orden**: Graba cada archivo secuencialmente
+   - **BASIC/ASCII**: Usa `--put-ascii` con nombre en MAYÚSCULAS
+   - **BIN/SCN**: Usa `--put-bin` con load/execute addresses
+   - **RAW**: Usa `--put-raw` sin cabecera
+5. **Muestra catálogo**: Lista bloques y estructura de la cinta
+
+### Ejemplo de Salida
+
+```
+═══════════════════════════════════════
+  Crear Cinta CDT
+═══════════════════════════════════════
+
+ℹ CDT: my_game.cdt
+ℹ Archivos: loader.bas 8BP0.bin ciclo.bin
+
+→ Creando CDT vacío...
+✓ CDT creado: dist/my_game.cdt
+
+→ Añadiendo loader.bas al CDT...
+ℹ   Tipo: BASIC
+ℹ   Name: LOADER
+✓ loader.bas añadido
+
+→ Añadiendo 8BP0.bin al CDT...
+ℹ   Tipo: BINARIO
+ℹ   Load: 0x5C30
+ℹ   Exec: 0x5C30
+ℹ   Name: 8BP0
+✓ 8BP0.bin añadido
+
+→ Añadiendo ciclo.bin al CDT...
+ℹ   Tipo: BINARIO
+ℹ   Load: 0x4E20
+ℹ   Exec: 0x4E20
+ℹ   Name: CICLO
+✓ ciclo.bin añadido
+
+✓ 3 archivo(s) añadido(s) al CDT
+```
+
+### Ejecutar CDT
+
+```bash
+# Ejecución automática (usa RUN_MODE del config)
+devcpc run
+
+# Forzar CDT
+devcpc run --cdt
+
+# Forzar DSK
+devcpc run --dsk
+```
+
+**Diferencias de ejecución:**
+
+| Medio | Comando CPC | Ventajas | Desventajas |
+|-------|-------------|----------|-------------|
+| **DSK** | `RUN"FILE"` | Acceso aleatorio, rápido | Requiere unidad de disco |
+| **CDT** | `RUN"` | Sin disco, más "retro" | Carga secuencial, más lento |
+
+**Modelos con disco (664/6128):**
+- DevCPC automáticamente usa `|TAPE` antes de `RUN"` para cambiar del disco a la cinta
+- No necesitas configurar nada especial
+
+### Ejemplo Completo
+
+```bash
+# devcpc.conf
+PROJECT_NAME="space_invaders"
+BUILD_LEVEL=0
+
+# Generar DSK y CDT
+DSK="${PROJECT_NAME}.dsk"
+CDT="${PROJECT_NAME}.cdt"
+
+# Orden de carga en cinta
+CDT_FILES="intro.bas title.scn loader.bas 8BP0.bin game.bin"
+
+# Ejecutar en cinta por defecto
+RUN_MODE="cdt"
+```
+
+```bash
+# Compilar y ejecutar
+devcpc build && devcpc run
+```
+
+Resultado:
+- `dist/space_invaders.dsk` - Versión disco (todos los archivos)
+- `dist/space_invaders.cdt` - Versión cinta (solo los especificados en CDT_FILES)
 
 ---
 
@@ -1153,7 +1344,7 @@ cd juego-asm
 # Configurar (devcpc.conf)
 PROJECT_NAME="juego-asm"
 BUILD_LEVEL=0
-BP_ASM_PATH="ASM"
+ASM_PATH="ASM"
 
 # Copiar código
 cp /ruta/a/make_all_mygame.asm ASM/
@@ -1172,7 +1363,7 @@ cd juego-completo
 # Configurar
 PROJECT_NAME="juego-completo"
 BUILD_LEVEL=0
-BP_ASM_PATH="ASM"
+ASM_PATH="ASM"
 BASIC_PATH="bas"
 
 # Copiar archivos
@@ -1193,7 +1384,7 @@ cd juego-c
 # Configurar
 PROJECT_NAME="juego-c"
 BUILD_LEVEL=0
-BP_ASM_PATH="ASM"
+ASM_PATH="ASM"
 C_PATH="C"
 C_SOURCE="main.c"
 C_CODE_LOC=20000

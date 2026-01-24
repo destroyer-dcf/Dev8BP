@@ -22,7 +22,8 @@ load_config() {
     fi
     
     # Valores por defecto
-    BUILD_LEVEL="${BUILD_LEVEL:-0}"
+    # BUILD_LEVEL: Solo se asigna si está definido (no forzamos valor por defecto)
+    # Para proyectos ASM puros, debe estar sin definir para usar LOADADDR/SOURCE/TARGET
     OBJ_DIR="${OBJ_DIR:-obj}"
     DIST_DIR="${DIST_DIR:-dist}"
     DSK="${DSK:-${PROJECT_NAME}.dsk}"
@@ -30,7 +31,7 @@ load_config() {
 
 # Mostrar información del proyecto
 show_project_info() {
-    if ! is_dev8bp_project; then
+    if ! is_devcpc_project; then
         error "No estás en un proyecto DevCPC"
         exit 1
     fi
@@ -44,12 +45,12 @@ show_project_info() {
     echo ""
     
     echo -e "${YELLOW}Rutas configuradas:${NC}"
-    [[ -n "$BP_ASM_PATH" ]] && echo -e "  ${GREEN}✓${NC} ASM:    $BP_ASM_PATH"
+    [[ -n "$ASM_PATH" ]] && echo -e "  ${GREEN}✓${NC} ASM:    $ASM_PATH"
     [[ -n "$BASIC_PATH" ]] && echo -e "  ${GREEN}✓${NC} BASIC:  $BASIC_PATH"
     [[ -n "$RAW_PATH" ]] && echo -e "  ${GREEN}✓${NC} RAW:    $RAW_PATH"
     [[ -n "$C_PATH" ]] && echo -e "  ${GREEN}✓${NC} C:      $C_PATH"
     
-    if [[ -z "$BP_ASM_PATH" && -z "$BASIC_PATH" && -z "$RAW_PATH" && -z "$C_PATH" ]]; then
+    if [[ -z "$ASM_PATH" && -z "$BASIC_PATH" && -z "$RAW_PATH" && -z "$C_PATH" ]]; then
         echo -e "  ${YELLOW}⚠${NC} Ninguna ruta configurada"
     fi
     

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Dev8BP CLI - Script de instalación
+# DevCPC CLI - Script de instalación
 # Copyright (c) 2026 Destroyer
 # ==============================================================================
 
@@ -16,7 +16,7 @@ NC='\033[0m'
 
 echo ""
 echo -e "${BLUE}═══════════════════════════════════════${NC}"
-echo -e "${BLUE}  Dev8BP CLI - Instalación${NC}"
+echo -e "${BLUE}  DevCPC CLI - Instalación${NC}"
 echo -e "${BLUE}═══════════════════════════════════════${NC}"
 echo ""
 

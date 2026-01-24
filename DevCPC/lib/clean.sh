@@ -32,13 +32,13 @@ clean_project() {
     fi
     
     # Limpiar backups en ASM/
-    if [[ -n "$BP_ASM_PATH" && -d "$BP_ASM_PATH" ]]; then
-        local backups=$(find "$BP_ASM_PATH" -name "*.backup*" -o -name "*.bak" -o -name "*.BAK" 2>/dev/null | wc -l)
+    if [[ -n "$ASM_PATH" && -d "$ASM_PATH" ]]; then
+        local backups=$(find "$ASM_PATH" -name "*.backup*" -o -name "*.bak" -o -name "*.BAK" 2>/dev/null | wc -l)
         if [[ $backups -gt 0 ]]; then
-            step "Limpiando backups en $BP_ASM_PATH/..."
-            find "$BP_ASM_PATH" -name "*.backup*" -delete 2>/dev/null || true
-            find "$BP_ASM_PATH" -name "*.bak" -delete 2>/dev/null || true
-            find "$BP_ASM_PATH" -name "*.BAK" -delete 2>/dev/null || true
+            step "Limpiando backups en $ASM_PATH/..."
+            find "$ASM_PATH" -name "*.backup*" -delete 2>/dev/null || true
+            find "$ASM_PATH" -name "*.bak" -delete 2>/dev/null || true
+            find "$ASM_PATH" -name "*.BAK" -delete 2>/dev/null || true
             success "$backups archivo(s) de backup eliminados"
             ((cleaned++))
         fi
