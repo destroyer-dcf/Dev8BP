@@ -20,7 +20,7 @@ compile_asm() {
         return 0
     fi
     
-    # Detectar modo de compilación: 8BP (con BUILD_LEVEL) o ASM puro
+    # Detectar modo de compilación: 8BP (con BUILD_LEVEL) o ASM sin 8bp
     if [[ -n "$BUILD_LEVEL" ]]; then
         # =========================================
         # MODO 8BP: Compilación con BUILD_LEVEL
@@ -28,7 +28,7 @@ compile_asm() {
         compile_asm_8bp
     else
         # =========================================
-        # MODO ASM PURO: Compilación estándar
+        # MODO ASM SIN 8BP: Compilación estándar
         # =========================================
         compile_asm_pure
     fi
@@ -212,7 +212,7 @@ verify_graphics_limit() {
 # Compilación ASM pura (sin BUILD_LEVEL, para proyectos ASM estándar)
 # ==============================================================================
 compile_asm_pure() {
-    header "Compilar ASM Puro"
+    header "Compilar ASM (sin 8BP)"
     
     # Validar variables requeridas
     if [[ -z "$LOADADDR" ]]; then

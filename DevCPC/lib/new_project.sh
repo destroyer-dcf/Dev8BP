@@ -38,7 +38,7 @@ new_project() {
     echo ""
     echo "  1) 8BP       - Proyecto con librería 8BP (ASM + BASIC + sprites + música)"
     echo "  2) BASIC     - Proyecto BASIC puro (solo BASIC + recursos)"
-    echo "  3) ASM       - Proyecto ASM puro (solo ensamblador + recursos)"
+    echo "  3) ASM       - Proyecto ASM sin 8bp (solo ensamblador + recursos)"
     echo ""
     echo -ne "${YELLOW}Selecciona una opción [1-3]:${NC} "
     
@@ -257,7 +257,7 @@ MODE=0  # 0=16 colores, 1=4, 2=2
 | \`DSK\` | \`\"\${PROJECT_NAME}.dsk\"\` | ✅ Imagen de disco |
 | \`CDT\` | \`\"\${PROJECT_NAME}.cdt\"\` | Imagen de cinta (opcional) |
 
-### Ejemplo: Proyecto ASM Puro
+### Ejemplo: Proyecto ASM sin 8BP
 
 1. Edita \`devcpc.conf\`:
 

@@ -71,7 +71,7 @@ MODE=0  # 0=16 colores, 1=4, 2=2
 | `DSK` | `"${PROJECT_NAME}.dsk"` | ✅ Imagen de disco |
 | `CDT` | `"${PROJECT_NAME}.cdt"` | Imagen de cinta (opcional) |
 
-### Ejemplo: Proyecto ASM Puro
+### Ejemplo: Proyecto ASM sin 8BP
 
 1. Edita `devcpc.conf`:
 

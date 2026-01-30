@@ -23,7 +23,7 @@ load_config() {
     
     # Valores por defecto
     # BUILD_LEVEL: Solo se asigna si está definido (no forzamos valor por defecto)
-    # Para proyectos ASM puros, debe estar sin definir para usar LOADADDR/SOURCE/TARGET
+    # Para proyectos ASM sin 8bp, debe estar sin definir para usar LOADADDR/SOURCE/TARGET
     OBJ_DIR="${OBJ_DIR:-obj}"
     DIST_DIR="${DIST_DIR:-dist}"
     DSK="${DSK:-${PROJECT_NAME}.dsk}"

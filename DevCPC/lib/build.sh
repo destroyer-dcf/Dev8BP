@@ -39,7 +39,7 @@ build_project() {
         info "Build Level: $BUILD_LEVEL ($(get_level_description $BUILD_LEVEL))"
         info "Memoria BASIC: MEMORY $(get_memory_for_level $BUILD_LEVEL)"
     else
-        info "Modo: ASM Puro (sin BUILD_LEVEL)"
+        info "Modo: ASM (sin BUILD_LEVEL/8BP)"
     fi
     echo ""
     
@@ -115,7 +115,7 @@ build_project() {
                 exit 1
             fi
             echo ""
-        # Proyecto ASM puro: usar ${TARGET}.bin
+        # Proyecto ASM sin 8bp: usar ${TARGET}.bin
         elif [[ -z "$BUILD_LEVEL" && -n "$TARGET" && -f "$OBJ_DIR/${TARGET}.bin" ]]; then
             if ! add_bin_to_dsk "$DSK" "${TARGET}.bin" "$LOADADDR" "$LOADADDR"; then
                 error "Error al añadir binario ASM al DSK"
@@ -173,7 +173,7 @@ build_project() {
         echo "  BIN: $OBJ_DIR/8BP${BUILD_LEVEL}.bin"
     fi
     
-    # Mostrar binario ASM puro
+    # Mostrar binario ASM sin 8bp
     if [[ -n "$ASM_PATH" && -z "$BUILD_LEVEL" && -n "$TARGET" && -f "$OBJ_DIR/${TARGET}.bin" ]]; then
         echo "  BIN: $OBJ_DIR/${TARGET}.bin"
     fi
@@ -191,8 +191,8 @@ build_project() {
         echo "  LOAD\"8BP${BUILD_LEVEL}.bin\""
         echo "  CALL &6B78"
     elif [[ -n "$ASM_PATH" && -n "$TARGET" && -n "$LOADADDR" ]]; then
-        # Modo ASM puro - convertir 0x a & para BASIC
-        local basic_addr="${LOADADDR/0x/&}"
+        # Modo ASM sin 8bp - convertir 0x a & para BASIC
+        local basic_addr="${LOADADDR//0x/&}"
         echo "  LOAD\"${TARGET}.bin\""
         echo "  CALL ${basic_addr}"
     else

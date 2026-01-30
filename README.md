@@ -1,4 +1,4 @@
-# DevCPC CLI - Sistema de Compilación para 8BP
+# DevCPC CLI - SDK para desarrollo en Amstrad CPC
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows%20WSL-lightgrey.svg)]()
@@ -7,31 +7,31 @@
 [![Amstrad CPC](https://img.shields.io/badge/Amstrad-CPC-red.svg)]()
 [![8BP](https://img.shields.io/badge/8BP-v0.43-purple.svg)](https://github.com/jjaranda13/8BP)
 
-<p align="center">
-  <img src="docs/images/help.png" alt="DevCPC Help" width="800"/>
-</p>
-
 ---
 
 
 
 ## 🎯 ¿Por qué DevCPC CLI?
 
-Esta idea nace de la necesidad de poder compilar la librería [8BP](https://github.com/jjaranda13/8BP) para Amstrad CPC en sistemas operativos que no fueran Windows de forma nativa. Gracias al ensamblador [ABASM](https://github.com/fragarco/abasm) creado por [fragarco](https://github.com/fragarco) todo esto ha sido posible.
+Esta idea nace de la necesidad de poder compilar la librería [8BP](https://github.com/jjaranda13/8BP) para Amstrad CPC en sistemas operativos que no fueran Windows de forma nativa. Gracias al ensamblador [ABASM](https://github.com/fragarco/abasm) creado por [fragarco](https://github.com/fragarco) todo esto ha sido posible. A partir de ahi se han ido implementando nuevas funcionalidades para facilitar el desarrollo de proyectos en Basic y ensamblador para Amstrad CPC
 
 ---
 
 ## � ¿Qué incluye?
 
 ### Compilación automatizada
-- ✅ **8BP** - Librería de programación para Amstrad CPC
-- ✅ **ASM** - Código ensamblador 8BP (make_all_*.asm)
-- ✅ **BASIC** - Archivos BASIC (se añaden al DSK)
+- ✅ **8BP** - Compilacion de la librería de programación 8BP (make_all_*.asm)
+- ✅ **ASM** - Compilacion Código ensamblador
+- ✅ **BASIC** - Archivos BASIC / compilacion con Abasc (en proceso)
 - ✅ **RAW** - Archivos binarios sin encabezado AMSDOS
-- ✅ **C** - Código C compilado con SDCC
-- ✅ **8BP0.BIN** - Archivo binario de 8BP (make_all_*.bin)
-- ✅ **MI_JUEGO.DSK** - Generación de DSK (disco)
-- ✅ **MI_JUEGO.CDT** - Generación de CDT (cinta)
+- ✅ **C** - Código C compilado con SDCC para 8BP
+- ✅ **DSK** - Generación de imagen de disco DSK con todos los archivos del proyecto
+- ✅ **CDT** - Generación de imagen de cinta CDT con todos los archivos del proyecto en el orden establecido
+- ✅ **RETRO VIRTUAL MACHINE** - Pruebas sobre emulador RVM con un solo comando
+- ✅ **M4 BOARD** - Pruebas sobre tarjeta M4 con un solo comando
+- ✅ **PANTALLAS DE CARGA** - Creacion de pantallas de cargar desde una imagen png
+- ✅ **SPRITES** - Creacion de sprites desde una imagen png
+
 
 ### Herramientas integradas
 - ✅ **[ABASM](https://github.com/fragarco/abasm)** - Ensamblador para Z80
@@ -76,16 +76,16 @@ Si decides utilizar la conversion de imagenes a ASM necesitaras instalar la libr
 - ✅ Conversion de imagenes a scn (pantallas de carga)
 - ✅ Creacion de imagenes de cinta CDT
 - ✅ Ejecución flexible DSK/CDT con auto-detección
-- 🚧 Soporte para pruebas en M4Board
-- 🚧 Soporte para proyectos asm (No 8BP)
-- 🚧 Compilacion bas con abasc
+- ✅ Soporte para proyectos asm (No 8BP)
+- 🚧 Soporte para pruebas en M4Board (En desarrollo)
+- 🚧 Compilacion bas con abasc (En desarrollo)
 
 
 ## 🚀 Como Empezar
 
-<p align="center">
+<!-- <p align="center">
   <img src="docs/images/demo1.gif" alt="DevCPC Demo" width="100%"/>
-</p>
+</p> -->
 
 ### 1. Instalación
 
@@ -538,9 +538,9 @@ mi-juego/
 | `C_PATH` | Ruta a código C | `"C"` | ❌ Opcional |
 | `C_SOURCE` | Archivo C principal | `"main.c"` | ❌ Si C_PATH |
 | `C_CODE_LOC` | Dirección de carga C | `20000` | ❌ Si C_PATH |
-| `LOADADDR` | Dirección carga ASM puro | `0x1200` | ❌ ASM sin 8BP |
-| `SOURCE` | Archivo fuente ASM puro | `"main"` | ❌ ASM sin 8BP |
-| `TARGET` | Binario ASM puro | `"program"` | ❌ ASM sin 8BP |
+| `LOADADDR` | Dirección carga ASM  | `0x1200` | ❌ ASM sin 8BP |
+| `SOURCE` | Archivo fuente ASM  | `"main"` | ❌ ASM sin 8BP |
+| `TARGET` | Binario ASM  | `"program"` | ❌ ASM sin 8BP |
 | `OBJ_DIR` | Directorio objetos | `"obj"` | ❌ Opcional |
 | `DIST_DIR` | Directorio salida | `"dist"` | ❌ Opcional |
 | `DSK` | Nombre del DSK | `"${PROJECT_NAME}.dsk"` | ❌ Opcional |

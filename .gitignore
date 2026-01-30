@@ -60,3 +60,5 @@ docs/images/demo.yml
 docs/images/readme.md
 david/*
 test/*
+.shellcheckrc
+destroyer/*
