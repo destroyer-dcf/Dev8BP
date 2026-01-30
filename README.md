@@ -125,7 +125,7 @@ Verifica la instalación:
 devcpc version
 ```
 
-## Instalación Manual
+### Instalación Manual
 
 Si prefieres instalar manualmente:
 
