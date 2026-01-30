@@ -216,7 +216,7 @@ if [[ -d "$DEVCPC_HOME" ]]; then
         warning "DevCPC ya está instalado en $DEVCPC_HOME"
     fi
     echo ""
-    read -p "¿Deseas reinstalar y reemplazar la instalación existente? [y/N]: " -n 1 -r
+    read -p "¿Deseas reinstalar y reemplazar la instalación existente? [y/N]: " -r </dev/tty
     echo ""
     
     if [[ ! $REPLY =~ ^[YySs]$ ]]; then
