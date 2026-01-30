@@ -174,31 +174,18 @@ configure_shell() {
     
     # Verificar si ya está configurado
     if grep -q "DEVCPC_PATH" "$shell_rc" 2>/dev/null; then
-        warning "DevCPC ya está configurado en $shell_rc"
+        success "DevCPC ya está configurado en $shell_rc (no se modificará)"
+    else
+        # Añadir configuración solo si no existe
+        {
+            echo ""
+            echo "# DevCPC CLI"
+            echo "export DEVCPC_PATH=\"$DEVCPC_HOME\""
+            echo "export PATH=\"\$PATH:\$DEVCPC_PATH/bin\""
+        } >> "$shell_rc"
         
-        # Eliminar configuración anterior
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            sed -i '' '/# DevCPC CLI/d' "$shell_rc"
-            sed -i '' '/DEVCPC_PATH/d' "$shell_rc"
-            sed -i '' '/export PATH.*DevCPC/d' "$shell_rc"
-        else
-            sed -i '/# DevCPC CLI/d' "$shell_rc"
-            sed -i '/DEVCPC_PATH/d' "$shell_rc"
-            sed -i '/export PATH.*DevCPC/d' "$shell_rc"
-        fi
-        
-        info "Configuración anterior eliminada"
+        success "Configuración añadida a $shell_rc"
     fi
-    
-    # Añadir configuración
-    {
-        echo ""
-        echo "# DevCPC CLI"
-        echo "export DEVCPC_PATH=\"$DEVCPC_HOME\""
-        echo "export PATH=\"\$PATH:\$DEVCPC_PATH/bin\""
-    } >> "$shell_rc"
-    
-    success "Configuración añadida a $shell_rc"
     
     return 0
 }
@@ -221,11 +208,15 @@ if ! check_requirements; then
 fi
 
 # Verificar instalación existente
-if [[ -f "$DEVCPC_HOME/.version" ]]; then
-    current_version=$(cat "$DEVCPC_HOME/.version")
-    warning "DevCPC v${current_version} ya está instalado"
+if [[ -d "$DEVCPC_HOME" ]]; then
+    if [[ -f "$DEVCPC_HOME/.version" ]]; then
+        current_version=$(cat "$DEVCPC_HOME/.version")
+        warning "DevCPC v${current_version} ya está instalado en $DEVCPC_HOME"
+    else
+        warning "DevCPC ya está instalado en $DEVCPC_HOME"
+    fi
     echo ""
-    read -p "¿Deseas reinstalar? [y/N]: " -n 1 -r
+    read -p "¿Deseas reinstalar y reemplazar la instalación existente? [y/N]: " -n 1 -r
     echo ""
     
     if [[ ! $REPLY =~ ^[YySs]$ ]]; then
@@ -235,6 +226,7 @@ if [[ -f "$DEVCPC_HOME/.version" ]]; then
     
     info "Eliminando instalación anterior..."
     rm -rf "$DEVCPC_HOME"
+    success "Instalación anterior eliminada"
 fi
 
 # Obtener última versión
