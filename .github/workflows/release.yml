@@ -58,8 +58,9 @@ jobs:
             --exclude='test/tmp' \
             --exclude='destroyer' \
             --exclude='david' \
-            --exclude='examples/*/obj' \
-            --exclude='examples/*/dist' \
+            --exclude='examples' \
+            --exclude='docs' \
+            --exclude='dist' \
             --exclude='NOTAS.TXT' \
             .
           
@@ -74,8 +75,9 @@ jobs:
             -x 'test/tmp/*' \
             -x 'destroyer/*' \
             -x 'david/*' \
-            -x 'examples/*/obj/*' \
-            -x 'examples/*/dist/*' \
+            -x 'examples/*' \
+            -x 'docs/*' \
+            -x 'dist/*' \
             -x 'NOTAS.TXT'
       
       - name: Create Release
