@@ -33,7 +33,7 @@ show_help() {
     echo -e "${GREEN}By Destroyer 2026${NC}"
     # echo -e "${BLUE}═════════════════════════════════════════════════${NC}"
     echo ""
-    echo -e "${CYAN}SDK para desarrollo en Amstrad CPC${NC}"
+    echo -e "${CYAN}SDK para Amstrad CPC${NC}"
     echo ""
     echo -e "${YELLOW}Uso:${NC}"
     echo "  devcpc <comando> [opciones]"

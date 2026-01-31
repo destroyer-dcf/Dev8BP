@@ -1,4 +1,4 @@
-# DevCPC CLI - SDK para desarrollo en Amstrad CPC
+# DevCPC CLI - SDK para Amstrad CPC
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows%20WSL-lightgrey.svg)]()
