@@ -17,12 +17,12 @@ read	"../music/marcha3.mus.asm" ;
 
 ; archivos de musica
 SONG_0:
-INCBIN	"../MUSIC/marcha3.mus" ;
+INCBIN	"../music/marcha3.mus" ;
 SONG_0_END:
 
 
 SONG_1:
-;INCBIN	"../MUSIC/otracancion.mus" ;
+;INCBIN	"../music/otracancion.mus" ;
 SONG_1_END:
 
 SONG_2:
