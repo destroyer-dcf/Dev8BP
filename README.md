@@ -1522,7 +1522,6 @@ DevCPC cuenta con una extensión oficial para Visual Studio Code que facilita el
 
 <video width="80%" controls>
   <source src="docs/images/extension.mp4" type="video/mp4">
-  Tu navegador no soporta videos HTML5. <a href="docs/images/extension.mp4">Descarga el video</a>
 </video>
 
 ### Instalación
