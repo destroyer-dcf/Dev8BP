@@ -117,7 +117,7 @@ build_project() {
             echo ""
         # Proyecto ASM sin 8bp: usar ${TARGET}.bin
         elif [[ -z "$BUILD_LEVEL" && -n "$TARGET" && -f "$OBJ_DIR/${TARGET}.bin" ]]; then
-            if ! add_bin_to_dsk "$DSK" "${TARGET}.bin" "$LOADADDR" "$LOADADDR"; then
+            if ! add_bin_to_dsk "$DSK" "${TARGET}.bin" "$LOADADDR" "MAIN" "${SOURCE}.map"; then
                 error "Error al añadir binario ASM al DSK"
                 exit 1
             fi
