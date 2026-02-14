@@ -28,8 +28,13 @@ validate_project() {
     
     # BUILD_LEVEL solo es requerido para proyectos 8BP
     local is_8bp_project=0
-    if [[ -n "$ASM_PATH" && -f "$ASM_PATH/make_all_mygame.asm" ]]; then
-        is_8bp_project=1
+    if [[ -n "$ASM_PATH" ]]; then
+        # ASM_PATH puede ser un archivo (8BP) o directorio (ASM puro)
+        if [[ -f "$ASM_PATH" && "$ASM_PATH" == *"make_all_mygame.asm" ]]; then
+            is_8bp_project=1
+        elif [[ -d "$ASM_PATH" && -f "$ASM_PATH/make_all_mygame.asm" ]]; then
+            is_8bp_project=1
+        fi
     fi
     
     if [[ $is_8bp_project -eq 1 ]]; then
@@ -51,15 +56,17 @@ validate_project() {
     local has_source=0
     
     if [[ -n "$ASM_PATH" ]]; then
-        if [[ -d "$ASM_PATH" ]]; then
+        if [[ -f "$ASM_PATH" ]]; then
+            # ASM_PATH es un archivo (proyecto 8BP)
+            success "ASM_PATH: $ASM_PATH"
+            ((has_source++))
+        elif [[ -d "$ASM_PATH" ]]; then
+            # ASM_PATH es un directorio (proyecto ASM puro)
             success "ASM_PATH: $ASM_PATH"
             if [[ -f "$ASM_PATH/make_all_mygame.asm" ]]; then
                 success "  make_all_mygame.asm encontrado"
-                ((has_source++))
-            else
-                warning "  make_all_mygame.asm no encontrado"
-                ((warnings++))
             fi
+            ((has_source++))
         else
             error "ASM_PATH no existe: $ASM_PATH"
             ((errors++))
