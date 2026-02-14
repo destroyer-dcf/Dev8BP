@@ -1520,9 +1520,7 @@ devcpc build
 
 DevCPC cuenta con una extensión oficial para Visual Studio Code que facilita el desarrollo mostrando las tareas disponibles directamente en el explorador.
 
-<p align="center">
-  <img src="docs/images/extension.gif" alt="DevCPC Extension Demo" width="90%"/>
-</p>
+![Demo](docs/images/extension.gif)
 
 ### Instalación
 
