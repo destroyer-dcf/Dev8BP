@@ -34,6 +34,7 @@ Esta idea nace de la necesidad de poder compilar la librería [8BP](https://gith
 - ✅ **PANTALLAS DE CARGA** - Creacion de pantallas de cargar desde una imagen png
 - ✅ **SPRITES** - Creacion de sprites desde una imagen png
 - ✅ **CREACION DE PROYECTOS** - Creacion de proyectos con ejemplos Basic, ASM o 8BP
+- ✅ **EXTENSION VSCODE** - Extension para Visual Studio Code, que facilita el trabajo de compilacion.
 
 
 ### Herramientas integradas
