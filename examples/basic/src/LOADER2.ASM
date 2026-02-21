@@ -56,7 +56,7 @@ _code_:
     ld      hl,20
     ld      h,e
     call    &BB75             ; TXT_SET_CURSOR
-    __label_60:               ; 60 PRINT "SDK for AMSTRAD CPC"
+    __label_60:               ; 60 PRINT "SDK for AMSTRAD CPC1"
     ld      hl,__const_str_2
     call    rt_print_str
     call    rt_print_nl
@@ -160,7 +160,7 @@ _symbols_table: defs 128
 
 _data_constants_:
     __const_str_1: db 7,&4B,&45,&59,&2E,&53,&43,&4E; 'KEY.SCN'
-    __const_str_2: db 19,&53,&44,&4B,&20,&66,&6F,&72,&20,&41,&4D,&53,&54,&52,&41,&44,&20,&43,&50,&43; 'SDK for AMSTRAD CPC'
+    __const_str_2: db 20,&53,&44,&4B,&20,&66,&6F,&72,&20,&41,&4D,&53,&54,&52,&41,&44,&20,&43,&50,&43,&31; 'SDK for AMSTRAD CPC1'
 
 _data_constants_end_:
 _data_variables_:
